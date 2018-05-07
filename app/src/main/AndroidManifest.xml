@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.administrator.baidumap">
+    package="com.xunchijn.administrator.baidumap">
 
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
@@ -36,21 +36,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.example.administrator.models.DCApplication">>
-        <activity android:name="com.example.administrator.LoginActivity">
+        android:name="com.xunchijn.administrator.models.DCApplication">>
+        <activity android:name="com.xunchijn.administrator.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.administrator.map.EmpMapActivity"/>
-        <activity android:name="com.example.administrator.event.ReportEvent"/>
-        <activity android:name="com.example.administrator.map.MapActivity" />
-        <activity android:name="com.example.administrator.MainActivity"/>
-        <activity android:name="com.example.administrator.event.Historicaldetails"/>
-        <activity android:name="com.example.administrator.map.TruckMapActivity"/>
-        <activity android:name="com.example.administrator.map.EmpTrajectoryMapActivity"/>
+        <activity android:name="com.xunchijn.administrator.map.EmpMapActivity"/>
+        <activity android:name="com.xunchijn.administrator.event.ReportEvent"/>
+        <activity android:name="com.xunchijn.administrator.map.MapActivity" />
+        <activity android:name="com.xunchijn.administrator.MainActivity"/>
+        <activity android:name="com.xunchijn.administrator.event.Historicaldetails"/>
+        <activity android:name="com.xunchijn.administrator.map.TruckMapActivity"/>
+        <activity android:name="com.xunchijn.administrator.map.EmpTrajectoryMapActivity"/>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -61,7 +61,7 @@
             android:process=":remote"></service>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.cameraalbumtest.fileproviderDC"
+            android:authorities="com.xunchijn.cameraalbumtest.fileproviderDC"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
