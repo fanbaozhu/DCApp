@@ -500,6 +500,7 @@ public class EmpTrajectoryMapActivity extends Activity {
                         }
 
                     }
+                    break;
                 }
             }
 
