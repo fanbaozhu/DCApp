@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.common.util;
+package com.xunchijn.dcappv1.util;
 
 import android.content.Context;
 import android.os.Environment;

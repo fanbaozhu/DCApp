@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginBottom="36dp"
+        android:src="@mipmap/ic_launcher_round" />
+    <TextView
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:textSize="18sp"
+        android:text="Intelligent sanitation"/>
+
+    <EditText
+        android:id="@+id/login_userName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:hint="请输入您的账号"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/login_userPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:hint="请输入您的密码"
+        android:inputType="textPassword"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/login_confirm"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorBlue"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:text="登陆" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="90dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:textSize="18sp"
+        android:text="Published In 济南讯驰信息科技有限公司"/>
+
+</LinearLayout>
