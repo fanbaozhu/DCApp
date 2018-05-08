@@ -1,13 +1,19 @@
 package com.xunchijn.dcappv1.event.view;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentUris;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +44,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class ReportFragment extends Fragment {
+    private final String TAG = ReportFragment.class.getSimpleName();
     private ReportSettingAdapter mSettingAdapter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
@@ -100,7 +107,17 @@ public class ReportFragment extends Fragment {
 
             @Override
             public void onAddPicture() {
-                intentToCamera();
+                new AlertDialog.Builder(getContext()).setItems(new String[]{"拍照", "相册"},
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    intentToCamera();
+                                } else {
+                                    intentToPick();
+                                }
+                            }
+                        }).create().show();
             }
         });
     }
@@ -125,7 +142,8 @@ public class ReportFragment extends Fragment {
 
     private final int REQUEST_CODE_CAMERA = 0x1002;
     private final int REQUEST_CODE_CROP_PHOTO = 0x1003;
-    private final int REQUEST_CODE_PERMISSION = 0x1004;
+    private final int REQUEST_CODE_PICK_PHOTO = 0x1004;
+    private final int REQUEST_CODE_PERMISSION = 0x1005;
 
     //调用相机拍照
     public void intentToCamera() {
@@ -141,6 +159,19 @@ public class ReportFragment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
+    }
+
+    //打开相册
+    private void intentToPick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+                return;
+            }
+        }
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICK_PHOTO);
     }
 
     //权限返回结果
@@ -187,7 +218,8 @@ public class ReportFragment extends Fragment {
         }
         //拍照，返回结果需要裁剪照片
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK) {
-            startPhotoZoom(mUri);
+//            startPhotoZoom(mUri);
+            refreshPictures();
             return;
         }
 
@@ -210,13 +242,77 @@ public class ReportFragment extends Fragment {
             }
             return;
         }
+        //相册选择返回结果
+        if (requestCode == REQUEST_CODE_PICK_PHOTO && resultCode == RESULT_OK) {
+            //判断手机系统版本号
+            if (Build.VERSION.SDK_INT >= 19) {
+                //4.4及以上系统使用这个方法处理图片
+                handleImageOnKitKat(data);
+            } else {
+                //4.4及以下系统使用这个方法处理图片
+                handleImageBeforeKitKat(data);
+            }
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (DocumentsContract.isDocumentUri(getContext(), uri)) {
+            //如果是document类型的Uri，则通过document id处理
+            String docID = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docID.split(":")[1];//解析出数字格式的ID
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docID));
+                imagePath = getImagePath(contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            //如果是content类型的Uri,则使用普通方式处理
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            //如果是file类型的Uri，直接获取图片路径即可
+            imagePath = uri.getPath();
+        }
+        refreshPictures(imagePath);
+    }
+
+    private void handleImageBeforeKitKat(Intent data) {
+        Uri uri = data.getData();
+        String imagePath = getImagePath(uri, null);
+        refreshPictures(imagePath);
+    }
+
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        //通过Uri和selection来获取真实的图片路径
+        Cursor cursor = mActivity.getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
     }
 
     //刷新图片适配器
     private void refreshPictures() {
         if (mPicture.exists()) {
             mUrls.add(String.format("file://%s", mPicture.getAbsolutePath()));
+            mPictureAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void refreshPictures(String url) {
+        File file = new File(url);
+        if (file.exists()) {
+            mUrls.add(String.format("file://%s", url));
             mPictureAdapter.notifyDataSetChanged();
         }
     }
