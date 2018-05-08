@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.event.TestData;
+import com.xunchijn.dcappv1.util.TestData;
 import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
 import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
 import com.xunchijn.dcappv1.event.model.SettingItem;

@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.event;
+package com.xunchijn.dcappv1.util;
 
 import com.xunchijn.dcappv1.event.model.DepartmentEntity;
 import com.xunchijn.dcappv1.event.model.SettingItem;

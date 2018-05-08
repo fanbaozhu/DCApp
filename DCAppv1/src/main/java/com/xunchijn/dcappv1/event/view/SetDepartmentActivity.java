@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.event.TestData;
+import com.xunchijn.dcappv1.util.TestData;
 import com.xunchijn.dcappv1.event.adapter.DepartmentAdapter;
 
 public class SetDepartmentActivity extends AppCompatActivity {

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.xunchijn.dcappv1.MainActivity;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.contract.LoginContrast;
 import com.xunchijn.dcappv1.common.presenter.LoginPresenter;
