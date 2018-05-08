@@ -71,7 +71,7 @@ public class ReportFragment extends Fragment {
 
     //初始化标题栏
     private void initTitle() {
-        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true);
+        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true, 0);
 
         getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
                 .show(mTitleFragment).commit();

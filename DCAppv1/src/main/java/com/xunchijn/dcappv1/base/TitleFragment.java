@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +19,15 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
     private static final String TITLE = "title";
     private static final String SHOW_BACK = "showBack";
     private static final String SHOW_CONFIRM = "showConfirm";
+    private static final String DRAWABLE_ID = "drawableId";
 
-    public static TitleFragment newInstance(String title, boolean showBack, boolean showConfirm) {
+    public static TitleFragment newInstance(String title, boolean showBack, boolean showConfirm, int drawableId) {
         TitleFragment fragment = new TitleFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TITLE, title);
         bundle.putBoolean(SHOW_BACK, showBack);
         bundle.putBoolean(SHOW_CONFIRM, showConfirm);
+        bundle.putInt(DRAWABLE_ID, drawableId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -53,6 +56,10 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
         mBackView.setVisibility(showBack ? View.VISIBLE : View.GONE);
         boolean showConfirm = args.getBoolean(SHOW_CONFIRM, false);
         mConfirmView.setVisibility(showConfirm ? View.VISIBLE : View.GONE);
+        int drawableId = args.getInt(DRAWABLE_ID, 0);
+        if (drawableId != 0) {
+            mConfirmView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.ic_picture_delete));
+        }
         mBackView.setOnClickListener(this);
         mConfirmView.setOnClickListener(this);
     }

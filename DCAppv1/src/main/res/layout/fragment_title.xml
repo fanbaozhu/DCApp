@@ -11,8 +11,8 @@
         android:layout_height="32dp"
         android:layout_margin="8dp"
         android:contentDescription="@string/app_name"
-        android:scaleType="center"
-        android:src="@mipmap/ic_back_white" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_title_back" />
 
     <TextView
         android:id="@+id/text_title"
@@ -30,7 +30,7 @@
         android:layout_gravity="end"
         android:layout_margin="8dp"
         android:contentDescription="@string/app_name"
-        android:scaleType="center"
-        android:src="@mipmap/ic_done_white_36dp" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_title_confirm" />
 
 </FrameLayout>
