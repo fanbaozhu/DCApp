@@ -2,7 +2,9 @@ package com.xunchijn.dcappv1.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.text.TextUtils;
+
+import com.xunchijn.dcappv1.common.module.UserAccount;
 
 /**
  * Created by Administrator on 2018/5/8 0008.
@@ -11,8 +13,8 @@ import android.content.pm.PackageManager;
 public class PreferHelper {
     private static final String TAG = "PreferHelper";
     private static final String PREFERENCES = "PREFERENCES";
-    private static final String USERNAME = "UserName";
-    private static final String USERPASSWORD = "UserPassword";
+    private static final String USER_ACCOUNT = "UserName";
+    private static final String USER_PASSWORD = "UserPassword";
     private SharedPreferences mSharedPreferences;
 
     public PreferHelper(Context context) {
@@ -32,6 +34,23 @@ public class PreferHelper {
         if (mSharedPreferences == null) {
             return "";
         }
-        return mSharedPreferences.getString(key,"");
+        return mSharedPreferences.getString(key, "");
+    }
+
+    public UserAccount getUserAccount() {
+        String userAccount = get(USER_ACCOUNT);
+        String userPassword = get(USER_PASSWORD);
+        if (TextUtils.isEmpty(userAccount) || TextUtils.isEmpty(userPassword)) {
+            return null;
+        }
+        return new UserAccount(userAccount, userPassword);
+    }
+
+    public void saveUserAccount(UserAccount account) {
+        if (account == null) {
+            return;
+        }
+        save(USER_ACCOUNT, account.getUserAccount());
+        save(USER_PASSWORD, account.getUserPassword());
     }
 }

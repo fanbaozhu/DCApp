@@ -15,14 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.xunchijn.dcappv1.MainActivity">
+
+        </activity>
+        <activity android:name=".event.view.SetDepartmentActivity" />
+        <activity android:name=".event.view.ShowPictureActivity" />
+        <activity
+            android:name=".common.view.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".event.view.SetDepartmentActivity" />
-        <activity android:name=".event.view.ShowPictureActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
