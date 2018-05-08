@@ -44,14 +44,12 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class ReportFragment extends Fragment {
-    private final String TAG = ReportFragment.class.getSimpleName();
     private ReportSettingAdapter mSettingAdapter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
     private List<String> mUrls = new ArrayList<>();
     private Activity mActivity;
     private File mPicture;
-    private Uri mUri;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,7 +131,7 @@ public class ReportFragment extends Fragment {
         mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
-                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                Intent intent = new Intent(getContext(), SetDepartmentActivity.class);
                 intent.putExtra("item", item);
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
@@ -155,7 +153,7 @@ public class ReportFragment extends Fragment {
         }
         String fileName = String.format("%sDC_%s_img.jpg", mActivity.getExternalCacheDir(), System.currentTimeMillis());
         mPicture = new File(fileName);
-        mUri = FileProvider.getUriForFile(mActivity, "com.xunchijn.dcappv1.fileprovider", mPicture);
+        Uri mUri = FileProvider.getUriForFile(mActivity, "com.xunchijn.dcappv1.fileprovider", mPicture);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
@@ -238,6 +236,7 @@ public class ReportFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                photo.recycle();
                 refreshPictures();
             }
             return;
