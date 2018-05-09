@@ -94,6 +94,7 @@ public class PictureAdapter extends RecyclerView.Adapter {
         }
 
         void bindAddPictureView() {
+            Glide.with(mContext).load(R.mipmap.ic_picture_add).apply(new RequestOptions().centerInside()).into(mImageView);
             if (mItemClickListener == null) {
                 return;
             }
