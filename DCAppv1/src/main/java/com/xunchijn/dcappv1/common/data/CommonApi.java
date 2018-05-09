@@ -1,6 +1,7 @@
 package com.xunchijn.dcappv1.common.data;
 
 import com.xunchijn.dcappv1.common.module.CommonResult;
+import com.xunchijn.dcappv1.util.Result;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -28,5 +29,5 @@ public interface CommonApi {
     //报表获取
     @FormUrlEncoded
     @GET("API/tmd/Statistic")
-    Observable<Response<CommonResult>> Statistic();
+    Observable<Response<Result<CommonResult>>> Statistic();
 }

@@ -1,10 +1,11 @@
 package com.xunchijn.dcappv1.common.presenter;
 
+import android.util.Log;
+
 import com.xunchijn.dcappv1.common.contract.StatisticContrast;
 import com.xunchijn.dcappv1.common.data.CommonService;
 import com.xunchijn.dcappv1.common.module.CommonResult;
-
-import org.greenrobot.eventbus.MainThreadSupport;
+import com.xunchijn.dcappv1.util.Result;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,11 +17,11 @@ import retrofit2.Response;
  */
 
 public class StatisticPresenter implements StatisticContrast.Presenter {
+    private final String TAG = "Statistic";
     private StatisticContrast.View mView;
     private CommonService mService;
 
-
-    public StatisticPresenter(StatisticContrast.View view){
+    public StatisticPresenter(StatisticContrast.View view) {
         mView = view;
         mView.setPresenter(this);
         mService = new CommonService();
@@ -31,30 +32,43 @@ public class StatisticPresenter implements StatisticContrast.Presenter {
                 //在主线程执行
                 .subscribeOn(AndroidSchedulers.mainThread())
                 //返回的结果
-                .subscribe(new Observer<Response<CommonResult>>() {
+                .subscribe(new Observer<Response<Result<CommonResult>>>() {
                     @Override
-                    //订阅 暂时无卵用
                     public void onSubscribe(Disposable d) {
-
+                        Log.d(TAG, "onSubscribe: ");
                     }
 
-                    //过程
                     @Override
-                    public void onNext(Response<CommonResult> commonResultResponse) {
-
+                    public void onNext(Response<Result<CommonResult>> resultResponse) {
+                        if (resultResponse.isSuccessful()) {
+                            parseResult(resultResponse.body());
+                        } else {
+                            mView.showError(resultResponse.message());
+                        }
                     }
 
-                    //失败
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.toString());
+                        Log.e(TAG, "onError: " + e);
                     }
 
-                    //完成
                     @Override
                     public void onComplete() {
-
+                        Log.d(TAG, "onComplete: ");
                     }
                 });
+    }
+
+    private void parseResult(Result<CommonResult> result) {
+        if (result.getCode() == 200) {
+            if (result.getData() == null) {
+                return;
+            }
+            if (result.getData().getStatisticList() != null) {
+                mView.showStatistics(result.getData().getStatisticList());
+            }
+        } else {
+            mView.showError(result.getMessage());
+        }
     }
 }

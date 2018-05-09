@@ -1,5 +1,9 @@
 package com.xunchijn.dcappv1.common.module;
 
+import android.text.TextUtils;
+
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Author：ZHOUJIAWEI
  * Time:2018/5/9 0009   上午 10:41
@@ -8,56 +12,67 @@ package com.xunchijn.dcappv1.common.module;
 
 
 public class StatisticItem {
-    private String rfidScanTime;
-    private String truckNumber;
-    private String status;
-    private String address;
-    private int index;
 
-    public StatisticItem(int index, String truckNumber, String status, String rfidScanTime, String address) {
-        this.index = index;
-        this.truckNumber = truckNumber;
-        this.status = status;
-        this.rfidScanTime = rfidScanTime;
-        this.address = address;
+    @SerializedName("rfidScanTime")
+    private String mRFIDScanTime;
+    @SerializedName("truckNumber")
+    private String mTruckNumber;
+    @SerializedName("status")
+    private String mStatus;
+    @SerializedName("address")
+    private String mAddress;
+    @SerializedName("index")
+    private int mIndex;
+
+    public StatisticItem(int index, String truckNumber, String status, String RFIDScanTime, String address) {
+        mIndex = index;
+        mTruckNumber = truckNumber;
+        mStatus = status;
+        mRFIDScanTime = RFIDScanTime;
+        mAddress = address;
     }
+
     public int getIndex() {
-        return index;
+        return mIndex;
     }
 
     public void setIndex(int index) {
-        this.index = index;
+        this.mIndex = index;
     }
 
-    public void setRfidScanTime(String rfidScanTime) {
-        this.rfidScanTime = rfidScanTime;
+    public void setRFIDScanTime(String RFIDScanTime) {
+        this.mRFIDScanTime = RFIDScanTime;
     }
 
     public void setTruckNumber(String truckNumber) {
-        this.truckNumber = truckNumber;
+        this.mTruckNumber = truckNumber;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.mStatus = status;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.mAddress = address;
     }
 
-    public String getRfidScanTime() {
-        return rfidScanTime;
+    public String getRFIDScanTime() {
+        return mRFIDScanTime;
     }
 
     public String getTruckNumber() {
-        return truckNumber;
+        return mTruckNumber;
     }
 
     public String getStatus() {
-        return status;
+        return mStatus;
+    }
+
+    public boolean isOffline() {
+        return TextUtils.isEmpty(mStatus) || mStatus.equals("离线");
     }
 
     public String getAddress() {
-        return address;
+        return mAddress;
     }
 }

@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.StatisticItem;
-import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
-import com.xunchijn.dcappv1.event.model.SettingItem;
 
 import java.util.List;
 
@@ -24,24 +22,25 @@ import java.util.List;
 public class StatisticAdapter extends RecyclerView.Adapter {
     private List<StatisticItem> mList;
 
-    public StatisticAdapter(List<StatisticItem> list){
+    public StatisticAdapter(List<StatisticItem> list) {
         mList = list;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_statistic,parent,false);
-        return new SettingView(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_statistic, parent, false);
+        return new StatisticItemView(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(position>=mList.size()){
+        if (position >= mList.size()) {
             return;
         }
         StatisticItem item = mList.get(position);
-        if (holder instanceof StatisticAdapter.SettingView && item != null) {
-            ((StatisticAdapter.SettingView) holder).bindSettingView(item);
+        if (holder instanceof StatisticItemView && item != null) {
+            ((StatisticItemView) holder).bindSettingView(item);
         }
     }
 
@@ -50,42 +49,26 @@ public class StatisticAdapter extends RecyclerView.Adapter {
         return mList == null ? 0 : mList.size();
     }
 
-    private class SettingView extends RecyclerView.ViewHolder{
+    private class StatisticItemView extends RecyclerView.ViewHolder {
         private TextView viewStatus;
         private TextView viewTruckNumber;
         private TextView viewRFIDScanTime;
         private TextView viewAddress;
 
-        SettingView(View itemView) {
+        StatisticItemView(View itemView) {
             super(itemView);
-            viewStatus = itemView.findViewById(R.id.tv_status);
+            viewStatus = itemView.findViewById(R.id.text_status);
             viewTruckNumber = itemView.findViewById(R.id.truck_number);
-            viewRFIDScanTime = itemView.findViewById(R.id.rfid_scantime);
-            viewAddress = itemView.findViewById(R.id.address);
+            viewRFIDScanTime = itemView.findViewById(R.id.text_scan_time);
+            viewAddress = itemView.findViewById(R.id.text_address);
         }
-        void bindSettingView(final StatisticItem item){
-            viewStatus.setText(item.getStatus());
+
+        void bindSettingView(StatisticItem item) {
             viewTruckNumber.setText(item.getTruckNumber());
-            viewRFIDScanTime.setText(item.getRfidScanTime());
+            viewStatus.setBackgroundResource(item.isOffline() ?
+                    R.drawable.bg_gray_round_rect_8dp : R.drawable.bg_green_round_rect_8dp);
+            viewRFIDScanTime.setText(item.getRFIDScanTime());
             viewAddress.setText(item.getAddress());
-            if (mItemClickListener == null) {
-                return;
-            }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickListener.onItemClick(item);
-                }
-            });
         }
-    }
-    public interface OnItemClickListener {
-        void onItemClick(StatisticItem item);
-    }
-
-    private StatisticAdapter.OnItemClickListener mItemClickListener;
-
-    public void setItemClickListener(StatisticAdapter.OnItemClickListener itemClickListener) {
-        mItemClickListener = itemClickListener;
     }
 }
