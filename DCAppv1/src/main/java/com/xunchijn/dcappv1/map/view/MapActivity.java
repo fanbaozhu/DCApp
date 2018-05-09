@@ -42,8 +42,8 @@ public class MapActivity extends AppCompatActivity {
     private void initTitle() {
         mTitle = getIntent().getStringExtra("title");
 
-        TitleFragment fragment = TitleFragment.newInstance(mTitle, true, true,
-                mTitle.equals("轨迹回放") ? R.mipmap.ic_title_time : R.mipmap.ic_title_refresh, 0);
+        TitleFragment fragment = TitleFragment.newInstance(mTitle, true, true);
+        fragment.setRightDrawableId(mTitle.equals("轨迹回放") ? R.mipmap.ic_title_time : R.mipmap.ic_title_refresh);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, fragment)
                 .show(fragment).commit();

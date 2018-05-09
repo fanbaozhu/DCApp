@@ -3,7 +3,7 @@ package com.xunchijn.dcappv1.common.presenter;
 import android.util.Log;
 
 import com.xunchijn.dcappv1.common.contract.StatisticContrast;
-import com.xunchijn.dcappv1.common.data.CommonService;
+import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.common.module.CommonResult;
 import com.xunchijn.dcappv1.util.Result;
 

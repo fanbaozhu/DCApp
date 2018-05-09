@@ -27,8 +27,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initTitle() {
-        TitleFragment fragment = TitleFragment.newInstance("搜索页面", true, false,
-                0, 0);
+        TitleFragment fragment = TitleFragment.newInstance("搜索页面", true, false);
+        fragment.setShowEditSearch(true);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, fragment)
                 .show(fragment).commit();

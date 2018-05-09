@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.common.data;
+package com.xunchijn.dcappv1.data;
 
 import com.xunchijn.dcappv1.common.module.CommonResult;
 import com.xunchijn.dcappv1.util.Result;

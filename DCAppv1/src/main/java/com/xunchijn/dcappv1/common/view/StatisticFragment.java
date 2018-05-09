@@ -53,8 +53,7 @@ public class StatisticFragment extends Fragment implements StatisticContrast.Vie
     private void initView(View view) {
         mViewStatistics = view.findViewById(R.id.recycler_view_statistic);
 
-        TitleFragment titleFragment = TitleFragment.newInstance("统计报表",
-                true, false, 0, 0);
+        TitleFragment titleFragment = TitleFragment.newInstance("统计报表", true, false);
         getFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();

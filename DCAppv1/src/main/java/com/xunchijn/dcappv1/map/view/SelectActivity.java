@@ -17,7 +17,7 @@ import com.xunchijn.dcappv1.event.adapter.NestingSelectAdapter;
 import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
 import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
-import com.xunchijn.dcappv1.event.view.SelectDialog;
+import com.xunchijn.dcappv1.event.widget.SelectDialog;
 import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.util.TestData;
 
@@ -48,8 +48,7 @@ public class SelectActivity extends AppCompatActivity {
     private void initTitle() {
         mType = getIntent().getStringExtra(TYPE);
         mTitle = getIntent().getStringExtra(TITLE);
-        TitleFragment titleFragment = TitleFragment.newInstance(String.format("选择%s", mType),
-                true, true, 0, 0);
+        TitleFragment titleFragment = TitleFragment.newInstance(String.format("选择%s", mType), true, true);
         titleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
             @Override
             public void onBack() {

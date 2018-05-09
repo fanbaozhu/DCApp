@@ -3,7 +3,7 @@ package com.xunchijn.dcappv1.common.presenter;
 import android.content.Context;
 
 import com.xunchijn.dcappv1.common.contract.LoginContrast;
-import com.xunchijn.dcappv1.common.data.CommonService;
+import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.common.module.UserAccount;
 import com.xunchijn.dcappv1.util.PreferHelper;
 

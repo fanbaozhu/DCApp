@@ -23,6 +23,19 @@
         android:textColor="@color/colorWhite"
         android:textSize="22sp" />
 
+    <EditText
+        android:id="@+id/edit_title_content"
+        android:layout_width="240dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_blue_round_line_4dp"
+        android:hint="搜索"
+        android:inputType="text"
+        android:paddingEnd="8dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:paddingStart="8dp" />
+
     <ImageView
         android:id="@+id/image_title_confirm"
         android:layout_width="32dp"
