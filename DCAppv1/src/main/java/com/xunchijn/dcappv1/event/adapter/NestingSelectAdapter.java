@@ -11,15 +11,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.event.model.DepartmentEntity;
+import com.xunchijn.dcappv1.event.model.NestingItem;
+import com.xunchijn.dcappv1.event.model.SelectItem;
 
 import java.util.List;
 
-public class DepartmentAdapter extends RecyclerView.Adapter {
-    private List<DepartmentEntity> mList;
+/*
+ * 嵌套选择列表
+ * */
+
+public class NestingSelectAdapter extends RecyclerView.Adapter {
+    private List<NestingItem> mList;
     private Context mContext;
 
-    public DepartmentAdapter(List<DepartmentEntity> list) {
+    public NestingSelectAdapter(List<NestingItem> list) {
         mList = list;
     }
 
@@ -36,9 +41,9 @@ public class DepartmentAdapter extends RecyclerView.Adapter {
         if (position >= mList.size()) {
             return;
         }
-        DepartmentEntity entity = mList.get(position);
-        if (entity != null && holder instanceof DepartmentView) {
-            ((DepartmentView) holder).bindDepartments(entity);
+        NestingItem item = mList.get(position);
+        if (item != null && holder instanceof DepartmentView) {
+            ((DepartmentView) holder).bindDepartments(item);
         }
     }
 
@@ -59,22 +64,46 @@ public class DepartmentAdapter extends RecyclerView.Adapter {
             mViewSubDepartment = itemView.findViewById(R.id.recycler_view_sub_department);
         }
 
-        void bindDepartments(final DepartmentEntity departmentEntity) {
-            mViewTitle.setText(departmentEntity.getName());
-            mViewSubtitle.setText(departmentEntity.getSubtitle());
-            if (departmentEntity.getSubDepartment() == null) {
+        void bindDepartments(final NestingItem nestingItem) {
+            mViewTitle.setText(nestingItem.getName());
+            mViewSubtitle.setText(nestingItem.getSubtitle());
+            if (mItemClickListener != null) {
+                mViewSubtitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mItemClickListener.onSubTitleClick(nestingItem);
+                    }
+                });
+            }
+
+            if (nestingItem.getItems() == null) {
                 return;
             }
             mViewSubDepartment.setLayoutManager(new GridLayoutManager(mContext, 3));
-            SubDepartmentAdapter adapter = new SubDepartmentAdapter(departmentEntity.getSubDepartment());
+            SelectAdapter adapter = new SelectAdapter(nestingItem.getItems(), R.layout.adapter_select_item);
             mViewSubDepartment.setAdapter(adapter);
-            adapter.setItemClickListener(new SubDepartmentAdapter.OnItemClickListener() {
+            adapter.setItemClickListener(new SelectAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(DepartmentEntity entity) {
-                    departmentEntity.setSubtitle(entity.getName());
-                    mViewSubtitle.setText(entity.getName());
+                public void onItemClick(SelectItem item) {
+                    nestingItem.setSubtitle(item.getName());
+                    mViewSubtitle.setText(item.getName());
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(item);
+                    }
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(SelectItem item);
+
+        void onSubTitleClick(NestingItem item);
+    }
+
+    private OnItemClickListener mItemClickListener;
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        mItemClickListener = itemClickListener;
     }
 }
