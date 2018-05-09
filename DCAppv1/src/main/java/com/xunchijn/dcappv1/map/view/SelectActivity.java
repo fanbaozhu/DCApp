@@ -12,23 +12,29 @@ import android.support.v7.widget.RecyclerView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.common.module.UserInfo;
 import com.xunchijn.dcappv1.event.adapter.NestingSelectAdapter;
 import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
 import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.view.SelectDialog;
+import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.util.TestData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectActivity extends AppCompatActivity {
     private List<NestingItem> mList;
-    private static final String TYPE = "type";
-    private String type;
+    private static final String TYPE = "mType";
+    private static final String TITLE = "mTitle";
+    private String mType;
+    private String mTitle;
 
-    public static void newInstance(Context context, String title) {
+    public static void newInstance(Context context, String type, String title) {
         Intent intent = new Intent(context, SelectActivity.class);
-        intent.putExtra(TYPE, title);
+        intent.putExtra(TYPE, type);
+        intent.putExtra(TITLE, title);
         context.startActivity(intent);
     }
 
@@ -40,8 +46,9 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     private void initTitle() {
-        type = getIntent().getStringExtra(TYPE);
-        TitleFragment titleFragment = TitleFragment.newInstance(String.format("选择%s", type),
+        mType = getIntent().getStringExtra(TYPE);
+        mTitle = getIntent().getStringExtra(TITLE);
+        TitleFragment titleFragment = TitleFragment.newInstance(String.format("选择%s", mType),
                 true, true, 0, 0);
         titleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
             @Override
@@ -51,7 +58,7 @@ public class SelectActivity extends AppCompatActivity {
 
             @Override
             public void onConfirm() {
-
+                MapActivity.newInstance(SelectActivity.this, mTitle, new ArrayList<CarInfo>(), new ArrayList<UserInfo>());
             }
         });
 
@@ -65,7 +72,7 @@ public class SelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select);
         initTitle();
 
-        mList = TestData.getDepartments(type);
+        mList = TestData.getDepartments(mType);
         RecyclerView departmentView = findViewById(R.id.recycler_view_selects);
         departmentView.setLayoutManager(new LinearLayoutManager(this));
         NestingSelectAdapter adapter = new NestingSelectAdapter(mList);

@@ -159,10 +159,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.text_trace:
-                selectItem();
+                selectItem("轨迹回放");
                 break;
             case R.id.text_location:
-                selectItem();
+                selectItem("地图定位");
                 break;
             case R.id.text_event_report:
                 startActivity(new Intent(getContext(), ReportActivity.class));
@@ -170,11 +170,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void selectItem() {
+    private void selectItem(final String title) {
         new AlertDialog.Builder(getContext()).setItems(new String[]{"车辆", "人员"}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SelectActivity.newInstance(getContext(), which == 0 ? "车辆" : "人员");
+                SelectActivity.newInstance(getContext(), which == 0 ? "车辆" : "人员",title);
             }
         }).create().show();
     }

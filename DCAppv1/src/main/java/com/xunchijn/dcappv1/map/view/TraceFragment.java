@@ -9,13 +9,40 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.common.module.UserInfo;
+import com.xunchijn.dcappv1.map.model.CarInfo;
+
+import java.util.ArrayList;
 
 /**
- * Author：fanbaozhu
+ * Author：Fan BaoZhu
  * Time:2018/5/9   下午1:55
  * Description:轨迹回放页面
  **/
 public class TraceFragment extends Fragment {
+    private ArrayList<UserInfo> mUsers;
+    private ArrayList<CarInfo> mCars;
+
+    public static TraceFragment newInstance(Bundle bundle) {
+        TraceFragment fragment = new TraceFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
+    }
+
+    private void initData() {
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            return;
+        }
+        mCars = (ArrayList<CarInfo>) bundle.getSerializable("cars");
+        mUsers = (ArrayList<UserInfo>) bundle.getSerializable("users");
+    }
 
     @Nullable
     @Override

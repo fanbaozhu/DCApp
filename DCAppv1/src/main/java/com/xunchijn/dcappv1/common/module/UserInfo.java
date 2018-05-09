@@ -1,10 +1,12 @@
 package com.xunchijn.dcappv1.common.module;
 
+import java.io.Serializable;
+
 /**
  * Created by ZhouJiaWei on 2018/5/7 0007.
  */
 
-public class UserInfo {
+public class UserInfo implements Serializable {
     //用户ID：标示唯一用户
     private String userId;
     //用户账号
