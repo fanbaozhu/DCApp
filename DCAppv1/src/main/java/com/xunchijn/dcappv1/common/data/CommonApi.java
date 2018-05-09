@@ -1,9 +1,12 @@
 package com.xunchijn.dcappv1.common.data;
 
+import com.xunchijn.dcappv1.common.module.CommonResult;
+
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -21,4 +24,9 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("API/tmd/CheckUserPass")
     Observable<Response<String>> Login(@Field("USER_NAME") String userAccount, @Field("USER_PWD") String userPassword);
+
+    //报表获取
+    @FormUrlEncoded
+    @GET("API/tmd/Statistic")
+    Observable<Response<CommonResult>> Statistic();
 }
