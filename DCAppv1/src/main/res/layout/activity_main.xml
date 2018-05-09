@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context="com.xunchijn.dcappv1.common.view.MainActivity">
 
-
     <FrameLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"

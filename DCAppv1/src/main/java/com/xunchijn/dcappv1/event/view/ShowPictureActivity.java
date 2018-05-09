@@ -41,7 +41,8 @@ public class ShowPictureActivity extends AppCompatActivity {
 
     //标题、返回、删除
     private void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("图片详情", true, true, R.mipmap.ic_picture_delete);
+        TitleFragment titleFragment = TitleFragment.newInstance("图片详情", true, true,
+                R.mipmap.ic_picture_delete,0);
         getSupportFragmentManager().beginTransaction().add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
         titleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {

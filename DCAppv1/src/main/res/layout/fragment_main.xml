@@ -7,18 +7,12 @@
         android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="48dp" />
-    <FrameLayout
-        android:layout_marginTop="48dp"
-        android:id="@+id/layout_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:clickable="true" />
-    </FrameLayout>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
 
 
     <LinearLayout
@@ -34,28 +28,28 @@
             android:layout_height="64dp"
             android:background="@drawable/bg_gray_round_line_32dp"
             android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="@color/colorBlue" />
+            android:textColor="@color/colorBlue"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/text_location"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginEnd="24dp"
-            android:textSize="14sp"
             android:layout_marginStart="24dp"
             android:background="@drawable/bg_gray_round_line_32dp"
             android:gravity="center"
-            android:textColor="@color/colorBlue" />
+            android:textColor="@color/colorBlue"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/text_event_report"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:textSize="14sp"
             android:background="@drawable/bg_gray_round_line_32dp"
             android:gravity="center"
-            android:textColor="@color/colorBlue" />
+            android:textColor="@color/colorBlue"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </FrameLayout>

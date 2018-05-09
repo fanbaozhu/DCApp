@@ -1,6 +1,7 @@
 package com.xunchijn.dcappv1.util;
 
-import com.xunchijn.dcappv1.event.model.DepartmentEntity;
+import com.xunchijn.dcappv1.event.model.NestingItem;
+import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
 
 import java.util.ArrayList;
@@ -22,17 +23,34 @@ public class TestData {
         return items;
     }
 
-    public static List<DepartmentEntity> getDepartments() {
-        List<DepartmentEntity> list = new ArrayList<>();
-        DepartmentEntity entity = new DepartmentEntity("1", "部门1");
-        List<DepartmentEntity> subDepartment = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            DepartmentEntity entity1 = new DepartmentEntity(String.valueOf(i), String.format("部门%s", i));
-            subDepartment.add(entity1);
+    public static List<NestingItem> getDepartments(String type) {
+        List<NestingItem> list = new ArrayList<>();
+        NestingItem history = new NestingItem("0", "历史", "清空");
+        List<SelectItem> items = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            SelectItem item = new SelectItem(String.valueOf(i), String.format(type.equals("车辆") ? "川B2345%s" : "郎德贵%s", i));
+            items.add(item);
         }
-        entity.setSubDepartment(subDepartment);
-        list.add(entity);
-        list.add(entity);
+        history.setItems(items);
+
+        NestingItem nestingItem = new NestingItem("1", String.format("所有%s", type), "筛选");
+        List<SelectItem> departments = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            SelectItem item = new SelectItem(String.valueOf(i), String.format(type.equals("车辆") ? "川B2345%s" : "郎德贵%s", i % 10));
+            departments.add(item);
+        }
+        nestingItem.setItems(departments);
+        list.add(history);
+        list.add(nestingItem);
         return list;
+    }
+
+    public static List<SelectItem> getSelectItems(int count) {
+        List<SelectItem> selectItems = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            SelectItem item = new SelectItem(String.valueOf(i), String.format("部门%s", i));
+            selectItems.add(item);
+        }
+        return selectItems;
     }
 }

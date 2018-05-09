@@ -30,10 +30,12 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.util.TestData;
 import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
 import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
+import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
+import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.util.TestData;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -69,7 +71,7 @@ public class ReportFragment extends Fragment {
 
     //初始化标题栏
     private void initTitle() {
-        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true, 0);
+        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true, 0, 0);
 
         getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
                 .show(mTitleFragment).commit();
@@ -98,9 +100,7 @@ public class ReportFragment extends Fragment {
         mPictureAdapter.setItemClickListener(new PictureAdapter.OnItemClickListener() {
             @Override
             public void onPictureClick(String url) {
-                Intent intent = new Intent(getContext(), ShowPictureActivity.class);
-                intent.putExtra("url", url);
-                startActivityForResult(intent, REQUEST_CODE_SHOW_PICTURE);
+                ShowPictureActivity.startShowPicture(mActivity, url, REQUEST_CODE_SHOW_PICTURE);
             }
 
             @Override
@@ -131,11 +131,25 @@ public class ReportFragment extends Fragment {
         mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
-                Intent intent = new Intent(getContext(), SetDepartmentActivity.class);
-                intent.putExtra("item", item);
-                startActivityForResult(intent, REQUEST_CODE_SETTING);
+//                Intent intent = new Intent(getContext(), SetDepartmentActivity.class);
+//                intent.putExtra("item", item);
+//                startActivityForResult(intent, REQUEST_CODE_SETTING);
+                showSettingDialog(item.getTitle());
             }
         });
+    }
+
+    private void showSettingDialog(String title) {
+        final SelectDialog dialog = new SelectDialog();
+        dialog.setTitle(title);
+        dialog.setList(TestData.getSelectItems(2));
+        dialog.setItemClickListener(new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                dialog.refreshTitle(item.getName());
+            }
+        });
+        dialog.show(getFragmentManager(), title);
     }
 
     private final int REQUEST_CODE_CAMERA = 0x1002;
@@ -205,6 +219,11 @@ public class ReportFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SHOW_PICTURE && resultCode == RESULT_OK) {
+            String url = data.getStringExtra("url");
+            deletePicture(url);
+            return;
+        }
         if (requestCode == REQUEST_CODE_SETTING && resultCode == RESULT_OK) {
             SettingItem item = (SettingItem) data.getSerializableExtra("setting");
             if (item != null) {
@@ -312,6 +331,13 @@ public class ReportFragment extends Fragment {
         File file = new File(url);
         if (file.exists()) {
             mUrls.add(String.format("file://%s", url));
+            mPictureAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void deletePicture(String url) {
+        if (mUrls.contains(url)) {
+            mUrls.remove(url);
             mPictureAdapter.notifyDataSetChanged();
         }
     }

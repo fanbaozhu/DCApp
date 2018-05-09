@@ -2,13 +2,17 @@ package com.xunchijn.dcappv1.event.model;
 
 import java.util.List;
 
-public class DepartmentEntity {
+/*
+ * 嵌套外部类
+ * */
+public class NestingItem {
     private String mId;
     private String mName;
     private String mSubtitle;
+    //嵌套内部列表数据
     private List<SelectItem> mItems;
 
-    public DepartmentEntity(String id, String name, String subtitle) {
+    public NestingItem(String id, String name, String subtitle) {
         mId = id;
         mName = name;
         mSubtitle = subtitle;

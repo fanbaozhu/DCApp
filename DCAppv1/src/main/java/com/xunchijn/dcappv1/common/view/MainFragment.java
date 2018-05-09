@@ -1,6 +1,8 @@
 package com.xunchijn.dcappv1.common.view;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,11 +25,10 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.event.view.ReportActivity;
+import com.xunchijn.dcappv1.map.view.SelectActivity;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
-    private TextView mViewTrace;
-    private TextView mViewLocation;
-    private TextView mViewEventReport;
     private MapView mMapView = null;
     private BaiduMap mBaiduMap;
     public LocationClient mLocationClient;
@@ -35,7 +36,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
     private LocationClientOption option = null;
-
 
 
     @Nullable
@@ -49,6 +49,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         return view;
 
     }
+
     private void initMap() {
         //获取地图控件引用
         mBaiduMap = mMapView.getMap();
@@ -143,18 +144,39 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
-        mViewTrace = view.findViewById(R.id.text_trace);
-        mViewLocation = view.findViewById(R.id.text_location);
-        mViewEventReport = view.findViewById(R.id.text_event_report);
+        TextView mViewTrace = view.findViewById(R.id.text_trace);
+        TextView mViewLocation = view.findViewById(R.id.text_location);
+        TextView mViewEventReport = view.findViewById(R.id.text_event_report);
         mViewTrace.setText("轨迹\n回放");
         mViewLocation.setText("地图\n定位");
         mViewEventReport.setText("事件\n上传");
-
+        mViewTrace.setOnClickListener(this);
+        mViewLocation.setOnClickListener(this);
+        mViewEventReport.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.text_trace:
+                selectItem();
+                break;
+            case R.id.text_location:
+                selectItem();
+                break;
+            case R.id.text_event_report:
+                startActivity(new Intent(getContext(), ReportActivity.class));
+                break;
+        }
+    }
 
+    private void selectItem() {
+        new AlertDialog.Builder(getContext()).setItems(new String[]{"车辆", "人员"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SelectActivity.newInstance(getContext(), which == 0 ? "车辆" : "人员");
+            }
+        }).create().show();
     }
 
     @Override

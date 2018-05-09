@@ -9,10 +9,16 @@ import android.support.v7.widget.RecyclerView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.event.adapter.NestingSelectAdapter;
+import com.xunchijn.dcappv1.event.model.NestingItem;
+import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.util.TestData;
-import com.xunchijn.dcappv1.event.adapter.DepartmentAdapter;
+
+import java.util.List;
 
 public class SetDepartmentActivity extends AppCompatActivity {
+    private List<NestingItem> mList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +29,7 @@ public class SetDepartmentActivity extends AppCompatActivity {
     }
 
     private void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("选择部门", true, true, 0);
+        TitleFragment titleFragment = TitleFragment.newInstance("选择部门", true, true, 0,0);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, titleFragment)
                 .show(titleFragment).commit();
@@ -43,9 +49,21 @@ public class SetDepartmentActivity extends AppCompatActivity {
     }
 
     private void initDepartment() {
+        mList = TestData.getDepartments("人员");
         RecyclerView departmentView = findViewById(R.id.recycler_view_department);
         departmentView.setLayoutManager(new LinearLayoutManager(this));
-        DepartmentAdapter adapter = new DepartmentAdapter(TestData.getDepartments());
+        NestingSelectAdapter adapter = new NestingSelectAdapter(mList);
         departmentView.setAdapter(adapter);
+        adapter.setItemClickListener(new NestingSelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+
+            }
+
+            @Override
+            public void onSubTitleClick(NestingItem item) {
+
+            }
+        });
     }
 }
