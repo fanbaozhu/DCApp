@@ -73,15 +73,18 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (mConfirmListener == null) {
-            return;
-        }
         switch (v.getId()) {
             case R.id.image_title_confirm:
-                mConfirmListener.onConfirm();
+                if (mConfirmListener != null) {
+                    mConfirmListener.onConfirm();
+                }
                 break;
             case R.id.image_title_back:
-                mConfirmListener.onBack();
+                if (mConfirmListener != null) {
+                    mConfirmListener.onBack();
+                } else {
+                    getActivity().onBackPressed();
+                }
                 break;
         }
     }

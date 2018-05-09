@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.base.TitleFragment;
 import com.xunchijn.dcappv1.common.adapter.StatisticAdapter;
 import com.xunchijn.dcappv1.common.contract.StatisticContrast;
 import com.xunchijn.dcappv1.common.module.StatisticItem;
@@ -36,6 +37,12 @@ public class StatisticFragment extends Fragment implements StatisticContrast.Vie
 
     private void initView(View view) {
         mView = view.findViewById(R.id.recycler_view_statistic);
+
+        TitleFragment titleFragment = TitleFragment.newInstance("统计报表",
+                true, false, 0, 0);
+        getFragmentManager().beginTransaction()
+                .add(R.id.layout_title, titleFragment)
+                .show(titleFragment).commit();
     }
 
     //处理成功之后的逻辑

@@ -5,12 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.base.TitleFragment;
 
 /**
- * Created by Administrator on 2018/5/9 0009.
- */
-
-public class StatisticActivity extends AppCompatActivity {
+ * Author：Fan BaoZhu
+ * Time:2018/5/9   下午5:12
+ * Description:通用搜索页面
+ **/
+public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,11 +21,19 @@ public class StatisticActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        setContentView(R.layout.activity_statistic);
+        setContentView(R.layout.activity_common_search);
+        initTitle();
 
-        StatisticFragment fragment = new StatisticFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, fragment)
-                .show(fragment).commit();
     }
+
+    private void initTitle() {
+        TitleFragment fragment = TitleFragment.newInstance("搜索页面", true, false,
+                0, 0);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.layout_title, fragment)
+                .show(fragment).commit();
+
+    }
+
+
 }

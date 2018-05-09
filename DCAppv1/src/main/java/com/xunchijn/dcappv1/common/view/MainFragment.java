@@ -174,7 +174,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         new AlertDialog.Builder(getContext()).setItems(new String[]{"车辆", "人员"}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SelectActivity.newInstance(getContext(), which == 0 ? "车辆" : "人员",title);
+                SelectActivity.newInstance(getContext(), which == 0 ? "车辆" : "人员", title);
             }
         }).create().show();
     }

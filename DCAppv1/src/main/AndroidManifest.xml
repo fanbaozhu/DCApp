@@ -54,6 +54,8 @@
         <activity android:name=".map.view.MapActivity" />
         <activity android:name=".map.view.SelectActivity" />
         <activity android:name=".common.view.StatisticActivity" />
+        <activity android:name=".common.view.SearchActivity" />
+        <activity android:name=".event.view.HistoryActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
