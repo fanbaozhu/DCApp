@@ -51,7 +51,7 @@
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".map.view.TraceActivity" />
+        <activity android:name=".map.view.MapActivity" />
         <activity android:name=".map.view.SelectActivity" />
 
         <meta-data

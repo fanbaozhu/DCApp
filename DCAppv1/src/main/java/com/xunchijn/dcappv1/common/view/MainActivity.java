@@ -1,6 +1,5 @@
 package com.xunchijn.dcappv1.common.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onConfirm() {
-                startActivity(new Intent(MainActivity.this, SelectActivity.class));
+//                SelectActivity.newInstance(MainActivity.this, "人员");
             }
         });
     }
