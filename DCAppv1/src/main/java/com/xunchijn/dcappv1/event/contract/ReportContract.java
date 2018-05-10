@@ -21,7 +21,7 @@ public interface ReportContract {
         void getCheckContent();
 
         //事件上报：事件描述、图片地址、部门、子部门、考核类型、事件内容
-        void report(String describe, List<String> urls, String department, String subDepartment, String type, String content);
+        void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String assLon, String assLat, String address);
     }
 
     interface View extends BaseView<Presenter> {
