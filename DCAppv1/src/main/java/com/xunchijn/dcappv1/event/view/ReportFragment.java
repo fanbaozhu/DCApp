@@ -23,9 +23,11 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
@@ -33,8 +35,11 @@ import com.xunchijn.dcappv1.base.TitleFragment;
 import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
 import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
 import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
+import com.xunchijn.dcappv1.event.contract.ReportContract;
+import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.event.widget.SelectDialog;
 import com.xunchijn.dcappv1.util.TestData;
 
 import java.io.File;
@@ -45,13 +50,15 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ReportFragment extends Fragment {
+public class ReportFragment extends Fragment implements ReportContract.View {
+    private ReportContract.Presenter mPresenter;
     private ReportSettingAdapter mSettingAdapter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
     private List<String> mUrls = new ArrayList<>();
     private Activity mActivity;
     private File mPicture;
+    private EditText mInputDescribe;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class ReportFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
+        mInputDescribe = view.findViewById(R.id.edit_describe);
         initTitle();
         initPictureView(view);
         initSettingView(view);
@@ -71,7 +79,7 @@ public class ReportFragment extends Fragment {
 
     //初始化标题栏
     private void initTitle() {
-        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true, 0, 0);
+        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true);
 
         getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
                 .show(mTitleFragment).commit();
@@ -85,8 +93,25 @@ public class ReportFragment extends Fragment {
             @Override
             public void onConfirm() {
                 Toast.makeText(getContext(), "确定", Toast.LENGTH_SHORT).show();
+                report();
             }
         });
+    }
+
+    private void report() {
+        String describe = mInputDescribe.getText().toString();
+        if (TextUtils.isEmpty(describe)) {
+            showError("事件描述不能为空！");
+            return;
+        }
+        if (mUrls == null || mUrls.size() == 0) {
+            showError("请选择至少一张图片");
+            return;
+        }
+        if (mPresenter != null) {
+            mPresenter.uploadPictures(mUrls);
+            mPresenter.report(describe, mUrls.toString(), "", "", "", "");
+        }
     }
 
     private final int REQUEST_CODE_SHOW_PICTURE = 0x1000;
@@ -120,8 +145,6 @@ public class ReportFragment extends Fragment {
         });
     }
 
-    private final int REQUEST_CODE_SETTING = 0x1001;
-
     private void initSettingView(View view) {
         RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
         mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -131,9 +154,6 @@ public class ReportFragment extends Fragment {
         mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
-//                Intent intent = new Intent(getContext(), SetDepartmentActivity.class);
-//                intent.putExtra("item", item);
-//                startActivityForResult(intent, REQUEST_CODE_SETTING);
                 showSettingDialog(item.getTitle());
             }
         });
@@ -222,15 +242,6 @@ public class ReportFragment extends Fragment {
         if (requestCode == REQUEST_CODE_SHOW_PICTURE && resultCode == RESULT_OK) {
             String url = data.getStringExtra("url");
             deletePicture(url);
-            return;
-        }
-        if (requestCode == REQUEST_CODE_SETTING && resultCode == RESULT_OK) {
-            SettingItem item = (SettingItem) data.getSerializableExtra("setting");
-            if (item != null) {
-                mSettingItems.remove(item.getIndex());
-                mSettingItems.add(item.getIndex(), item);
-                mSettingAdapter.notifyItemChanged(item.getIndex());
-            }
             return;
         }
         //拍照，返回结果需要裁剪照片
@@ -340,5 +351,35 @@ public class ReportFragment extends Fragment {
             mUrls.remove(url);
             mPictureAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showDepartment(List<NestingItem> list) {
+
+    }
+
+    @Override
+    public void showSubDepartment(List<NestingItem> list) {
+
+    }
+
+    @Override
+    public void showCheckType(List<NestingItem> list) {
+
+    }
+
+    @Override
+    public void showCheckContent(List<NestingItem> list) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(ReportContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

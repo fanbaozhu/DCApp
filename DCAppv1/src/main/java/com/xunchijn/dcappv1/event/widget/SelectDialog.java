@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.event.view;
+package com.xunchijn.dcappv1.event.widget;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

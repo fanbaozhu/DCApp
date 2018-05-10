@@ -2,19 +2,13 @@ package com.xunchijn.dcappv1.event.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -41,8 +35,8 @@ public class ShowPictureActivity extends AppCompatActivity {
 
     //标题、返回、删除
     private void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("图片详情", true, true,
-                R.mipmap.ic_picture_delete,0);
+        TitleFragment titleFragment = TitleFragment.newInstance("图片详情", true, true);
+        titleFragment.setRightDrawableId(R.mipmap.ic_picture_delete);
         getSupportFragmentManager().beginTransaction().add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
         titleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
@@ -67,6 +61,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         });
 
     }
+
     //展示图片
     private void showPicture() {
         ImageView ivShowPicture = findViewById(R.id.iv_showPicture);

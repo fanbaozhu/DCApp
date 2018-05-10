@@ -24,8 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void initView() {
         setContentView(R.layout.activity_event_history);
 
-        TitleFragment titleFragment = TitleFragment.newInstance("上报历史",
-                true, false, 0, 0);
+        TitleFragment titleFragment = TitleFragment.newInstance("上报历史", true, false);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)

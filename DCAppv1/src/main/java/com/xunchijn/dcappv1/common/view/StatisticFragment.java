@@ -16,6 +16,7 @@ import com.xunchijn.dcappv1.base.TitleFragment;
 import com.xunchijn.dcappv1.common.adapter.StatisticAdapter;
 import com.xunchijn.dcappv1.common.contract.StatisticContrast;
 import com.xunchijn.dcappv1.common.module.StatisticItem;
+import com.xunchijn.dcappv1.common.presenter.StatisticPresenter;
 
 import java.util.List;
 
@@ -25,7 +26,21 @@ import java.util.List;
 
 public class StatisticFragment extends Fragment implements StatisticContrast.View {
     private StatisticContrast.Presenter mPresenter;
-    private RecyclerView mView;
+    private RecyclerView mViewStatistics;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter = new StatisticPresenter(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPresenter != null) {
+            mPresenter.getStatistic();
+        }
+    }
 
     @Nullable
     @Override
@@ -36,10 +51,9 @@ public class StatisticFragment extends Fragment implements StatisticContrast.Vie
     }
 
     private void initView(View view) {
-        mView = view.findViewById(R.id.recycler_view_statistic);
+        mViewStatistics = view.findViewById(R.id.recycler_view_statistic);
 
-        TitleFragment titleFragment = TitleFragment.newInstance("统计报表",
-                true, false, 0, 0);
+        TitleFragment titleFragment = TitleFragment.newInstance("统计报表", true, false);
         getFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
@@ -48,17 +62,10 @@ public class StatisticFragment extends Fragment implements StatisticContrast.Vie
     //处理成功之后的逻辑
     public void showStatistics(List<StatisticItem> list) {
         //设置布局的排列方式
-        mView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mViewStatistics.setLayoutManager(new LinearLayoutManager(getContext()));
         //填充数据
         StatisticAdapter adapter = new StatisticAdapter(list);
-        mView.setAdapter(adapter);
-        //设计点击事件
-//        adapter.setItemClickListener(new StatisticAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(StatisticItem item) {
-//
-//            }
-//        });
+        mViewStatistics.setAdapter(adapter);
     }
 
     public void showError(String error) {

@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("大厂APP", true, true,
-                R.mipmap.ic_title_search_64, R.mipmap.ic_title_user);
+        TitleFragment titleFragment = TitleFragment.newInstance("大厂APP", true, true);
+        titleFragment.setLeftDrawableId(R.mipmap.ic_title_user);
+        titleFragment.setRightDrawableId(R.mipmap.ic_title_search_64);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment)
