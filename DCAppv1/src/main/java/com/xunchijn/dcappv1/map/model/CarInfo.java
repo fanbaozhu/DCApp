@@ -8,4 +8,5 @@ import java.io.Serializable;
  * Description:
  **/
 public class CarInfo implements Serializable {
+
 }

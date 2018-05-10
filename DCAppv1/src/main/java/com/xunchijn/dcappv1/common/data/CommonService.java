@@ -22,4 +22,12 @@ public class CommonService {
     public Observable<Response<CommonResult>>statistic(){
         return mCommonApi.Statistic();
     }
+
+    public Observable<Response<CommonResult>>getEmp(String empSimid){
+        return mCommonApi.GetEmp(empSimid).observeOn(Schedulers.io());
+    }
+
+    public Observable<Response<CommonResult>>getTruck(String truckSimid){
+        return mCommonApi.GetTruck(truckSimid).observeOn(Schedulers.io());
+    }
 }

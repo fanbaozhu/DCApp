@@ -27,6 +27,16 @@ public interface CommonApi {
 
     //报表获取
     @FormUrlEncoded
-    @GET("API/tmd/Statistic")
+    @GET("API/tmd/GetStatistic")
     Observable<Response<CommonResult>> Statistic();
+
+    //人员定位
+    @FormUrlEncoded
+    @GET("API/tmd/GetEmpinformation")
+    Observable<Response<CommonResult>> GetEmp(@Field("GPS_SIMID") String empSimid);
+
+    //车辆定位
+    @FormUrlEncoded
+    @GET("API/tmd/GetTruck")
+    Observable<Response<CommonResult>> GetTruck(@Field("GPS_SIMID") String empSimid);
 }

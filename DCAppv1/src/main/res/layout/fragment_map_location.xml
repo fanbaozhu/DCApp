@@ -3,5 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_statistic"
+        android:layout_width="match_parent"
+        android:layout_height="96dp" />
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
 
 </LinearLayout>
