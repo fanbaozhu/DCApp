@@ -1,7 +1,7 @@
 package com.xunchijn.dcappv1.map.presenter;
 
-import com.xunchijn.dcappv1.common.data.CommonService;
 import com.xunchijn.dcappv1.common.module.CommonResult;
+import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.map.contract.EmpPositionContrast;
 
 import io.reactivex.Observer;

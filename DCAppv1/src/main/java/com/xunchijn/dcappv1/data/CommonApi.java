@@ -29,7 +29,7 @@ public interface CommonApi {
     //报表获取
     @FormUrlEncoded
     @GET("API/tmd/GetStatistic")
-    Observable<Response<CommonResult>> Statistic();
+    Observable<Response<Result<CommonResult>>> Statistic();
 
     //人员定位
     @FormUrlEncoded
