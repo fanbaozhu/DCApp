@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.common.adapter;
+package com.xunchijn.dcappv1.statistic;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.common.module.StatisticItem;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.common.module;
+package com.xunchijn.dcappv1.statistic;
 
 import android.text.TextUtils;
 
@@ -8,7 +8,7 @@ import com.xunchijn.dcappv1.util.TimeUtils;
 /**
  * Author：ZHOUJIAWEI
  * Time:2018/5/9 0009   上午 10:41
- * Description:
+ * Description:统计报表列表项
  **/
 
 
@@ -22,16 +22,6 @@ public class StatisticItem {
     private String mStatus;
     @SerializedName("Address")
     private String mAddress;
-    @SerializedName("index")
-    private int mIndex;
-
-    public StatisticItem(int index, String truckNumber, String status, String RFIDScanTime, String address) {
-        mIndex = index;
-        mTruckNumber = truckNumber;
-        mStatus = status;
-        mRFIDScanTime = RFIDScanTime;
-        mAddress = address;
-    }
 
     public void setAddress(String address) {
         this.mAddress = address;

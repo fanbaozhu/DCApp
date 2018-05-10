@@ -1,7 +1,6 @@
 package com.xunchijn.dcappv1.map.contract;
 
 import com.xunchijn.dcappv1.base.BaseView;
-import com.xunchijn.dcappv1.common.contract.StatisticContrast;
 import com.xunchijn.dcappv1.map.model.EmpItem;
 
 import java.util.List;

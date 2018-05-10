@@ -1,7 +1,6 @@
-package com.xunchijn.dcappv1.common.contract;
+package com.xunchijn.dcappv1.statistic;
 
 import com.xunchijn.dcappv1.base.BaseView;
-import com.xunchijn.dcappv1.common.module.StatisticItem;
 
 import java.util.List;
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.statistic.StatisticActivity;
 import com.xunchijn.dcappv1.event.view.HistoryActivity;
 
 public class MainActivity extends AppCompatActivity {

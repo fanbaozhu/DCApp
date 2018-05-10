@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.common.view;
+package com.xunchijn.dcappv1.statistic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

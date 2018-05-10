@@ -1,5 +1,6 @@
 package com.xunchijn.dcappv1.common.module;
 
+import com.xunchijn.dcappv1.statistic.StatisticItem;
 import com.xunchijn.dcappv1.map.model.EmpItem;
 
 import java.util.List;

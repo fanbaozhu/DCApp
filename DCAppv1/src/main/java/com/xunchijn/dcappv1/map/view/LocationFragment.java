@@ -22,7 +22,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.common.adapter.StatisticAdapter;
 import com.xunchijn.dcappv1.common.module.UserInfo;
 import com.xunchijn.dcappv1.map.adapter.EmpPositionAdapter;
 import com.xunchijn.dcappv1.map.contract.EmpPositionContrast;
