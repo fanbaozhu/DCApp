@@ -19,6 +19,43 @@ public class UserInfo implements Serializable {
     private String registerTime;
     //用户最后登录时间戳
     private String lastLoginTime;
+    //用户部门
+    private String userDept;
+    //用户状态
+    private String userStatus;
+    //用户区域
+    private String userZoon;
+    //用户最近一次上传的时间
+    private String userGPSScanTime;
+    //用户当前经纬度
+    private String userPoint;
+    //用户当前位置
+    private String userAddress;
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public String getUserZoon() {
+        return userZoon;
+    }
+
+    public String getUserGPSScanTime() {
+        return userGPSScanTime;
+    }
+
+    public String getUserPoint() {
+        return userPoint;
+    }
+
+    public String getUserDept() {
+
+        return userDept;
+    }
 
     public String getUserId() {
         return userId;
@@ -43,4 +80,6 @@ public class UserInfo implements Serializable {
     public String getLastLoginTime() {
         return lastLoginTime;
     }
+
+
 }
