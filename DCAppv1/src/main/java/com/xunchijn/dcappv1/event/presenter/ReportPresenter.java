@@ -45,7 +45,7 @@ public class ReportPresenter implements ReportContract.Presenter {
     }
 
     @Override
-    public void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String assLon, String assLat, String address) {
+    public void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String point, String address) {
         Map<String, String> map = new HashMap<>();
         map.put("describe", describe);
 //        map.put("urls", urls);
@@ -54,8 +54,7 @@ public class ReportPresenter implements ReportContract.Presenter {
         map.put("type", type);
         map.put("content", content);
         map.put("accountId", accountId);
-        map.put("assLon", assLon);
-        map.put("assLat", assLat);
+        map.put("point", point);
         map.put("address", address);
         mEventService.report(map).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<Result<EventResult>>>() {
             @Override
