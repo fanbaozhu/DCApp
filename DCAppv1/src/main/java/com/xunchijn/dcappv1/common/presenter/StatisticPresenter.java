@@ -3,13 +3,13 @@ package com.xunchijn.dcappv1.common.presenter;
 import android.util.Log;
 
 import com.xunchijn.dcappv1.common.contract.StatisticContrast;
-import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.common.module.CommonResult;
+import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.util.Result;
 
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 /**
@@ -30,7 +30,7 @@ public class StatisticPresenter implements StatisticContrast.Presenter {
     public void getStatistic() {
         mService.statistic()
                 //在主线程执行
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 //返回的结果
                 .subscribe(new Observer<Response<Result<CommonResult>>>() {
                     @Override

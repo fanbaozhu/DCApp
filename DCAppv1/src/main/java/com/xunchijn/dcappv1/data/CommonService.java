@@ -5,6 +5,7 @@ import com.xunchijn.dcappv1.util.Result;
 import com.xunchijn.dcappv1.util.RetrofitProvider;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
@@ -22,14 +23,14 @@ public class CommonService {
     }
 
     public Observable<Response<Result<CommonResult>>> statistic() {
-        return mCommonApi.Statistic().observeOn(Schedulers.io());
+        return mCommonApi.Statistic().observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<CommonResult>>getEmp(String empSimid){
+    public Observable<Response<CommonResult>> getEmp(String empSimid) {
         return mCommonApi.GetEmp(empSimid).observeOn(Schedulers.io());
     }
 
-    public Observable<Response<CommonResult>>getTruck(String truckSimid){
+    public Observable<Response<CommonResult>> getTruck(String truckSimid) {
         return mCommonApi.GetTruck(truckSimid).observeOn(Schedulers.io());
     }
 }

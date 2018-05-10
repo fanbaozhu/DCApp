@@ -109,8 +109,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             return;
         }
         if (mPresenter != null) {
-            mPresenter.uploadPictures(mUrls);
-            mPresenter.report(describe, mUrls.toString(), "", "", "", "");
+            mPresenter.report(describe, mUrls, "", "", "", "");
         }
     }
 

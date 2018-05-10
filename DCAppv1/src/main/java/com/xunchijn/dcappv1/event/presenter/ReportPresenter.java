@@ -45,15 +45,10 @@ public class ReportPresenter implements ReportContract.Presenter {
     }
 
     @Override
-    public void uploadPictures(List<String> urls) {
-
-    }
-
-    @Override
-    public void report(String describe, String urls, String department, String subDepartment, String type, String content) {
+    public void report(String describe, List<String> urls, String department, String subDepartment, String type, String content) {
         Map<String, String> map = new HashMap<>();
         map.put("describe", describe);
-        map.put("urls", urls);
+//        map.put("urls", urls);
         map.put("department", department);
         map.put("subDepartment", subDepartment);
         map.put("type", type);

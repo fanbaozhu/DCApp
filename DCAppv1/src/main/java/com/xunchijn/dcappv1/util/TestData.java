@@ -1,5 +1,7 @@
 package com.xunchijn.dcappv1.util;
 
+import com.xunchijn.dcappv1.common.module.StatisticItem;
+import com.xunchijn.dcappv1.event.model.EventEntity;
 import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
@@ -52,5 +54,26 @@ public class TestData {
             selectItems.add(item);
         }
         return selectItems;
+    }
+
+    public static List<StatisticItem> getStatistics(int count) {
+        List<StatisticItem> items = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            StatisticItem item = new StatisticItem(i,"编号：29394","离线",
+                    "2018年05年15日 20:20","山东省济南市高新区齐鲁文化创新基地9号楼");
+            items.add(item);
+        }
+        return items;
+    }
+
+    public static List<EventEntity> getEventHistory(int count) {
+        List<EventEntity> items = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            EventEntity item = new EventEntity("事件描述：这个地方做的不好，需要重新做一遍",
+                    "山东省济南市高新区齐鲁文化创新基地9号楼","",
+                    "2018年05年15日 20:20","未处理");
+            items.add(item);
+        }
+        return items;
     }
 }

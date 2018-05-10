@@ -27,7 +27,6 @@ public interface CommonApi {
     Observable<Response<String>> Login(@Field("USER_NAME") String userAccount, @Field("USER_PWD") String userPassword);
 
     //报表获取
-    @FormUrlEncoded
     @GET("API/tmd/GetStatistic")
     Observable<Response<Result<CommonResult>>> Statistic();
 

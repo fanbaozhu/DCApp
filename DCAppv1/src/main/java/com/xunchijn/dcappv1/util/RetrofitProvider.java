@@ -27,7 +27,7 @@ public class RetrofitProvider {
     //预发布
     private static final String PRE_RELEASE = "http://192.168.1.221:8097";
     //开发
-    private static final String DEVELOP = "http://192.168.1.221:8097";
+    private static final String DEVELOP = "http://49.4.69.187:8099";
 
     @NonNull
     public static Retrofit get(){

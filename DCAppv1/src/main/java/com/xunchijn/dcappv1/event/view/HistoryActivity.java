@@ -23,11 +23,21 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void initView() {
         setContentView(R.layout.activity_event_history);
+        initTile();
+        initHistoryView();
+    }
 
+    private void initTile() {
         TitleFragment titleFragment = TitleFragment.newInstance("上报历史", true, false);
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
+    }
+
+    private void initHistoryView() {
+        HistoryFragment historyFragment = new HistoryFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.layout_container, historyFragment)
+                .show(historyFragment).commit();
     }
 }

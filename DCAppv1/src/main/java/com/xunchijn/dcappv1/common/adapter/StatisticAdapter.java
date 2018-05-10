@@ -66,7 +66,8 @@ public class StatisticAdapter extends RecyclerView.Adapter {
         void bindSettingView(StatisticItem item) {
             viewTruckNumber.setText(item.getTruckNumber());
             viewStatus.setBackgroundResource(item.isOffline() ?
-                    R.drawable.bg_gray_round_rect_8dp : R.drawable.bg_green_round_rect_8dp);
+                    R.drawable.bg_gray_round_rect_20dp : R.drawable.bg_green_round_rect_20dp);
+            viewStatus.setText(item.isOffline() ? "未清理" : "已清理");
             viewRFIDScanTime.setText(item.getRFIDScanTime());
             viewAddress.setText(item.getAddress());
         }

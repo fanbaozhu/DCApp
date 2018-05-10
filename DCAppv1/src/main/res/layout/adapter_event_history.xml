@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
+
+    <ImageView
+        android:id="@+id/image_event_picture"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/text_report_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image_event_picture"
+        android:layout_toEndOf="@id/image_event_picture"
+        android:layout_toRightOf="@id/image_event_picture"
+        android:text="上报时间"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_status"
+        android:layout_width="48dp"
+        android:layout_height="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/text_report_time"
+        android:background="@drawable/bg_green_round_rect_8dp"
+        android:gravity="center"
+        android:text="已处理"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_report_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/text_report_time"
+        android:layout_alignStart="@id/text_report_time"
+        android:layout_below="@id/text_report_time"
+        android:layout_marginTop="8dp"
+        android:text="所在位置"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_report_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_event_picture"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="上报描述"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/text_report_describe"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorGray" />
+</RelativeLayout>
