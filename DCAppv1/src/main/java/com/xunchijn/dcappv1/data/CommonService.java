@@ -13,6 +13,7 @@ public class CommonService {
 
     private CommonApi mCommonApi;
 
+
     public CommonService() {
         mCommonApi = RetrofitProvider.get().create(CommonApi.class);
     }
@@ -33,4 +34,5 @@ public class CommonService {
     public Observable<Response<CommonResult>> getTruck(String truckSimid) {
         return mCommonApi.GetTruck(truckSimid).observeOn(Schedulers.io());
     }
+
 }

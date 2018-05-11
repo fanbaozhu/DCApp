@@ -1,5 +1,7 @@
 package com.xunchijn.dcappv1.data;
 
+import android.graphics.Point;
+
 import com.xunchijn.dcappv1.common.module.CommonResult;
 import com.xunchijn.dcappv1.util.Result;
 
@@ -39,4 +41,6 @@ public interface CommonApi {
     @FormUrlEncoded
     @GET("API/tmd/GetTruck")
     Observable<Response<CommonResult>> GetTruck(@Field("GPS_SIMID") String empSimid);
+
+
 }

@@ -21,6 +21,8 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.UserInfo;
+import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.event.widget.SettingItemDialog;
 import com.xunchijn.dcappv1.map.contract.EmpPositionContrast;
 import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.util.TestData;
@@ -102,6 +104,7 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
             mBaiduMap.setMapStatus(mapStatusUpdate);
         }
         mBaiduMap.addOverlays(options);
+
     }
 
     @Override
@@ -116,6 +119,20 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
 
     @Override
     public void showEmpPosition(UserInfo userInfo) {
-
+        List<SettingItem> list = new ArrayList<>();
+        SettingItem item0 = new SettingItem(0, "姓名：", userInfo.getUserName());
+        SettingItem item1 = new SettingItem(1, "部门：", userInfo.getUserDept());
+        SettingItem item2 = new SettingItem(2, "区域：", userInfo.getUserZoon());
+        SettingItem item3 = new SettingItem(3, "状态：", userInfo.getUserStatus());
+        SettingItem item4 = new SettingItem(4, "地址：", userInfo.getUserAddress());
+        list.add(item0);
+        list.add(item1);
+        list.add(item2);
+        list.add(item3);
+        list.add(item4);
+        SettingItemDialog dialog = new SettingItemDialog();
+        dialog.setTitle("用户信息");
+        dialog.setList(list);
+        dialog.show(getFragmentManager(),"用户信息");
     }
 }

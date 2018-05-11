@@ -12,7 +12,7 @@ public class UserInfo implements Serializable {
     //用户账号
     private String userAccount;
     //用户名字
-    private String userName;
+    private String userName="001";
     //用户群组：标示是普通用户,还是管理员用户
     private String groupId;
     //用户注册时间戳
@@ -20,17 +20,17 @@ public class UserInfo implements Serializable {
     //用户最后登录时间戳
     private String lastLoginTime;
     //用户部门
-    private String userDept;
+    private String userDept="001";
     //用户状态
-    private String userStatus;
+    private String userStatus="03";
     //用户区域
-    private String userZoon;
+    private String userZoon="002";
     //用户最近一次上传的时间
     private String userGPSScanTime;
     //用户当前经纬度
     private String userPoint;
     //用户当前位置
-    private String userAddress;
+    private String userAddress="005";
 
     public String getUserAddress() {
         return userAddress;
