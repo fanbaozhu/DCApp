@@ -8,6 +8,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 
@@ -18,7 +19,27 @@ public class EventService {
         mEventApi = RetrofitProvider.get().create(EventApi.class);
     }
 
+    public Observable<Response<Result<EventResult>>> uploadPic(Map<String, RequestBody> map) {
+        return mEventApi.UploadPic(map).subscribeOn(Schedulers.io());
+    }
+
     public Observable<Response<Result<EventResult>>> report(Map<String, String> map) {
-        return mEventApi.Report(map).observeOn(Schedulers.io());
+        return mEventApi.Report(map).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getDepartments() {
+        return mEventApi.GetDepartments().subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getSubDepartments(String departmentId) {
+        return mEventApi.GetSubDepartments(departmentId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getCheckType() {
+        return mEventApi.GetCheckType().subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getCheckContent(String typeId) {
+        return mEventApi.GetCheckContent(typeId).subscribeOn(Schedulers.io());
     }
 }

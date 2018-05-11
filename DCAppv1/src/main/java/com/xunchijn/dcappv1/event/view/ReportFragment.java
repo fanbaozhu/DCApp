@@ -36,9 +36,9 @@ import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
 import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
 import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
 import com.xunchijn.dcappv1.event.contract.ReportContract;
-import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 import com.xunchijn.dcappv1.event.widget.SelectDialog;
 import com.xunchijn.dcappv1.util.TestData;
 
@@ -64,6 +64,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
+        mPresenter = new ReportPresenter(this);
     }
 
     @Nullable
@@ -109,7 +110,8 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             return;
         }
         if (mPresenter != null) {
-            mPresenter.report(describe, mUrls, "", "", "", "");
+            mPresenter.report(describe, mUrls, "", "", "",
+                    "", "", "", "", "");
         }
     }
 
@@ -142,33 +144,6 @@ public class ReportFragment extends Fragment implements ReportContract.View {
                         }).create().show();
             }
         });
-    }
-
-    private void initSettingView(View view) {
-        RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
-        mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSettingItems = TestData.getSettingItems();
-        mSettingAdapter = new ReportSettingAdapter(mSettingItems);
-        mViewSettings.setAdapter(mSettingAdapter);
-        mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SettingItem item) {
-                showSettingDialog(item.getTitle());
-            }
-        });
-    }
-
-    private void showSettingDialog(String title) {
-        final SelectDialog dialog = new SelectDialog();
-        dialog.setTitle(title);
-        dialog.setList(TestData.getSelectItems(2));
-        dialog.setItemClickListener(new SelectAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SelectItem item) {
-                dialog.refreshTitle(item.getName());
-            }
-        });
-        dialog.show(getFragmentManager(), title);
     }
 
     private final int REQUEST_CODE_CAMERA = 0x1002;
@@ -352,24 +327,97 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         }
     }
 
-    @Override
-    public void showDepartment(List<NestingItem> list) {
+    private void initSettingView(View view) {
+        RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
+        mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
+        mSettingItems = TestData.getSettingItems();
+        mSettingAdapter = new ReportSettingAdapter(mSettingItems);
+        mViewSettings.setAdapter(mSettingAdapter);
+        mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SettingItem item) {
+                getSettingItems(item.getIndex());
+            }
+        });
+    }
 
+    private String mDepartmentId = "";
+    private String mSubDepartmentId = "";
+    private String mTypeId = "";
+    private String mContentId = "";
+
+    private void getSettingItems(int witch) {
+        if (mPresenter == null) {
+            return;
+        }
+        switch (witch) {
+            case 1:
+                mPresenter.getDepartment();
+                break;
+            case 2:
+                mPresenter.getSubDepartment(mDepartmentId);
+                break;
+            case 3:
+                mPresenter.getCheckType();
+                break;
+            case 4:
+                mPresenter.getCheckContent(mTypeId);
+                break;
+        }
     }
 
     @Override
-    public void showSubDepartment(List<NestingItem> list) {
-
+    public void showDepartment(List<SelectItem> list) {
+        showSettingDialog("考核部门", list, new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                mDepartmentId = item.getId();
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
-    public void showCheckType(List<NestingItem> list) {
-
+    public void showSubDepartment(List<SelectItem> list) {
+        showSettingDialog("考核子部门", list, new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                mSubDepartmentId = item.getId();
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
-    public void showCheckContent(List<NestingItem> list) {
+    public void showCheckType(List<SelectItem> list) {
+        showSettingDialog("考核类型", list, new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                mTypeId = item.getId();
+                dialog.dismiss();
+            }
+        });
+    }
 
+    @Override
+    public void showCheckContent(List<SelectItem> list) {
+        showSettingDialog("考核内容", list, new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                mContentId = item.getId();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    SelectDialog dialog;
+
+    private void showSettingDialog(String title, List<SelectItem> list, SelectAdapter.OnItemClickListener listener) {
+        dialog = new SelectDialog();
+        dialog.setTitle(title);
+        dialog.setList(list);
+        dialog.setItemClickListener(listener);
+        dialog.show(getFragmentManager(), title);
     }
 
     @Override

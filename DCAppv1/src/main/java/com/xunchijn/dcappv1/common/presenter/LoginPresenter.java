@@ -3,8 +3,8 @@ package com.xunchijn.dcappv1.common.presenter;
 import android.content.Context;
 
 import com.xunchijn.dcappv1.common.contract.LoginContrast;
-import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.common.module.UserAccount;
+import com.xunchijn.dcappv1.data.CommonService;
 import com.xunchijn.dcappv1.util.PreferHelper;
 
 import io.reactivex.Observer;
@@ -54,7 +54,7 @@ public class LoginPresenter implements LoginContrast.Presenter {
                             } else if (result.equals("1")) {
                                 mView.showError("登陆失败");
                             }
-                        }else {
+                        } else {
                             mView.showError(stringResponse.message());
                         }
                     }
