@@ -99,8 +99,7 @@ public class UploadUtil {
      * @param RequestURL
      * 请求的URL
      */
-    public void uploadFile(final File file, final String fileKey,
-                           final String RequestURL, final Map<String, String> param) {
+    public void uploadFile(final File file, final String fileKey, final String RequestURL, final Map<String, String> param) {
         if (file == null || (!file.exists())) {
             sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE,"文件不存在");
             return;
@@ -117,8 +116,7 @@ public class UploadUtil {
         }).start();
     }
 
-    private void toUploadFile(File file, String fileKey, String RequestURL,
-                              Map<String, String> param) {
+    private void toUploadFile(File file, String fileKey, String RequestURL, Map<String, String> param) {
         String result = null;
         requestTime= 0;
 
@@ -175,8 +173,7 @@ public class UploadUtil {
              * filename是文件的名字，包含后缀名的 比如:abc.png
              */
             sb.append(PREFIX).append(BOUNDARY).append(LINE_END);
-            sb.append("Content-Disposition:form-data; name=\"" + fileKey
-                    + "\"; filename=\"" + file.getName() + "\"" + LINE_END);
+            sb.append("Content-Disposition:form-data; name=\"" + fileKey + "\"; filename=\"" + file.getName() + "\"" + LINE_END);
             sb.append("Content-Type:image/pjpeg" + LINE_END); // 这里配置的Content-type很重要的 ，用于服务器端辨别文件的类型的
             sb.append(LINE_END);
             params = sb.toString();
@@ -222,8 +219,7 @@ public class UploadUtil {
                 }
                 result = sb1.toString();
                 Log.e(TAG, "result : " + result);
-                sendMessage(UPLOAD_SUCCESS_CODE, "上传结果："
-                        + result);
+                sendMessage(UPLOAD_SUCCESS_CODE, "上传结果：" + result);
                 return;
             } else {
                 Log.e(TAG, "request error");

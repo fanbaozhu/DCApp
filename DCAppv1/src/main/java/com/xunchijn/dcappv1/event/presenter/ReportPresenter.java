@@ -113,18 +113,18 @@ public class ReportPresenter implements ReportContract.Presenter {
     }
 
     @Override
-    public void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String assLon, String assLat, String address) {
+    public void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String point, String address) {
         uploadPic(urls);
 
         map = new HashMap<>();
         map.put("describe", describe);
+//        map.put("urls", urls);
         map.put("position", position);
         map.put("subDepartment", subDepartment);
         map.put("type", type);
         map.put("content", content);
         map.put("accountId", accountId);
-        map.put("assLon", assLon);
-        map.put("assLat", assLat);
+        map.put("point", point);
         map.put("address", address);
     }
 
