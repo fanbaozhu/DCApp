@@ -81,5 +81,7 @@ public class UserInfo implements Serializable {
         return lastLoginTime;
     }
 
-
+    public void setUserPoint(String userPoint) {
+        this.userPoint = userPoint;
+    }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.UserInfo;
 import com.xunchijn.dcappv1.map.contract.EmpPositionContrast;
 import com.xunchijn.dcappv1.map.model.CarInfo;
+import com.xunchijn.dcappv1.util.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +39,9 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
     private ArrayList<CarInfo> mCars;
     private MapView mMapView = null;
     private BaiduMap mBaiduMap;
-    BitmapDescriptor bitmap;
-    private RecyclerView mView;
-    String empPoint;
+    private BitmapDescriptor bitmap;
     List<OverlayOptions> options = new ArrayList<OverlayOptions>();
+
 
     public static LocationFragment newInstance(Bundle bundle) {
         LocationFragment fragment = new LocationFragment();
@@ -53,6 +52,7 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
         initData();
     }
 
@@ -61,47 +61,46 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
         if (bundle == null) {
             return;
         }
-        mCars = (ArrayList<CarInfo>) bundle.getSerializable("cars");
-        mUsers = (ArrayList<UserInfo>) bundle.getSerializable("users");
+//        mCars = (ArrayList<CarInfo>) bundle.getSerializable("cars");
+//        mUsers = (ArrayList<UserInfo>) bundle.getSerializable("users");
+
+        mUsers = TestData.getEmpLocation(1);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map_location, container, false);
-        initView(view);
+        mMapView = view.findViewById(R.id.bmapView);
+        mBaiduMap = mMapView.getMap();
+        initView();
         return view;
     }
 
-    private void initView(View view) {
+    private void initView() {
         Double pointx;
         Double pointy;
         String px;
         String py;
-        mView = view.findViewById(R.id.recycler_view_statistic);
-        mMapView = view.findViewById(R.id.bmapView);
-        bitmap = BitmapDescriptorFactory
-                .fromResource(R.mipmap.ic_gps_point);
-        Bundle bundle = new Bundle();
-        if (bundle == null) {
-            return;
-        }
-        empPoint = bundle.getString("point");
+        String empPoint;
+        int i = mUsers.size();
         options = new ArrayList<>();
-        px = empPoint.split(",")[0];
-        pointx = Double.parseDouble(px);
-        py = empPoint.split(",")[1];
-        pointy = Double.parseDouble(py);
-        LatLng llDot = new LatLng(pointy, pointx);
-        OverlayOptions option = new MarkerOptions()
-                .position(llDot).icon(bitmap);
-        options.add(option);
-        MapStatus mapStatus = new MapStatus.Builder()
-                .target(llDot)
-                .zoom(16)
-                .build();
-        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
-        mBaiduMap.setMapStatus(mapStatusUpdate);
+        for (int a = 0; a < i; a++) {
+            empPoint = mUsers.get(a).getUserPoint();
+            px = empPoint.split(",")[0];
+            pointx = Double.parseDouble(px);
+            py = empPoint.split(",")[1];
+            pointy = Double.parseDouble(py);
+            LatLng llDot = new LatLng(pointy, pointx);
+            OverlayOptions option = new MarkerOptions().position(llDot).icon(bitmap);
+            options.add(option);
+            MapStatus mapStatus = new MapStatus.Builder()
+                    .target(llDot)
+                    .zoom(16)
+                    .build();
+            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+            mBaiduMap.setMapStatus(mapStatusUpdate);
+        }
         mBaiduMap.addOverlays(options);
     }
 
