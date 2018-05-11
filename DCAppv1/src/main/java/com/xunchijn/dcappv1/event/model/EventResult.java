@@ -8,6 +8,7 @@ public class EventResult {
     private List<SelectItem> checkType;
     private List<SelectItem> checkContent;
     private String fileName;//上传文件返回的文件名
+    private Integer reportStatus;
 
     public String getFileName() {
         return fileName;
@@ -33,5 +34,9 @@ public class EventResult {
 
     public List<SelectItem> getCheckContent() {
         return checkContent;
+    }
+
+    public Integer getReportStatus() {
+        return reportStatus;
     }
 }

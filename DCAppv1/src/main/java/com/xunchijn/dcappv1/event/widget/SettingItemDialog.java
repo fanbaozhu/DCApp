@@ -18,15 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
-import com.xunchijn.dcappv1.event.adapter.SelectAdapter.OnItemClickListener;
-import com.xunchijn.dcappv1.event.model.SelectItem;
+import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
+import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter.OnItemClickListener;
+import com.xunchijn.dcappv1.event.model.SettingItem;
 
 import java.util.List;
 
-public class SelectDialog extends DialogFragment {
+public class SettingItemDialog extends DialogFragment {
     private OnItemClickListener mItemClickListener;
-    private List<SelectItem> mList;
+    private List<SettingItem> mList;
     private String mTitle;
 
     @Nullable
@@ -41,7 +41,7 @@ public class SelectDialog extends DialogFragment {
     }
 
     private void initView(View view) {
-        TextView  mViewTitle = view.findViewById(R.id.text_title);
+        TextView mViewTitle = view.findViewById(R.id.text_title);
         RecyclerView mViewSelects = view.findViewById(R.id.recycler_view_selects);
         if (!TextUtils.isEmpty(mTitle)) {
             mViewTitle.setText(mTitle);
@@ -56,7 +56,7 @@ public class SelectDialog extends DialogFragment {
             mViewSelects.setLayoutParams(params);
         }
         mViewSelects.setLayoutManager(new LinearLayoutManager(getContext()));
-        SelectAdapter adapter = new SelectAdapter(mList, R.layout.adapter_select_dialog);
+        ReportSettingAdapter adapter = new ReportSettingAdapter(mList,R.layout.dialog_setting);
         mViewSelects.setAdapter(adapter);
         adapter.setItemClickListener(mItemClickListener);
     }
@@ -65,7 +65,7 @@ public class SelectDialog extends DialogFragment {
         mTitle = title;
     }
 
-    public void setList(List<SelectItem> list) {
+    public void setList(List<SettingItem> list) {
         mList = list;
     }
 

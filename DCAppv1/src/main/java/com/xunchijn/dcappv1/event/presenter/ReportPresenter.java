@@ -25,7 +25,7 @@ public class ReportPresenter implements ReportContract.Presenter {
     private ReportContract.View mView;
     private EventService mEventService;
     private Observer<Response<Result<EventResult>>> mObserver;
-    private Map<String, String> map;
+    private Map<String, String> mMap;
 
     public ReportPresenter(ReportContract.View view) {
         mView = view;
@@ -34,7 +34,7 @@ public class ReportPresenter implements ReportContract.Presenter {
         mObserver = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                Log.d(TAG, "onSubscribe: ");
             }
 
             @Override
@@ -53,7 +53,7 @@ public class ReportPresenter implements ReportContract.Presenter {
 
             @Override
             public void onComplete() {
-
+                Log.d(TAG, "onComplete: ");
             }
         };
     }
@@ -81,8 +81,14 @@ public class ReportPresenter implements ReportContract.Presenter {
             }
             String fileName = result.getData().getFileName();
             if (!TextUtils.isEmpty(fileName)) {
+                mMap.put("pictureName", fileName);
                 report();
+                return;
             }
+            if (result.getData().getReportStatus() != null && result.getData().getReportStatus() == 1) {
+                mView.reportSuccess();
+            }
+
         } else {
             mView.showError(result.getMessage());
         }
@@ -113,51 +119,27 @@ public class ReportPresenter implements ReportContract.Presenter {
     }
 
     @Override
-    public void report(String describe, List<String> urls, String position, String subDepartment, String type, String content, String accountId, String point, String address) {
+    public void report(String describe, List<String> urls, String address, String point, String subDepartment, String type, String content, String accountId) {
         uploadPic(urls);
 
-        map = new HashMap<>();
-        map.put("describe", describe);
-//        map.put("urls", urls);
-        map.put("position", position);
-        map.put("subDepartment", subDepartment);
-        map.put("type", type);
-        map.put("content", content);
-        map.put("accountId", accountId);
-        map.put("point", point);
-        map.put("address", address);
+        mMap = new HashMap<>();
+        mMap.put("describe", describe);
+        mMap.put("subDepartment", subDepartment);
+        mMap.put("type", type);
+        mMap.put("content", content);
+        mMap.put("accountId", accountId);
+        mMap.put("point", point);
+        mMap.put("address", address);
     }
 
     private void report() {
-        if (map == null) {
+        if (mMap == null) {
             mView.showError("参数不能为null");
             return;
         }
-        mEventService.report(map).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<Result<EventResult>>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Response<Result<EventResult>> resultResponse) {
-                if (resultResponse.isSuccessful()) {
-
-                } else {
-                    mView.showError(resultResponse.message());
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        mEventService.report(mMap)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
     }
 
     private void uploadPic(List<String> urls) {

@@ -93,7 +93,6 @@ public class ReportFragment extends Fragment implements ReportContract.View {
 
             @Override
             public void onConfirm() {
-                Toast.makeText(getContext(), "确定", Toast.LENGTH_SHORT).show();
                 report();
             }
         });
@@ -110,8 +109,8 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             return;
         }
         if (mPresenter != null) {
-            mPresenter.report(describe, mUrls, "", "", "",
-                    "", "", "", "", "");
+            mPresenter.report(describe, mUrls, "山东省济南市高新区", "135.24,35.35", mSubDepartmentId,
+                    mTypeId, mContentId, "巡查员");
         }
     }
 
@@ -307,7 +306,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     //刷新图片适配器
     private void refreshPictures() {
         if (mPicture.exists()) {
-            mUrls.add(String.format("file://%s", mPicture.getAbsolutePath()));
+            mUrls.add(mPicture.getAbsolutePath());
             mPictureAdapter.notifyDataSetChanged();
         }
     }
@@ -315,7 +314,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     private void refreshPictures(String url) {
         File file = new File(url);
         if (file.exists()) {
-            mUrls.add(String.format("file://%s", url));
+            mUrls.add(url);
             mPictureAdapter.notifyDataSetChanged();
         }
     }
@@ -372,6 +371,8 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             @Override
             public void onItemClick(SelectItem item) {
                 mDepartmentId = item.getId();
+                mSettingItems.get(1).setSubtitle(item.getName());
+                mSettingAdapter.notifyItemChanged(1);
                 dialog.dismiss();
             }
         });
@@ -383,6 +384,8 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             @Override
             public void onItemClick(SelectItem item) {
                 mSubDepartmentId = item.getId();
+                mSettingItems.get(2).setSubtitle(item.getName());
+                mSettingAdapter.notifyItemChanged(2);
                 dialog.dismiss();
             }
         });
@@ -394,6 +397,8 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             @Override
             public void onItemClick(SelectItem item) {
                 mTypeId = item.getId();
+                mSettingItems.get(3).setSubtitle(item.getName());
+                mSettingAdapter.notifyItemChanged(3);
                 dialog.dismiss();
             }
         });
@@ -405,9 +410,17 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             @Override
             public void onItemClick(SelectItem item) {
                 mContentId = item.getId();
+                mSettingItems.get(4).setSubtitle(item.getName());
+                mSettingAdapter.notifyItemChanged(4);
                 dialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void reportSuccess() {
+        showError("上报成功");
+        mActivity.onBackPressed();
     }
 
     SelectDialog dialog;

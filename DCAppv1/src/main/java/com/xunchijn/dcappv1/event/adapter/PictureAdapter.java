@@ -81,7 +81,11 @@ public class PictureAdapter extends RecyclerView.Adapter {
         }
 
         void bindView(final String url) {
-            Glide.with(mContext).load(url).apply(options).into(mImageView);
+            if (url.startsWith("http")) {
+                Glide.with(mContext).load(url).apply(options).into(mImageView);
+            } else {
+                Glide.with(mContext).load(String.format("file://%s", url)).apply(options).into(mImageView);
+            }
             if (mItemClickListener == null) {
                 return;
             }

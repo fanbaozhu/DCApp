@@ -13,14 +13,21 @@ import java.util.List;
 
 public class ReportSettingAdapter extends RecyclerView.Adapter {
     private List<SettingItem> mList;
+    private int mResourceId;
 
     public ReportSettingAdapter(List<SettingItem> list) {
         mList = list;
+        mResourceId = R.layout.adapter_report_setting;
+    }
+
+    public ReportSettingAdapter(List<SettingItem> list, int resourceId) {
+        mList = list;
+        mResourceId = resourceId;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_report_setting, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mResourceId, parent, false);
         return new SettingView(view);
     }
 

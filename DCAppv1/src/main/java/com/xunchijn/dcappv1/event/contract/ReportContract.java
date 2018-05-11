@@ -1,7 +1,6 @@
 package com.xunchijn.dcappv1.event.contract;
 
 import com.xunchijn.dcappv1.base.BaseView;
-import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 
 import java.util.List;
@@ -21,9 +20,19 @@ public interface ReportContract {
         //获取考核内容列表
         void getCheckContent(String typeId);
 
-        //事件上报：事件描述、图片地址、部门、子部门、考核类型、事件内容
-        void report(String describe, List<String> urls, String position, String subDepartment,
-                    String type, String content, String accountId, String point, String address);
+        /*
+         *@Method 事件上报
+         *  @Params describe:事件描述
+         * @Params urls:事件描述
+         * @Params address:事件描述
+         * @Params point:事件描述
+         * @Params subDepartment:事件描述
+         * @Params type:事件描述
+         * @Params content:事件描述
+         * @Params accountId:事件描述
+         * */
+        void report(String describe, List<String> urls, String address, String point,
+                    String subDepartment, String type, String content, String accountId);
     }
 
     interface View extends BaseView<Presenter> {
@@ -35,5 +44,7 @@ public interface ReportContract {
         void showCheckType(List<SelectItem> list);
 
         void showCheckContent(List<SelectItem> list);
+
+        void reportSuccess();
     }
 }
