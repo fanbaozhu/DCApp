@@ -1,5 +1,6 @@
 package com.xunchijn.dcappv1.util;
 
+import com.xunchijn.dcappv1.common.module.UserInfo;
 import com.xunchijn.dcappv1.event.model.EventEntity;
 import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
@@ -61,6 +62,16 @@ public class TestData {
             EventEntity item = new EventEntity("事件描述：这个地方做的不好，需要重新做一遍",
                     "山东省济南市高新区齐鲁文化创新基地9号楼", "",
                     "2018年05年15日 20:20", "未处理");
+            items.add(item);
+        }
+        return items;
+    }
+
+    public static ArrayList<UserInfo> getEmpLocation(int count) {
+        ArrayList<UserInfo> items = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            UserInfo item = new UserInfo();
+            item.setUserPoint("116.32,34.27");
             items.add(item);
         }
         return items;
