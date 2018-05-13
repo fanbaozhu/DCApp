@@ -42,4 +42,20 @@ public class EventService {
     public Observable<Response<Result<EventResult>>> getCheckContent(String typeId) {
         return mEventApi.GetCheckContent(typeId).subscribeOn(Schedulers.io());
     }
+
+    public Observable<Response<Result<EventResult>>> getEventHistory() {
+        return mEventApi.GetEventHistory().subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getDepartmentUsers(String subDepartmentId) {
+        return mEventApi.GetDepartmentUsers(subDepartmentId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getUserInfo(String userId) {
+        return mEventApi.GetUserInfo(userId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<EventResult>>> getDepartmentCars(String subDepartmentId) {
+        return mEventApi.GetDepartmentCars(subDepartmentId).subscribeOn(Schedulers.io());
+    }
 }

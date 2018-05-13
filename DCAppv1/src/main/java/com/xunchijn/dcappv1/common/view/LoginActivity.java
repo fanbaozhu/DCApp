@@ -50,7 +50,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContrast.Vi
     }
 
     @Override
-    public void loginSuccess() {
+    public void loginSuccess(String userName) {
+        showError(String.format("欢迎%s登录大厂APP", userName));
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

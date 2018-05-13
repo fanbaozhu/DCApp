@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -21,9 +23,10 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.UserInfo;
-import com.xunchijn.dcappv1.map.contract.EmpPositionContrast;
+import com.xunchijn.dcappv1.map.contract.LocationContrast;
 import com.xunchijn.dcappv1.map.model.CarInfo;
-import com.xunchijn.dcappv1.util.TestData;
+import com.xunchijn.dcappv1.map.model.User;
+import com.xunchijn.dcappv1.map.presenter.LocationPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +36,12 @@ import java.util.List;
  * Time:2018/5/9   下午1:55
  * Description:地图定位页面
  **/
-public class LocationFragment extends Fragment implements EmpPositionContrast.View {
-    private EmpPositionContrast.Presenter mPresenter;
-    private ArrayList<UserInfo> mUsers;
-    private ArrayList<CarInfo> mCars;
-    private MapView mMapView = null;
-    private BaiduMap mBaiduMap;
+public class LocationFragment extends Fragment implements LocationContrast.View {
+    private static final String TAG = "Location";
+    private LocationContrast.Presenter mPresenter;
     private BitmapDescriptor bitmap;
-    List<OverlayOptions> options = new ArrayList<OverlayOptions>();
-
+    private TextView mViewNames;
+    private BaiduMap mMap;
 
     public static LocationFragment newInstance(Bundle bundle) {
         LocationFragment fragment = new LocationFragment();
@@ -52,56 +52,45 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
         initData();
     }
 
     private void initData() {
+        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
+        mPresenter = new LocationPresenter(this);
         Bundle bundle = getArguments();
         if (bundle == null) {
             return;
         }
-//        mCars = (ArrayList<CarInfo>) bundle.getSerializable("cars");
-//        mUsers = (ArrayList<UserInfo>) bundle.getSerializable("users");
-
-        mUsers = TestData.getEmpLocation(1);
+        boolean isAll = bundle.getBoolean("isAll");
+        String id = bundle.getString("id");
+        if (TextUtils.isEmpty(id)) {
+            return;
+        }
+        if (isAll) {
+            mPresenter.getUsers(id);
+        } else {
+            mPresenter.getUser(id);
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map_location, container, false);
-        mMapView = view.findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
-        initView();
+        mViewNames = view.findViewById(R.id.text_bottom);
+        MapView mMapView = view.findViewById(R.id.bmapView);
+        mMap = mMapView.getMap();
         return view;
     }
 
-    private void initView() {
-        Double pointx;
-        Double pointy;
-        String px;
-        String py;
-        String empPoint;
-        int i = mUsers.size();
-        options = new ArrayList<>();
-        for (int a = 0; a < i; a++) {
-            empPoint = mUsers.get(a).getUserPoint();
-            px = empPoint.split(",")[0];
-            pointx = Double.parseDouble(px);
-            py = empPoint.split(",")[1];
-            pointy = Double.parseDouble(py);
-            LatLng llDot = new LatLng(pointy, pointx);
-            OverlayOptions option = new MarkerOptions().position(llDot).icon(bitmap);
-            options.add(option);
-            MapStatus mapStatus = new MapStatus.Builder()
-                    .target(llDot)
-                    .zoom(16)
-                    .build();
-            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
-            mBaiduMap.setMapStatus(mapStatusUpdate);
-        }
-        mBaiduMap.addOverlays(options);
+    private void showLocation(List<OverlayOptions> options, String position) {
+        LatLng llDot = new LatLng(Double.valueOf(position.split(",")[0]), Double.valueOf(position.split(",")[1]));
+        OverlayOptions option = new MarkerOptions().position(llDot).icon(bitmap);
+        MapStatus mapStatus = new MapStatus.Builder().target(llDot).zoom(16).build();
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+        mMap.setMapStatus(mapStatusUpdate);
+        options.add(option);
     }
 
     @Override
@@ -110,12 +99,39 @@ public class LocationFragment extends Fragment implements EmpPositionContrast.Vi
     }
 
     @Override
-    public void setPresenter(EmpPositionContrast.Presenter presenter) {
+    public void setPresenter(LocationContrast.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void showEmpPosition(UserInfo userInfo) {
+    public void showUsers(ArrayList<User> list) {
+        List<OverlayOptions> options = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            showLocation(options, list.get(i).getPosition());
+            builder.append(list.get(i).getName());
+            builder.append(" ,");
+        }
+        int index = builder.lastIndexOf(",");
+        builder.delete(index, index + 1);
+        mMap.addOverlays(options);
+        mViewNames.setText(builder.toString());
+    }
 
+    @Override
+    public void showCars(ArrayList<CarInfo> list) {
+        List<OverlayOptions> options = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            showLocation(options, list.get(i).getPosition());
+        }
+        mMap.addOverlays(options);
+    }
+
+    @Override
+    public void showUser(UserInfo userInfo) {
+        List<OverlayOptions> options = new ArrayList<>();
+        showLocation(options, userInfo.getUserPoint());
+        mViewNames.setText(userInfo.getUserName());
+        mMap.addOverlays(options);
     }
 }

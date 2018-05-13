@@ -43,4 +43,20 @@ public interface EventApi {
     //获取考核内容
     @GET("API/tmd/GetCheckContent")
     Observable<Response<Result<EventResult>>> GetCheckContent(@Query("typeId") String typeId);
+
+    //获取事件历史
+    @GET("API/tmd/GetEventInfo")
+    Observable<Response<Result<EventResult>>> GetEventHistory();
+
+    //获取事件历史
+    @GET("API/tmd/GetEmpName")
+    Observable<Response<Result<EventResult>>> GetDepartmentUsers(@Query("deptid") String subDepartmentId);
+
+    //获取用户详情
+    @GET("API/tmd/GetEmpinformation")
+    Observable<Response<Result<EventResult>>> GetUserInfo(@Query("Name") String subDepartmentId);
+
+    //获取事件历史
+    @GET("API/tmd/GetEmpName")
+    Observable<Response<Result<EventResult>>> GetDepartmentCars(@Query("deptid") String subDepartmentId);
 }

@@ -48,6 +48,8 @@ public class PreferHelper {
 
     public void saveUserAccount(UserAccount account) {
         if (account == null) {
+            save(USER_ACCOUNT, "");
+            save(USER_PASSWORD, "");
             return;
         }
         save(USER_ACCOUNT, account.getUserAccount());

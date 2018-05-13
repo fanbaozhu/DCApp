@@ -18,8 +18,8 @@ public class CommonService {
     }
 
     //与接口方法一一对应
-    public Observable<Response<String>> login(String userAccount, String userPassword) {
-        return mCommonApi.Login(userAccount, userPassword).observeOn(Schedulers.io());
+    public Observable<Response<Result<CommonResult>>> login(String userAccount, String userPassword) {
+        return mCommonApi.Login(userAccount, userPassword).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<CommonResult>>> statistic() {

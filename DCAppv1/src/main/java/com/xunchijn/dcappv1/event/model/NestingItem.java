@@ -10,7 +10,7 @@ public class NestingItem {
     private String mName;
     private String mSubtitle;
     //嵌套内部列表数据
-    private List<SelectItem> mItems;
+    private List<? extends SelectItem> mItems;
 
     public NestingItem(String id, String name, String subtitle) {
         mId = id;
@@ -42,11 +42,11 @@ public class NestingItem {
         mSubtitle = subtitle;
     }
 
-    public List<SelectItem> getItems() {
+    public List<? extends SelectItem> getItems() {
         return mItems;
     }
 
-    public void setItems(List<SelectItem> items) {
+    public void setItems(List<? extends SelectItem> items) {
         mItems = items;
     }
 }

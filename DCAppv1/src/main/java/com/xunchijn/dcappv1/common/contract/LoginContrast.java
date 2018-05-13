@@ -6,10 +6,10 @@ public interface LoginContrast {
     interface Presenter {
         void checkLocalData();
 
-        void login(String userAccount,String password);
+        void login(String userAccount, String password);
     }
 
-    interface View extends BaseView<Presenter>{
-        void loginSuccess();
+    interface View extends BaseView<Presenter> {
+        void loginSuccess(String userName);
     }
 }

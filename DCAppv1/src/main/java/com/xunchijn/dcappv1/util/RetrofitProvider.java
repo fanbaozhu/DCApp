@@ -27,7 +27,7 @@ public class RetrofitProvider {
     //预发布
     private static final String PRE_RELEASE = "http://192.168.1.221:8097";
     //开发
-    private static final String DEVELOP = "http://49.4.69.187:8099";
+    public static final String BASE_URL = "http://49.4.69.187:8099";
 
     @NonNull
     public static Retrofit get(){
@@ -46,7 +46,7 @@ public class RetrofitProvider {
 
         //选择使用的网络传输版本
 
-        return new Retrofit.Builder().baseUrl(DEVELOP)
+        return new Retrofit.Builder().baseUrl(BASE_URL)
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -66,7 +66,7 @@ public class RetrofitProvider {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(interceptor);
         }
-        return new Retrofit.Builder().baseUrl(DEVELOP)
+        return new Retrofit.Builder().baseUrl(BASE_URL)
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

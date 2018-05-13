@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.event.model.EventEntity;
 
 import java.util.List;
+
+import static com.xunchijn.dcappv1.util.RetrofitProvider.BASE_URL;
 
 public class HistoryAdapter extends RecyclerView.Adapter {
     private List<EventEntity> mList;
@@ -57,7 +60,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
         EventView(View itemView) {
             super(itemView);
-            mViewPicture = itemView.findViewById(R.id.image_report_picture);
+            mViewPicture = itemView.findViewById(R.id.image_event_picture);
             mViewReportTime = itemView.findViewById(R.id.text_report_time);
             mViewReportLocation = itemView.findViewById(R.id.text_report_location);
             mViewReportDescribe = itemView.findViewById(R.id.text_report_describe);
@@ -65,17 +68,18 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         }
 
         void bindEvent(EventEntity eventEntity) {
-            if (eventEntity.getEventStatus().equals("已处理")) {
+            if (eventEntity.getEventStatus().equals("新上报")) {
+                mViewStatus.setText("新上报");
+                mViewStatus.setBackgroundResource(R.drawable.bg_gray_round_rect_8dp);
+            } else {
                 mViewStatus.setText("已处理");
                 mViewStatus.setBackgroundResource(R.drawable.bg_green_round_rect_8dp);
-            } else {
-                mViewStatus.setText("未处理");
-                mViewStatus.setBackgroundResource(R.drawable.bg_gray_round_rect_8dp);
             }
-            String url = eventEntity.getEventPictureUrl();
-            if (!TextUtils.isEmpty(url)) {
-                String[] urls = url.split(",");
-                Glide.with(mContext).load(urls[0]).into(mViewPicture);
+            String pictureName = eventEntity.getEventPictureName();
+            if (!TextUtils.isEmpty(pictureName)) {
+                String[] urls = pictureName.split(",");
+                Glide.with(mContext).load(String.format("%s/UploadImg/%s", BASE_URL, urls[0]))
+                        .apply(new RequestOptions().centerCrop()).into(mViewPicture);
             }
             mViewReportTime.setText(eventEntity.getReportTime());
             mViewReportLocation.setText(eventEntity.getEventPosition());

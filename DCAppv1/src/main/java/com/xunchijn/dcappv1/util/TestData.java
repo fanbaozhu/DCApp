@@ -1,9 +1,5 @@
 package com.xunchijn.dcappv1.util;
 
-import com.xunchijn.dcappv1.common.module.UserInfo;
-import com.xunchijn.dcappv1.event.model.EventEntity;
-import com.xunchijn.dcappv1.event.model.NestingItem;
-import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
 
 import java.util.ArrayList;
@@ -22,58 +18,6 @@ public class TestData {
         items.add(item3);
         items.add(item4);
         items.add(item5);
-        return items;
-    }
-
-    public static List<NestingItem> getDepartments(String type) {
-        List<NestingItem> list = new ArrayList<>();
-        NestingItem history = new NestingItem("0", "历史", "清空");
-        List<SelectItem> items = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            SelectItem item = new SelectItem(String.valueOf(i), String.format(type.equals("车辆") ? "川B2345%s" : "郎德贵%s", i));
-            items.add(item);
-        }
-        history.setItems(items);
-
-        NestingItem nestingItem = new NestingItem("1", String.format("所有%s", type), "筛选");
-        List<SelectItem> departments = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            SelectItem item = new SelectItem(String.valueOf(i), String.format(type.equals("车辆") ? "川B2345%s" : "郎德贵%s", i % 10));
-            departments.add(item);
-        }
-        nestingItem.setItems(departments);
-        list.add(history);
-        list.add(nestingItem);
-        return list;
-    }
-
-    public static List<SelectItem> getSelectItems(int count) {
-        List<SelectItem> selectItems = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            SelectItem item = new SelectItem(String.valueOf(i), String.format("部门%s", i));
-            selectItems.add(item);
-        }
-        return selectItems;
-    }
-
-    public static List<EventEntity> getEventHistory(int count) {
-        List<EventEntity> items = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            EventEntity item = new EventEntity("事件描述：这个地方做的不好，需要重新做一遍",
-                    "山东省济南市高新区齐鲁文化创新基地9号楼", "",
-                    "2018年05年15日 20:20", "未处理");
-            items.add(item);
-        }
-        return items;
-    }
-
-    public static ArrayList<UserInfo> getEmpLocation(int count) {
-        ArrayList<UserInfo> items = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            UserInfo item = new UserInfo();
-            item.setUserPoint("116.32,34.27");
-            items.add(item);
-        }
         return items;
     }
 }

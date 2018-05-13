@@ -23,8 +23,8 @@ public interface CommonApi {
 
     //账号登录
     @FormUrlEncoded
-    @POST("API/tmd/CheckUserPass")
-    Observable<Response<String>> Login(@Field("USER_NAME") String userAccount, @Field("USER_PWD") String userPassword);
+    @POST("API/tmd/Login")
+    Observable<Response<Result<CommonResult>>> Login(@Field("userName") String userAccount, @Field("passWord") String userPassword);
 
     //报表获取
     @GET("API/tmd/GetStatistic")

@@ -9,25 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.common.module.UserInfo;
-import com.xunchijn.dcappv1.map.model.CarInfo;
-
-import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
     private String mTitle;
 
 
-    public static void newInstance(Context context, String title, ArrayList<CarInfo> cars, ArrayList<UserInfo> users) {
+    public static void newInstance(Context context, String title, String id, boolean isAll) {
         Intent intent = new Intent(context, MapActivity.class);
         intent.putExtra("title", title);
         Bundle bundle = new Bundle();
-        if (cars != null) {
-            bundle.putSerializable("cars", cars);
-        }
-        if (users != null) {
-            bundle.putSerializable("users", users);
-        }
+        bundle.putString("id", id);
+        bundle.putBoolean("isAll", isAll);
         intent.putExtra("args", bundle);
         context.startActivity(intent);
     }
@@ -43,7 +35,7 @@ public class MapActivity extends AppCompatActivity {
         mTitle = getIntent().getStringExtra("title");
 
         TitleFragment fragment = TitleFragment.newInstance(mTitle, true, true);
-        fragment.setRightDrawableId(mTitle.equals("轨迹回放") ? R.mipmap.ic_title_time : R.mipmap.ic_title_refresh);
+        fragment.setRightDrawableId(mTitle.equals("轨迹回放") ? R.mipmap.ic_title_time : R.mipmap.ic_title_more);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, fragment)
                 .show(fragment).commit();

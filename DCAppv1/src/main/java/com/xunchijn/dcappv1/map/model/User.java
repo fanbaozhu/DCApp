@@ -3,14 +3,8 @@ package com.xunchijn.dcappv1.map.model;
 import com.google.gson.annotations.SerializedName;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 
-/**
- * Author：Fan BaoZhu
- * Time:2018/5/9   下午2:50
- * Description:
- **/
-public class CarInfo extends SelectItem {
-
-    public CarInfo(String id, String name) {
+public class User extends SelectItem {
+    public User(String id, String name) {
         super(id, name);
     }
 

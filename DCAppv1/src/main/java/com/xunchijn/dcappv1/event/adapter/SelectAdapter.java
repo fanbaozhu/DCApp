@@ -13,10 +13,10 @@ import com.xunchijn.dcappv1.event.model.SelectItem;
 import java.util.List;
 
 public class SelectAdapter extends RecyclerView.Adapter {
-    private List<SelectItem> mList;
+    private List<? extends SelectItem> mList;
     private int mLayoutId;
 
-    public SelectAdapter(List<SelectItem> list, int layoutId) {
+    public SelectAdapter(List<? extends SelectItem> list, int layoutId) {
         mList = list;
         mLayoutId = layoutId;
     }

@@ -33,17 +33,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".common.view.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".event.view.ShowPictureActivity" />
         <activity
             android:name=".common.view.LoginActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".event.view.ReportActivity"
