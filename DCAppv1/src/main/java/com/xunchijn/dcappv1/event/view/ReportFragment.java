@@ -72,6 +72,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         mInputDescribe = view.findViewById(R.id.edit_describe);
+        mInputDescribe.clearFocus();
         initTitle();
         initPictureView(view);
         initSettingView(view);
@@ -80,7 +81,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
 
     //初始化标题栏
     private void initTitle() {
-        TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true);
+        final TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true);
 
         getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
                 .show(mTitleFragment).commit();
@@ -88,7 +89,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         mTitleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
             @Override
             public void onBack() {
-                Toast.makeText(getContext(), "返回", Toast.LENGTH_SHORT).show();
+                mActivity.onBackPressed();
             }
 
             @Override
