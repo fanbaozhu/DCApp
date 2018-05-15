@@ -8,6 +8,7 @@ import com.xunchijn.dcappv1.map.model.User;
 import java.util.ArrayList;
 
 /**
+ * 契约类 P层和V层绑定 BaseView是基类
  * Created by Administrator on 2018/5/9 0009.
  */
 
