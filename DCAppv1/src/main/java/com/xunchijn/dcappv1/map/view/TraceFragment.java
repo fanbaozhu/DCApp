@@ -6,15 +6,18 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
@@ -23,10 +26,11 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.map.model.CarInfo;
+import com.xunchijn.dcappv1.map.contract.TraceContrast;
 import com.xunchijn.dcappv1.map.model.Point;
-import com.xunchijn.dcappv1.util.TestData;
+import com.xunchijn.dcappv1.map.presenter.TracePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,18 +40,21 @@ import java.util.List;
  * Time:2018/5/9   下午1:55
  * Description:轨迹回放页面
  **/
-public class TraceFragment extends Fragment {
-    private ArrayList<Point> mPoints;
-    private ArrayList<CarInfo> mCars;
-    private static final int TIME_INTERVAL = 80;
-    private static final double DISTANCE = 0.0001;
+public class TraceFragment extends Fragment implements TraceContrast.View {
+    private String TAG = "Trace";
+    private TraceContrast.Presenter mPresenter;
+    private Polyline mPolyline;
     private Marker mMoveMarker;
+    private MapView mMapView;
     private Handler mHandler;
-    private MapView mMapView = null;
-    private BaiduMap mBaiduMap;
-    BitmapDescriptor bitmap;
-    List<LatLng> options = new ArrayList<>();
-    Polyline mPolyline;
+    private BaiduMap mMap;
+    private ImageView mViewPlay;
+
+    //通过设置间隔时间和距离可以控制速度和图标移动的距离
+    private int mTimeInterval = 80;
+    private double mDistance = 0.00002;
+    private BitmapDescriptor bitmap;
+    private List<LatLng> options;
 
     public static TraceFragment newInstance(Bundle bundle) {
         TraceFragment fragment = new TraceFragment();
@@ -55,56 +62,80 @@ public class TraceFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
-        initData();
-    }
-
-    private void initData() {
-        Bundle bundle = getArguments();
-        if (bundle == null) {
-            return;
-        }
-        mPoints = TestData.getEmpPoint();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map_trace, container, false);
         mMapView = view.findViewById(R.id.bmapView);
-        mHandler = new Handler(Looper.getMainLooper());
-        mBaiduMap = mMapView.getMap();
-        initView();
+        mMapView.onCreate(getContext(), savedInstanceState);
+        mMap = mMapView.getMap();
+        ImageView viewQuick = view.findViewById(R.id.image_trace_quick);
+        viewQuick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: " + mTimeInterval);
+                if (mTimeInterval > 60) {
+                    mTimeInterval = mTimeInterval - 10;
+                    Toast.makeText(getContext(), "速度+1", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "最大速度", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mViewPlay = view.findViewById(R.id.image_trace_play);
+        mViewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveLooper();
+            }
+        });
+        ImageView viewSlow = view.findViewById(R.id.image_trace_slow);
+        viewSlow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: " + mTimeInterval);
+                if (mTimeInterval < 100) {
+                    mTimeInterval = mTimeInterval + 10;
+                    Toast.makeText(getContext(), "速度—1", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "最小速度", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mPresenter = new TracePresenter(this);
+        mPresenter.getUserTrace("", "", "");
         return view;
     }
 
-    private void initView() {
-        Point empPoint;
-        int i = mPoints.size();
-        options = new ArrayList<>();
-        for (int a = 0; a < i; a++) {
-            empPoint = mPoints.get(a);
-            LatLng llDot = new LatLng(empPoint.getY(), empPoint.getX());
-            options.add(llDot);
-            MapStatus mapStatus = new MapStatus.Builder()
-                    .target(llDot)
-                    .zoom(16)
-                    .build();
-            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
-            mBaiduMap.setMapStatus(mapStatusUpdate);
-        }
-        OverlayOptions option = new PolylineOptions().width(10)
-                .color(0xAAFF0000).points(options);
-        mPolyline = (Polyline) mBaiduMap.addOverlay(option);
-        OverlayOptions markerOptions;
-        markerOptions = new MarkerOptions().flat(true).anchor(0.5f, 0.5f)
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.arrow)).position(options.get(0))
-                .rotate((float) getAngle(0));
-        mMoveMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
+    private void initMap(List<Point> list) {
+        MapStatus.Builder builder = new MapStatus.Builder();
+        LatLng latLng = new LatLng(list.get(0).getX(), list.get(0).getY());
+        builder.target(latLng);
+        builder.zoom(16.0f);
+        mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
+        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_trace_car);
+        mHandler = new Handler(Looper.getMainLooper());
+        drawPolyLine(list);
         moveLooper();
+        mMapView.showZoomControls(false);
+    }
+
+    private void drawPolyLine(List<Point> list) {
+        options = new ArrayList<>();
+        for (int index = 0; index < list.size(); index++) {
+            LatLng latLng = new LatLng(list.get(index).getX(), list.get(index).getY());
+            options.add(latLng);
+        }
+        PolylineOptions polylineOptions = new PolylineOptions().points(options)
+                .width(10).color(ContextCompat.getColor(getContext(), R.color.colorGreen));
+
+        mPolyline = (Polyline) mMap.addOverlay(polylineOptions);
+
+        //轨迹图标
+        OverlayOptions marketOptions = new MarkerOptions().flat(true).anchor(0.5f, 0.5f)
+                .icon(bitmap).position(options.get(0)).rotate((float) getAngle(0));
+        mMoveMarker = (Marker) mMap.addOverlay(marketOptions);
     }
 
     /**
@@ -136,17 +167,14 @@ public class TraceFragment extends Fragment {
             deltAngle = 180;
         }
         double radio = Math.atan(slope);
-        double angle = 180 * (radio / Math.PI) + deltAngle - 90;
-        return angle;
+        return (180 * (radio / Math.PI) + deltAngle - 90);
     }
 
     /**
      * 根据点和斜率算取截距
      */
     private double getInterception(double slope, LatLng point) {
-
-        double interception = point.latitude - slope * point.longitude;
-        return interception;
+        return (point.latitude - slope * point.longitude);
     }
 
     /**
@@ -156,82 +184,32 @@ public class TraceFragment extends Fragment {
         if (toPoint.longitude == fromPoint.longitude) {
             return Double.MAX_VALUE;
         }
-        double slope = ((toPoint.latitude - fromPoint.latitude) / (toPoint.longitude - fromPoint.longitude));
-        return slope;
-
+        return ((toPoint.latitude - fromPoint.latitude) / (toPoint.longitude - fromPoint.longitude));
     }
 
-    /**
-     * 循环进行移动逻辑
-     */
-    public void moveLooper() {
-        new Thread() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
 
-            public void run() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
 
-                while (true) {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
+    }
 
-                    for (int i = 0; i < options.size() - 1; i++) {
-
-
-                        final LatLng startPoint = options.get(i);
-                        final LatLng endPoint = options.get(i + 1);
-                        mMoveMarker
-                                .setPosition(startPoint);
-
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                // refresh marker's rotate
-                                if (mMapView == null) {
-                                    return;
-                                }
-                                mMoveMarker.setRotate((float) getAngle(startPoint,
-                                        endPoint));
-                            }
-                        });
-                        double slope = getSlope(startPoint, endPoint);
-                        // 是不是正向的标示
-                        boolean isReverse = (startPoint.latitude > endPoint.latitude);
-
-                        double intercept = getInterception(slope, startPoint);
-
-                        double xMoveDistance = isReverse ? getXMoveDistance(slope) :
-                                -1 * getXMoveDistance(slope);
-
-
-                        for (double j = startPoint.latitude; !((j > endPoint.latitude) ^ isReverse);
-                             j = j - xMoveDistance) {
-                            LatLng latLng = null;
-                            if (slope == Double.MAX_VALUE) {
-                                latLng = new LatLng(j, startPoint.longitude);
-                            } else {
-                                latLng = new LatLng(j, (j - intercept) / slope);
-                            }
-
-                            final LatLng finalLatLng = latLng;
-                            mHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mMapView == null) {
-                                        return;
-                                    }
-                                    mMoveMarker.setPosition(finalLatLng);
-                                }
-                            });
-                            try {
-                                Thread.sleep(TIME_INTERVAL);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                    }
-                    //break;
-                }
-            }
-
-        }.start();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+        mMap.clear();
     }
 
     /**
@@ -239,12 +217,110 @@ public class TraceFragment extends Fragment {
      */
     private double getXMoveDistance(double slope) {
         if (slope == Double.MAX_VALUE) {
-            return DISTANCE;
+            return mDistance;
         }
-        return Math.abs((DISTANCE * slope) / Math.sqrt(1 + slope * slope));
+        return Math.abs((mDistance * slope) / Math.sqrt(1 + slope * slope));
     }
 
+    /**
+     * 循环进行移动逻辑
+     */
+    public void moveLooper() {
+        if (TracePlayThread.isAlive()) {
+            isPause = !isPause;
+        } else {
+            TracePlayThread.start();
+        }
+        Glide.with(this).load(isPause ? R.mipmap.ic_trace_play : R.mipmap.ic_trace_pause).into(mViewPlay);
+    }
+
+    @Override
     public void showUserTrace(List<Point> list) {
-
+        initMap(list);
     }
+
+    @Override
+    public void showCarTrace(List<Point> list) {
+        initMap(list);
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(TraceContrast.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    private boolean isPause = true;
+
+    private Thread TracePlayThread = new Thread() {
+        public void run() {
+            for (int i = 0; i < options.size() - 1; i++) {
+                final LatLng startPoint = options.get(i);
+                final LatLng endPoint = options.get(i + 1);
+                mMoveMarker.setPosition(startPoint);
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // refresh marker's rotate
+                        if (mMapView == null) {
+                            return;
+                        }
+                        mMoveMarker.setRotate((float) getAngle(startPoint, endPoint));
+                    }
+                });
+                double slope = getSlope(startPoint, endPoint);
+                // 是不是正向的标示
+                boolean isReverse = (startPoint.latitude > endPoint.latitude);
+
+                double intercept = getInterception(slope, startPoint);
+
+                double xMoveDistance = isReverse ? getXMoveDistance(slope) : -1 * getXMoveDistance(slope);
+
+
+                for (double j = startPoint.latitude; !((j > endPoint.latitude) ^ isReverse); j = j - xMoveDistance) {
+                    LatLng latLng;
+                    if (slope == Double.MAX_VALUE) {
+                        latLng = new LatLng(j, startPoint.longitude);
+                    } else {
+                        latLng = new LatLng(j, (j - intercept) / slope);
+                    }
+
+                    final LatLng finalLatLng = latLng;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mMapView == null) {
+                                return;
+                            }
+                            mMoveMarker.setPosition(finalLatLng);
+                            mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().target(finalLatLng).build()));
+                        }
+                    });
+                    try {
+                        Thread.sleep(mTimeInterval);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    while (isPause) {
+                        try {
+                            Thread.sleep(mTimeInterval);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Glide.with(getContext()).load(R.mipmap.ic_trace_play).into(mViewPlay);
+                }
+            });
+        }
+    };
 }

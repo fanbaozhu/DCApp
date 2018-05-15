@@ -9,10 +9,33 @@
     android:paddingEnd="16dp"
     android:paddingStart="16dp">
 
-    <include
-        layout="@layout/adapter_report_setting"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/text_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/bg_blue_round_rect_4dp"
+            android:text="重置"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_gravity="bottom"
+            android:background="@color/colorGray" />
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_sub_department"

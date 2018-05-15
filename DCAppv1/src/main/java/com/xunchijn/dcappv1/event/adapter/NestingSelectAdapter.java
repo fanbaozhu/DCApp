@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
@@ -54,21 +55,21 @@ public class NestingSelectAdapter extends RecyclerView.Adapter {
 
     private class DepartmentView extends ViewHolder {
         private TextView mViewTitle;
-        private TextView mViewSubtitle;
+        private Button mButton;
         private RecyclerView mViewSubDepartment;
 
         DepartmentView(View itemView) {
             super(itemView);
             mViewTitle = itemView.findViewById(R.id.text_item_title);
-            mViewSubtitle = itemView.findViewById(R.id.text_item_subtitle);
+            mButton = itemView.findViewById(R.id.btn_reset);
             mViewSubDepartment = itemView.findViewById(R.id.recycler_view_sub_department);
         }
 
         void bindDepartments(final NestingItem nestingItem) {
             mViewTitle.setText(nestingItem.getName());
-            mViewSubtitle.setText(nestingItem.getSubtitle());
+            mButton.setText(nestingItem.getSubtitle());
             if (mItemClickListener != null) {
-                mViewSubtitle.setOnClickListener(new View.OnClickListener() {
+                mButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mItemClickListener.onSubTitleClick(nestingItem);
@@ -85,8 +86,7 @@ public class NestingSelectAdapter extends RecyclerView.Adapter {
             adapter.setItemClickListener(new SelectAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(SelectItem item) {
-                    nestingItem.setSubtitle(item.getName());
-                    mViewSubtitle.setText(item.getName());
+                    nestingItem.setName(item.getName());
                     if (mItemClickListener != null) {
                         mItemClickListener.onItemClick(item);
                     }

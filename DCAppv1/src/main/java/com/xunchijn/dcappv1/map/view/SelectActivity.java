@@ -32,6 +32,8 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
     private String mTitle;
     private SelectItem mItem;
     private String mSubDepartmentId;
+    private String mDepartment;
+    private String mSubDepartment;
 
     public static void newInstance(Context context, String type, String title) {
         Intent intent = new Intent(context, SelectActivity.class);
@@ -94,11 +96,13 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
             @Override
             public void onItemClick(SelectItem item) {
                 if (item.getId().length() == 6) {
+                    mDepartment = item.getName();
                     //点击部门选项，获取子部门
                     mPresenter.getSubDepartment(item.getId());
                     return;
                 }
                 if (item.getId().length() == 9) {
+                    mSubDepartment = item.getName();
                     //点击子部门选项，获取用户/车辆
                     mSubDepartmentId = item.getId();
                     mPresenter.getUsers(item.getId());
@@ -115,7 +119,8 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
 
     @Override
     public void showDepartment(List<SelectItem> list) {
-        NestingItem item = new NestingItem("0", "选择部门", "");
+        mList.clear();
+        NestingItem item = new NestingItem("0", "选择部门", "重置");
         item.setItems(list);
         mList.add(item);
         adapter.notifyDataSetChanged();
@@ -124,7 +129,7 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
     @Override
     public void showSubDepartment(List<SelectItem> list) {
         mList.clear();
-        NestingItem item = new NestingItem("1", "选择子部门", "");
+        NestingItem item = new NestingItem("1", String.format("%s-选择子部门", mDepartment), "重置");
         item.setItems(list);
         mList.add(item);
         adapter.notifyDataSetChanged();
@@ -133,7 +138,7 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
     @Override
     public void showUsers(ArrayList<User> list) {
         mList.clear();
-        NestingItem item = new NestingItem("2", "选择人员", "");
+        NestingItem item = new NestingItem("2", String.format("%s-%s-选择人员", mDepartment, mSubDepartment), "重置");
         list.add(0, new User("0", "全部人员"));
         item.setItems(list);
         mList.add(item);
@@ -143,7 +148,7 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
     @Override
     public void showCars(ArrayList<CarInfo> list) {
         mList.clear();
-        NestingItem item = new NestingItem("2", "选择车辆", "");
+        NestingItem item = new NestingItem("2", String.format("%s-%s-选择车辆", mDepartment, mSubDepartment), "重置");
         list.add(0, new CarInfo("0", "全部车辆"));
         item.setItems(list);
         mList.add(item);
