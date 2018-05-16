@@ -27,12 +27,7 @@ public class CommonService {
         return mCommonApi.Statistic().observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<CommonResult>> getEmp(String empSimid) {
-        return mCommonApi.GetEmp(empSimid).observeOn(Schedulers.io());
+    public Observable<Response<Result<CommonResult>>> getSearch(String name) {
+        return mCommonApi.GetSearch(name).subscribeOn(Schedulers.io());
     }
-
-    public Observable<Response<CommonResult>> getTruck(String truckSimid) {
-        return mCommonApi.GetTruck(truckSimid).observeOn(Schedulers.io());
-    }
-
 }

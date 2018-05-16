@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
     private int mRightDrawableId;
     private boolean mShowEditSearch;
     private Activity mActivity;
+    private TextWatcher mTextWatcher;
 
     public static TitleFragment newInstance(String title, boolean showBack, boolean showConfirm) {
         TitleFragment fragment = new TitleFragment();
@@ -93,6 +95,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
         EditText editContent = view.findViewById(R.id.edit_title_content);
         editContent.setVisibility(mShowEditSearch ? View.VISIBLE : View.GONE);
+        editContent.addTextChangedListener(mTextWatcher);
     }
 
     @Override
@@ -123,5 +126,9 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
     public void setConfirmListener(OnItemClickListener confirmListener) {
         mConfirmListener = confirmListener;
+    }
+
+    public void setTextWatcher(TextWatcher textWatcher) {
+        mTextWatcher = textWatcher;
     }
 }
