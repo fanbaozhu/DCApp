@@ -6,7 +6,6 @@ import com.xunchijn.dcappv1.data.EventService;
 import com.xunchijn.dcappv1.event.contract.HistoryContract;
 import com.xunchijn.dcappv1.event.model.EventResult;
 import com.xunchijn.dcappv1.util.Result;
-import com.xunchijn.dcappv1.util.TestData;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

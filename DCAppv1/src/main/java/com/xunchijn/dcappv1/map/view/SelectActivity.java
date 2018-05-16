@@ -15,7 +15,7 @@ import com.xunchijn.dcappv1.event.adapter.NestingSelectAdapter;
 import com.xunchijn.dcappv1.event.model.NestingItem;
 import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.map.contract.SelectContrast;
-import com.xunchijn.dcappv1.map.model.CarInfo;
+import com.xunchijn.dcappv1.map.model.Car;
 import com.xunchijn.dcappv1.map.model.User;
 import com.xunchijn.dcappv1.map.presenter.SelectPresenter;
 
@@ -59,7 +59,7 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
         mType = getIntent().getStringExtra(TYPE);
         mTitle = getIntent().getStringExtra(TITLE);
         TitleFragment titleFragment = TitleFragment.newInstance(String.format("选择%s", mType), true, true);
-        titleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
+        titleFragment.setConfirmListener(new TitleFragment.OnItemClickListener() {
             @Override
             public void onBack() {
                 onBackPressed();
@@ -67,12 +67,16 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
 
             @Override
             public void onConfirm() {
+                if (mItem == null) {
+                    showError(String.format("请先选择%s", mTitle));
+                    return;
+                }
                 if (mItem.getId().equals("0")) {
                     //选择全部
-                    MapActivity.newInstance(SelectActivity.this, mTitle, mSubDepartmentId, true);
+                    MapActivity.newInstance(SelectActivity.this, mTitle, mType, mSubDepartmentId, true);
                 } else {
-                    //选择单个人
-                    MapActivity.newInstance(SelectActivity.this, mTitle, mItem.getId(), false);
+                    //选择单个人/车辆
+                    MapActivity.newInstance(SelectActivity.this, mTitle, mType, mItem.getId(), false);
                 }
             }
         });
@@ -105,7 +109,11 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
                     mSubDepartment = item.getName();
                     //点击子部门选项，获取用户/车辆
                     mSubDepartmentId = item.getId();
-                    mPresenter.getUsers(item.getId());
+                    if (mType.equals("人员")) {
+                        mPresenter.getUsers(item.getId());
+                    } else {
+                        mPresenter.getCars(item.getId());
+                    }
                     return;
                 }
                 mItem = item;
@@ -146,10 +154,10 @@ public class SelectActivity extends AppCompatActivity implements SelectContrast.
     }
 
     @Override
-    public void showCars(ArrayList<CarInfo> list) {
+    public void showCars(ArrayList<Car> list) {
         mList.clear();
         NestingItem item = new NestingItem("2", String.format("%s-%s-选择车辆", mDepartment, mSubDepartment), "重置");
-        list.add(0, new CarInfo("0", "全部车辆"));
+        list.add(0, new Car("0", "全部车辆"));
         item.setItems(list);
         mList.add(item);
         adapter.notifyDataSetChanged();

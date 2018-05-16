@@ -39,23 +39,32 @@
         <activity android:name=".event.view.ShowPictureActivity" />
         <activity
             android:name=".common.view.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".event.view.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".map.view.MapActivity" />
+        <activity android:name=".map.view.SelectActivity" />
+        <activity android:name=".statistic.StatisticActivity" />
+        <activity android:name=".common.view.SearchActivity" />
+        <activity android:name=".event.view.HistoryActivity" />
+        <activity android:name=".test.TestActivity">
+            <!--            <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".common.view.SplashActivity"
+            android:theme="@style/AppFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".event.view.ReportActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".map.view.MapActivity" />
-        <activity android:name=".map.view.SelectActivity" />
-        <activity android:name=".statistic.StatisticActivity" />
-        <activity android:name=".common.view.SearchActivity" />
-        <activity android:name=".event.view.HistoryActivity" />
+        <activity android:name=".map.view.SelectUserActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -74,6 +83,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
     </application>
 
 </manifest>

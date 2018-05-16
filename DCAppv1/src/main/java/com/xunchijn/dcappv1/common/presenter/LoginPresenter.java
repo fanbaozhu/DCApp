@@ -33,6 +33,7 @@ public class LoginPresenter implements LoginContrast.Presenter {
     public void checkLocalData() {
         UserAccount userAccount = mPreferHelper.getUserAccount();
         if (userAccount == null) {
+            mView.showError("请登录");
             return;
         }
         login(userAccount.getUserAccount(), userAccount.getUserPassword());

@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.xunchijn.dcappv1.R;
 
 public class TitleFragment extends Fragment implements View.OnClickListener {
-    private OnConfirmListener mConfirmListener;
+    private OnItemClickListener mConfirmListener;
     private static final String TITLE = "title";
     private static final String SHOW_BACK = "showBack";
     private static final String SHOW_CONFIRM = "showConfirm";
@@ -113,7 +113,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public interface OnConfirmListener {
+    public interface OnItemClickListener {
 
         void onBack();
 
@@ -121,7 +121,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public void setConfirmListener(OnConfirmListener confirmListener) {
+    public void setConfirmListener(OnItemClickListener confirmListener) {
         mConfirmListener = confirmListener;
     }
 }

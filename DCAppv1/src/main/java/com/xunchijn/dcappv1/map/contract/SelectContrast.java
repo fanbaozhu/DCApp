@@ -2,7 +2,7 @@ package com.xunchijn.dcappv1.map.contract;
 
 import com.xunchijn.dcappv1.base.BaseView;
 import com.xunchijn.dcappv1.event.model.SelectItem;
-import com.xunchijn.dcappv1.map.model.CarInfo;
+import com.xunchijn.dcappv1.map.model.Car;
 import com.xunchijn.dcappv1.map.model.User;
 
 import java.util.ArrayList;
@@ -26,6 +26,6 @@ public interface SelectContrast {
 
         void showUsers(ArrayList<User> list);
 
-        void showCars(ArrayList<CarInfo> list);
+        void showCars(ArrayList<Car> list);
     }
 }

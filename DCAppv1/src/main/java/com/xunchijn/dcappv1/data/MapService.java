@@ -1,8 +1,11 @@
 package com.xunchijn.dcappv1.data;
 
 import com.xunchijn.dcappv1.map.model.MapResult;
-import com.xunchijn.dcappv1.map.model.Point;
 import com.xunchijn.dcappv1.util.Result;
+import com.xunchijn.dcappv1.util.RetrofitProvider;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -15,7 +18,39 @@ import retrofit2.Response;
 public class MapService {
     private MapApi mMapApi;
 
-    public Observable<Response<Result<MapResult>>> getEmpPoint(String empSimid) {
-        return mMapApi.GetEmpPoint(empSimid).observeOn(Schedulers.io());
+    public MapService() {
+        mMapApi = RetrofitProvider.get().create(MapApi.class);
+    }
+
+    public Observable<Response<Result<MapResult>>> getDepartmentUsers(String subDepartmentId) {
+        return mMapApi.GetDepartmentUsers(subDepartmentId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<MapResult>>> getUserInfo(String userId) {
+        return mMapApi.GetUserInfo(userId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<MapResult>>> getDepartmentCars(String subDepartmentId) {
+        return mMapApi.GetDepartmentCars(subDepartmentId).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<MapResult>>> getCarInfo(String id) {
+        return mMapApi.GetCarInfo(id).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<MapResult>>> getUserTrace(String targetId, String startTime, String endTime) {
+        Map<String, String> map = new HashMap<>();
+        map.put("targetId", targetId);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+        return mMapApi.GetUserTrace(map).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<MapResult>>> getCarTrace(String targetId, String startTime, String endTime) {
+        Map<String, String> map = new HashMap<>();
+        map.put("targetId", targetId);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+        return mMapApi.GetCarTrace(map).subscribeOn(Schedulers.io());
     }
 }

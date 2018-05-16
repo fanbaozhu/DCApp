@@ -40,7 +40,7 @@ import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
 import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 import com.xunchijn.dcappv1.event.widget.SelectDialog;
-import com.xunchijn.dcappv1.util.TestData;
+import com.xunchijn.dcappv1.test.TestData;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,7 +72,6 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         mInputDescribe = view.findViewById(R.id.edit_describe);
-        mInputDescribe.clearFocus();
         initTitle();
         initPictureView(view);
         initSettingView(view);
@@ -86,7 +85,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
                 .show(mTitleFragment).commit();
 
-        mTitleFragment.setConfirmListener(new TitleFragment.OnConfirmListener() {
+        mTitleFragment.setConfirmListener(new TitleFragment.OnItemClickListener() {
             @Override
             public void onBack() {
                 mActivity.onBackPressed();

@@ -2,9 +2,9 @@ package com.xunchijn.dcappv1.map.presenter;
 
 import android.util.Log;
 
-import com.xunchijn.dcappv1.data.EventService;
-import com.xunchijn.dcappv1.event.model.EventResult;
+import com.xunchijn.dcappv1.data.MapService;
 import com.xunchijn.dcappv1.map.contract.LocationContrast;
+import com.xunchijn.dcappv1.map.model.MapResult;
 import com.xunchijn.dcappv1.util.Result;
 
 import io.reactivex.Observer;
@@ -19,22 +19,21 @@ import retrofit2.Response;
 public class LocationPresenter implements LocationContrast.Presenter {
     private static final String TAG = "Location";
     private LocationContrast.View mView;
-    private EventService mEventService;
-    private Observer<Response<Result<EventResult>>> mObserver;
-
+    private MapService mMapService;
+    private Observer<Response<Result<MapResult>>> mObserver;
 
     public LocationPresenter(LocationContrast.View view) {
         mView = view;
         mView.setPresenter(this);
-        mEventService = new EventService();
-        mObserver = new Observer<Response<Result<EventResult>>>() {
+        mMapService = new MapService();
+        mObserver = new Observer<Response<Result<MapResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
             }
 
             @Override
-            public void onNext(Response<Result<EventResult>> resultResponse) {
+            public void onNext(Response<Result<MapResult>> resultResponse) {
                 if (resultResponse.isSuccessful()) {
                     parseResult(resultResponse.body());
                 } else {
@@ -54,7 +53,7 @@ public class LocationPresenter implements LocationContrast.Presenter {
         };
     }
 
-    private void parseResult(Result<EventResult> result) {
+    private void parseResult(Result<MapResult> result) {
         if (result.getCode() == 200) {
             if (result.getData() == null) {
                 return;
@@ -69,6 +68,10 @@ public class LocationPresenter implements LocationContrast.Presenter {
             }
             if (result.getData().getCarList() != null) {
                 mView.showCars(result.getData().getCarList());
+                return;
+            }
+            if (result.getData().getCarInformation() != null) {
+                mView.showCar(result.getData().getCarInformation());
             }
         } else {
             mView.showError(result.getMessage());
@@ -77,19 +80,25 @@ public class LocationPresenter implements LocationContrast.Presenter {
 
     @Override
     public void getUsers(String subDepartmentId) {
-        mEventService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+        mMapService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 
     @Override
     public void getUser(String userId) {
-        mEventService.getUserInfo(userId).observeOn(AndroidSchedulers.mainThread())
+        mMapService.getUserInfo(userId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 
     @Override
     public void getCars(String subDepartmentId) {
-        mEventService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+        mMapService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
+    }
+
+    @Override
+    public void getCar(String carId) {
+        mMapService.getCarInfo(carId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 }

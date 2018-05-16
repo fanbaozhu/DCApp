@@ -7,11 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -29,8 +31,9 @@ import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.map.contract.TraceContrast;
-import com.xunchijn.dcappv1.map.model.Point;
+import com.xunchijn.dcappv1.map.model.TraceInfo;
 import com.xunchijn.dcappv1.map.presenter.TracePresenter;
+import com.xunchijn.dcappv1.test.TimePickerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +52,14 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
     private Handler mHandler;
     private BaiduMap mMap;
     private ImageView mViewPlay;
+    private TextView mViewSelectTime;
+    private TimePickerDialog timePickerDialog;
+    private long mStartTime;
+    private long mEndTime;
 
     //通过设置间隔时间和距离可以控制速度和图标移动的距离
     private int mTimeInterval = 80;
-    private double mDistance = 0.00002;
+    private static final double mDistance = 0.00002;
     private BitmapDescriptor bitmap;
     private List<LatLng> options;
 
@@ -102,14 +109,69 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
                 }
             }
         });
-        mPresenter = new TracePresenter(this);
-        mPresenter.getUserTrace("", "", "");
+        mViewSelectTime = view.findViewById(R.id.text_select_time);
+        mViewSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectStartTime();
+            }
+        });
+        initData();
         return view;
     }
 
-    private void initMap(List<Point> list) {
+    private void initData() {
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            return;
+        }
+        String type = bundle.getString("type");
+        if (TextUtils.isEmpty(type)) {
+            return;
+        }
+        if (type.equals("人员")) {
+            mPresenter.getUserTrace("17360782514", "1524600000", "1524622000");
+        } else {
+            mPresenter.getCarTrace("13819020864", "1524600000", "1524622000");
+        }
+    }
+
+    private void selectStartTime() {
+        timePickerDialog = new TimePickerDialog();
+        timePickerDialog.setTitle("开始时间");
+        timePickerDialog.setOnConfirmClickListener(new TimePickerDialog.OnConfirmClickListener() {
+            @Override
+            public void OnConfirm(String timestamp, long time) {
+                timePickerDialog.dismiss();
+                Log.d("test", "OnConfirm: timestamp=" + timestamp + " time=" + time);
+                if (mStartTime == 0) {
+                    mStartTime = time;
+                    mViewSelectTime.setText(String.format("开始时间：%s", timestamp));
+                    selectEndTime();
+                } else if (mStartTime >= time) {
+                    selectEndTime();
+                    Toast.makeText(getContext(), "结束时间不能早于或者等于开始时间", Toast.LENGTH_SHORT).show();
+                } else {
+                    mEndTime = time;
+                    mViewSelectTime.append(String.format("\n结束时间：%s", timestamp));
+                }
+            }
+        });
+        timePickerDialog.show(getFragmentManager(), "");
+    }
+
+    private void selectEndTime() {
+        if (timePickerDialog == null) {
+            timePickerDialog = new TimePickerDialog();
+        }
+        timePickerDialog.setTitle("结束时间");
+        timePickerDialog.setFixedDate(false);
+        timePickerDialog.show(getFragmentManager(), "");
+    }
+
+    private void initMap(List<TraceInfo> list) {
         MapStatus.Builder builder = new MapStatus.Builder();
-        LatLng latLng = new LatLng(list.get(0).getX(), list.get(0).getY());
+        LatLng latLng = new LatLng(list.get(0).getPositionX(), list.get(0).getPositionY());
         builder.target(latLng);
         builder.zoom(16.0f);
         mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
@@ -121,10 +183,10 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
         mMapView.showZoomControls(false);
     }
 
-    private void drawPolyLine(List<Point> list) {
+    private void drawPolyLine(List<TraceInfo> list) {
         options = new ArrayList<>();
         for (int index = 0; index < list.size(); index++) {
-            LatLng latLng = new LatLng(list.get(index).getX(), list.get(index).getY());
+            LatLng latLng = new LatLng(list.get(index).getPositionX(), list.get(index).getPositionY());
             options.add(latLng);
         }
         PolylineOptions polylineOptions = new PolylineOptions().points(options)
@@ -235,12 +297,12 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
     }
 
     @Override
-    public void showUserTrace(List<Point> list) {
+    public void showUserTrace(List<TraceInfo> list) {
         initMap(list);
     }
 
     @Override
-    public void showCarTrace(List<Point> list) {
+    public void showCarTrace(List<TraceInfo> list) {
         initMap(list);
     }
 

@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.util;
+package com.xunchijn.dcappv1.test;
 
 import com.xunchijn.dcappv1.event.model.SettingItem;
 import com.xunchijn.dcappv1.map.model.Point;

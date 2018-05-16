@@ -1,23 +1,42 @@
 package com.xunchijn.dcappv1.map.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xunchijn.dcappv1.event.model.SelectItem;
 
-/**
- * Author：Fan BaoZhu
- * Time:2018/5/9   下午2:50
- * Description:
- **/
-public class CarInfo extends SelectItem {
+public class CarInfo {
+    private String carId;
+    private String carName;
+    @SerializedName("carZoon")
+    private String carZone;
+    private String carStatus;
+    private String carAddress;
+    private String carPoint;
+    private String carGPSScanTime;
 
-    public CarInfo(String id, String name) {
-        super(id, name);
+    public String getCarId() {
+        return carId;
     }
 
-    @SerializedName("position")
-    private String mPosition;
+    public String getCarName() {
+        return carName;
+    }
 
-    public String getPosition() {
-        return mPosition;
+    public String getCarZone() {
+        return carZone;
+    }
+
+    public String getCarStatus() {
+        return carStatus;
+    }
+
+    public String getCarAddress() {
+        return carAddress;
+    }
+
+    public String getCarPoint() {
+        return carPoint;
+    }
+
+    public String getCarGPSScanTime() {
+        return carGPSScanTime;
     }
 }

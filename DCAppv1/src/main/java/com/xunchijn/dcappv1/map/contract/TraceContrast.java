@@ -1,7 +1,7 @@
 package com.xunchijn.dcappv1.map.contract;
 
 import com.xunchijn.dcappv1.base.BaseView;
-import com.xunchijn.dcappv1.map.model.Point;
+import com.xunchijn.dcappv1.map.model.TraceInfo;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ public interface TraceContrast {
     interface View extends BaseView<Presenter> {
 
         //显示用户轨迹
-        void showUserTrace(List<Point> list);
+        void showUserTrace(List<TraceInfo> list);
 
         //显示车辆轨迹
-        void showCarTrace(List<Point> list);
+        void showCarTrace(List<TraceInfo> list);
     }
 }

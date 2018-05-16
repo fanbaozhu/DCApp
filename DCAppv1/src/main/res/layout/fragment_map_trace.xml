@@ -11,36 +11,20 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <LinearLayout
-        android:id="@+id/layout_select_time"
+    <TextView
+        android:id="@+id/text_select_time"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorWhite"
         android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018年05月15日"
-            android:textSize="16sp" />
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="1dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="20：00——20：00"
-            android:textSize="16sp" />
-    </LinearLayout>
+        android:text="点击选择时间"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/layout_select_time"
+        android:layout_above="@id/text_select_time"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">

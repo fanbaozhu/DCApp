@@ -25,9 +25,9 @@ import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.UserInfo;
 import com.xunchijn.dcappv1.map.contract.LocationContrast;
+import com.xunchijn.dcappv1.map.model.Car;
 import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.map.model.User;
-import com.xunchijn.dcappv1.map.presenter.LocationPresenter;
 
 import java.util.ArrayList;
 
@@ -57,9 +57,8 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
 
     private void initData() {
         bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
-        mPresenter = new LocationPresenter(this);
         Bundle bundle = getArguments();
-        if (bundle == null) {
+        if (bundle == null || mPresenter == null) {
             return;
         }
         boolean isAll = bundle.getBoolean("isAll");
@@ -129,7 +128,7 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
     }
 
     @Override
-    public void showCars(ArrayList<CarInfo> list) {
+    public void showCars(ArrayList<Car> list) {
         for (int i = 0; i < list.size(); i++) {
             showLocation(list.get(i).getName(), list.get(i).getPosition());
         }
@@ -139,6 +138,12 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
     public void showUser(UserInfo userInfo) {
         showLocation(userInfo.getUserName(), userInfo.getUserPoint());
         mViewNames.setText(userInfo.getUserName());
+    }
+
+    @Override
+    public void showCar(CarInfo carInfo) {
+        showLocation(carInfo.getCarName(), carInfo.getCarPoint());
+        mViewNames.setText(carInfo.getCarName());
     }
 
     @Override

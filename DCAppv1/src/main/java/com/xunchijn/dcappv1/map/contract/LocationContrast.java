@@ -2,6 +2,7 @@ package com.xunchijn.dcappv1.map.contract;
 
 import com.xunchijn.dcappv1.base.BaseView;
 import com.xunchijn.dcappv1.common.module.UserInfo;
+import com.xunchijn.dcappv1.map.model.Car;
 import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.map.model.User;
 
@@ -19,6 +20,8 @@ public interface LocationContrast {
 
         void getUser(String userId);
 
+        void getCar(String carId);
+
         void getCars(String subDepartmentId);
     }
 
@@ -26,8 +29,10 @@ public interface LocationContrast {
 
         void showUsers(ArrayList<User> list);
 
-        void showCars(ArrayList<CarInfo> list);
+        void showCars(ArrayList<Car> list);
 
         void showUser(UserInfo userInfo);
+
+        void showCar(CarInfo carInfo);
     }
 }

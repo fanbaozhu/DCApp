@@ -3,8 +3,10 @@ package com.xunchijn.dcappv1.map.presenter;
 import android.util.Log;
 
 import com.xunchijn.dcappv1.data.EventService;
+import com.xunchijn.dcappv1.data.MapService;
 import com.xunchijn.dcappv1.event.model.EventResult;
 import com.xunchijn.dcappv1.map.contract.SelectContrast;
+import com.xunchijn.dcappv1.map.model.MapResult;
 import com.xunchijn.dcappv1.util.Result;
 
 import io.reactivex.Observer;
@@ -16,13 +18,16 @@ public class SelectPresenter implements SelectContrast.Presenter {
     private static final String TAG = "Select";
     private SelectContrast.View mView;
     private EventService mEventService;
-    private Observer<Response<Result<EventResult>>> mObserver;
+    private MapService mMapService;
+    private Observer<Response<Result<EventResult>>> mObserverCommon;
+    private Observer<Response<Result<MapResult>>> mObserverMap;
 
     public SelectPresenter(SelectContrast.View view) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
-        mObserver = new Observer<Response<Result<EventResult>>>() {
+        mMapService = new MapService();
+        mObserverCommon = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
@@ -32,6 +37,31 @@ public class SelectPresenter implements SelectContrast.Presenter {
             public void onNext(Response<Result<EventResult>> resultResponse) {
                 if (resultResponse.isSuccessful()) {
                     parseResult(resultResponse.body());
+                } else {
+                    mView.showError(resultResponse.message());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "onError: ", e);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
+            }
+        };
+        mObserverMap = new Observer<Response<Result<MapResult>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d(TAG, "onSubscribe: ");
+            }
+
+            @Override
+            public void onNext(Response<Result<MapResult>> resultResponse) {
+                if (resultResponse.isSuccessful()) {
+                    parseMapResult(resultResponse.body());
                 } else {
                     mView.showError(resultResponse.message());
                 }
@@ -60,6 +90,15 @@ public class SelectPresenter implements SelectContrast.Presenter {
             }
             if (result.getData().getCheckSubDepartment() != null) {
                 mView.showSubDepartment(result.getData().getCheckSubDepartment());
+            }
+        } else {
+            mView.showError(result.getMessage());
+        }
+    }
+
+    private void parseMapResult(Result<MapResult> result) {
+        if (result.getCode() == 200) {
+            if (result.getData() == null) {
                 return;
             }
             if (result.getData().getUserList() != null) {
@@ -77,24 +116,24 @@ public class SelectPresenter implements SelectContrast.Presenter {
     @Override
     public void getDepartment() {
         mEventService.getDepartments().observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+                .subscribe(mObserverCommon);
     }
 
     @Override
     public void getSubDepartment(String departmentId) {
         mEventService.getSubDepartments(departmentId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+                .subscribe(mObserverCommon);
     }
 
     @Override
     public void getUsers(String subDepartmentId) {
-        mEventService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+        mMapService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserverMap);
     }
 
     @Override
     public void getCars(String subDepartmentId) {
-        mEventService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+        mMapService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserverMap);
     }
 }
