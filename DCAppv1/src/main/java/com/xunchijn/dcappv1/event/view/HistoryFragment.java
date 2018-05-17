@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.event.adapter.HistoryAdapter;
-import com.xunchijn.dcappv1.event.contract.HistoryContract;
-import com.xunchijn.dcappv1.event.model.EventEntity;
-import com.xunchijn.dcappv1.event.presenter.HistoryPresenter;
+import com.xunchijn.dcappv1.adapter.HistoryAdapter;
+import com.xunchijn.dcappv1.event.presenter.HistoryContract;
+import com.xunchijn.dcappv1.event.model.EventItem;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     }
 
     @Override
-    public void showHistory(List<EventEntity> list) {
+    public void showHistory(List<EventItem> list) {
         HistoryAdapter historyAdapter = new HistoryAdapter(list);
         viewHistory.setAdapter(historyAdapter);
     }

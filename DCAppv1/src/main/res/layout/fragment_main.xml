@@ -10,7 +10,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="224dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_banner2" />
@@ -19,6 +19,5 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>

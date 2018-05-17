@@ -6,8 +6,8 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
-import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.util.TitleFragment;
+import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.event.presenter.SelectOptionsPresenter;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class SelectOptionsActivity extends AbsBaseActivity {
 
     @Override
     public void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("", true, true);
+        TitleFragment titleFragment = TitleFragment.newInstance("上报设置", true, true);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment)

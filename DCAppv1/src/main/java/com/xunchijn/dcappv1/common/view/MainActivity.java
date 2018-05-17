@@ -1,25 +1,22 @@
 package com.xunchijn.dcappv1.common.view;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.util.PreferHelper;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
-    private BottomNavigationBar mNavigationBar;
-    private PreferHelper mPreferHelper;
+    private FragmentManager mFragmentManager;
+    private MainFragment mMainFragment;
+    private MineFragment mMineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreferHelper = new PreferHelper(this);
         initView();
     }
 
@@ -28,15 +25,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         initNavigationBar();
 
-        MainFragment mainFragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, mainFragment)
-                .show(mainFragment)
+        mMainFragment = new MainFragment();
+        mMineFragment = new MineFragment();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .add(R.id.layout_container, mMainFragment)
+                .add(R.id.layout_container, mMineFragment)
+                .hide(mMineFragment)
+                .show(mMainFragment)
                 .commit();
     }
 
     private void initNavigationBar() {
-        mNavigationBar = findViewById(R.id.bottom_navigation_bar);
+        BottomNavigationBar mNavigationBar = findViewById(R.id.bottom_navigation_bar);
 
         mNavigationBar.setTabSelectedListener(this)
                 .setMode(BottomNavigationBar.MODE_FIXED)
@@ -51,18 +52,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .initialise();
     }
 
-    private void logout() {
-        new AlertDialog.Builder(this).setMessage("确定要退出当前账号吗？")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mPreferHelper.saveUserAccount(null);
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        finish();
-                    }
-                }).setNegativeButton("取消", null).create().show();
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -74,7 +63,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     @Override
     public void onTabSelected(int position) {
-
+        if (position == 1) {
+            mFragmentManager.beginTransaction().hide(mMainFragment).show(mMineFragment).commit();
+        } else {
+            mFragmentManager.beginTransaction().hide(mMineFragment).show(mMainFragment).commit();
+        }
     }
 
     @Override

@@ -15,11 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
-import com.xunchijn.dcappv1.event.adapter.SelectedAdapter;
-import com.xunchijn.dcappv1.event.contract.SelectOptionsContrast;
+import com.xunchijn.dcappv1.adapter.SelectAdapter;
+import com.xunchijn.dcappv1.adapter.SelectedAdapter;
 import com.xunchijn.dcappv1.event.model.SelectItem;
-import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.common.module.SettingItem;
+import com.xunchijn.dcappv1.event.presenter.SelectOptionsContrast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +36,7 @@ public class SelectOptionsFragment extends Fragment implements SelectOptionsCont
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_dept, container, false);
+        View view = inflater.inflate(R.layout.fragment_select_options, container, false);
         initView(view);
         return view;
     }

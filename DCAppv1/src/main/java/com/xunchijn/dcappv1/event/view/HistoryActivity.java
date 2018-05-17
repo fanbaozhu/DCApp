@@ -2,7 +2,7 @@ package com.xunchijn.dcappv1.event.view;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
-import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.util.TitleFragment;
 import com.xunchijn.dcappv1.event.presenter.HistoryPresenter;
 
 /**

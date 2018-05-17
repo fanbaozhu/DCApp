@@ -2,12 +2,11 @@ package com.xunchijn.dcappv1.map.presenter;
 
 import android.util.Log;
 
-import com.xunchijn.dcappv1.data.EventService;
-import com.xunchijn.dcappv1.data.MapService;
+import com.xunchijn.dcappv1.event.model.EventService;
+import com.xunchijn.dcappv1.map.model.MapService;
 import com.xunchijn.dcappv1.event.model.EventResult;
-import com.xunchijn.dcappv1.map.contract.SelectContrast;
 import com.xunchijn.dcappv1.map.model.MapResult;
-import com.xunchijn.dcappv1.util.Result;
+import com.xunchijn.dcappv1.base.Result;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -85,11 +84,11 @@ public class SelectPresenter implements SelectContrast.Presenter {
                 return;
             }
             if (result.getData().getCheckDepartment() != null) {
-                mView.showDepartment(result.getData().getCheckDepartment());
+                mView.showOptions("部门", result.getData().getCheckDepartment());
                 return;
             }
             if (result.getData().getCheckSubDepartment() != null) {
-                mView.showSubDepartment(result.getData().getCheckSubDepartment());
+                mView.showOptions("子部门", result.getData().getCheckSubDepartment());
             }
         } else {
             mView.showError(result.getMessage());
@@ -102,11 +101,11 @@ public class SelectPresenter implements SelectContrast.Presenter {
                 return;
             }
             if (result.getData().getUserList() != null) {
-                mView.showUsers(result.getData().getUserList());
+                mView.showOptions("人员", result.getData().getUserList());
                 return;
             }
             if (result.getData().getCarList() != null) {
-                mView.showCars(result.getData().getCarList());
+                mView.showOptions("车辆", result.getData().getCarList());
             }
         } else {
             mView.showError(result.getMessage());

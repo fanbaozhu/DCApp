@@ -4,8 +4,8 @@ import android.content.Intent;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
-import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.base.TitleFragment.OnItemClickListener;
+import com.xunchijn.dcappv1.util.TitleFragment;
+import com.xunchijn.dcappv1.util.TitleFragment.OnItemClickListener;
 import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 
 public class ReportActivity extends AbsBaseActivity {

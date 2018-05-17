@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.util.TitleFragment;
 
 public class ShowPictureActivity extends AppCompatActivity {
     private String url;

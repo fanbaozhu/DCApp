@@ -4,34 +4,36 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.event.adapter.NestingSelectAdapter;
-import com.xunchijn.dcappv1.event.model.NestingItem;
+import com.xunchijn.dcappv1.adapter.SelectAdapter;
+import com.xunchijn.dcappv1.adapter.SelectedAdapter;
 import com.xunchijn.dcappv1.event.model.SelectItem;
-import com.xunchijn.dcappv1.map.contract.SelectContrast;
-import com.xunchijn.dcappv1.map.model.Car;
-import com.xunchijn.dcappv1.map.model.User;
+import com.xunchijn.dcappv1.common.module.SettingItem;
+import com.xunchijn.dcappv1.map.presenter.SelectContrast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SelectFragment extends Fragment implements SelectContrast.View {
-    private List<SelectItem> mSelectItems = new ArrayList<>();
     private static final String TYPE = "mSelectType";
-    private NestingSelectAdapter mSelectAdapter;
     private SelectContrast.Presenter mPresenter;
-    private List<NestingItem> mList;
-    private String mSubDepartment;
+    private SelectedAdapter mSelectedAdapter;
+    private List<SettingItem> mSelectedItems;
+    private RecyclerView mViewOptions;
+    private TextView mViewTitle;
     private String mSelectType;
-    private String mDepartment;
-    private boolean mMultiSelection;
+    private String mTitle;
 
     public static SelectFragment newInstance(String selectType) {
         SelectFragment selectFragment = new SelectFragment();
@@ -44,74 +46,47 @@ public class SelectFragment extends Fragment implements SelectContrast.View {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select, container, false);
+        View view = inflater.inflate(R.layout.fragment_select_options, container, false);
         initView(view);
         return view;
     }
 
     private void initView(View view) {
-        mList = new ArrayList<>();
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_select);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSelectAdapter = new NestingSelectAdapter(mList);
-        mSelectAdapter.setMultiSelection(mMultiSelection);
-        recyclerView.setAdapter(mSelectAdapter);
-        mSelectAdapter.setItemClickListener(new NestingSelectAdapter.OnItemClickListener() {
+        mViewTitle = view.findViewById(R.id.text_title);
+
+        mViewOptions = view.findViewById(R.id.recycler_view_options);
+        mViewOptions.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        RecyclerView viewSelected = view.findViewById(R.id.recycler_view_selected);
+        viewSelected.setLayoutManager(new LinearLayoutManager(getContext()));
+        mSelectedItems = new ArrayList<>();
+        mSelectedAdapter = new SelectedAdapter(mSelectedItems);
+        viewSelected.setAdapter(mSelectedAdapter);
+        mSelectedAdapter.setItemClickListener(new SelectedAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(SelectItem item) {
-                selectUsers(item);
+            public void onItemClick(SettingItem item) {
+                Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onSubTitleClick(NestingItem item) {
-
+            public void onItemDelete(SettingItem item) {
+                parseDelete(item);
+                boolean delete = false;
+                Iterator<SettingItem> itemIterator = mSelectedItems.iterator();
+                while (itemIterator.hasNext()) {
+                    SettingItem item1 = itemIterator.next();
+                    if (item.equals(item1)) {
+                        delete = true;
+                    }
+                    if (delete) {
+                        itemIterator.remove();
+                    }
+                }
+                mSelectedAdapter.notifyDataSetChanged();
             }
         });
-        initData();
-    }
 
-    private void selectUsers(SelectItem item) {
-        if (mSelectType.equals("车辆")) {
-            if (item.getId().length() == 6) {
-                mDepartment = item.getName();
-                //根据乡镇Id，直接获取车辆信息
-                mPresenter.getCars(item.getId());
-                return;
-            }
-            if (!mMultiSelection) {
-                mSelectItems.clear();
-                mSelectItems.add(item);
-                return;
-            }
-            if (mSelectItems.contains(item)) {
-                mSelectItems.remove(item);
-            } else {
-                mSelectItems.add(item);
-            }
-        } else {
-            if (item.getId().length() == 6) {
-                mDepartment = item.getName();
-                //根据部门Id，获取子部门
-                mPresenter.getSubDepartment(item.getId());
-                return;
-            }
-            if (item.getId().length() == 9) {
-                mSubDepartment = item.getName();
-                //点击子部门选项，获取用户/车辆
-                mPresenter.getUsers(item.getId());
-                return;
-            }
-            if (!mMultiSelection) {
-                mSelectItems.clear();
-                mSelectItems.add(item);
-                return;
-            }
-            if (mSelectItems.contains(item)) {
-                mSelectItems.remove(item);
-            } else {
-                mSelectItems.add(item);
-            }
-        }
+        initData();
     }
 
     private void initData() {
@@ -123,46 +98,66 @@ public class SelectFragment extends Fragment implements SelectContrast.View {
         mPresenter.getDepartment();
     }
 
+    private void parseOptionClick(SelectItem item) {
+        SettingItem settingItem = new SettingItem(1, mTitle, item.getName());
+        settingItem.setId(item.getId());
+        mSelectedItems.add(settingItem);
+        mSelectedAdapter.notifyDataSetChanged();
+        if (mTitle.equals("部门")) {
+            if (mSelectType.equals("人员")) {
+                mPresenter.getSubDepartment(item.getId());
+            } else {
+                mPresenter.getCars(item.getId());
+            }
+            return;
+        }
+        if (mTitle.equals("子部门")) {
+            mPresenter.getUsers(item.getId());
+            return;
+        }
+        showOptions("", null);
+    }
 
-    @Override
-    public void showDepartment(List<SelectItem> list) {
-        mList.clear();
-        NestingItem item = new NestingItem("0", "选择部门", "重置");
-        item.setItems(list);
-        mList.add(item);
-        mSelectAdapter.notifyDataSetChanged();
+    private void parseDelete(SettingItem item) {
+        if (item.getTitle().equals("部门")) {
+            mPresenter.getDepartment();
+            return;
+        }
+        int index = mSelectedItems.indexOf(item);
+        SettingItem settingItem = mSelectedItems.get(index - 1);
+        if (item.getTitle().equals("子部门")) {
+            mPresenter.getSubDepartment(settingItem.getId());
+            return;
+        }
+        if (item.getTitle().equals("人员")) {
+            mPresenter.getUsers(settingItem.getId());
+            return;
+        }
+        if (item.getTitle().equals("车辆")) {
+            mPresenter.getCars(settingItem.getId());
+        }
     }
 
     @Override
-    public void showSubDepartment(List<SelectItem> list) {
-        mList.clear();
-        NestingItem item = new NestingItem("1", String.format("%s-选择子部门", mDepartment), "重置");
-        item.setItems(list);
-        mList.add(item);
-        mSelectAdapter.notifyDataSetChanged();
-    }
+    public void showOptions(String title, List<? extends SelectItem> list) {
+        mTitle = title;
+        mViewTitle.setText(TextUtils.isEmpty(title) ? "" : String.format("请选择%s", mTitle));
 
-    @Override
-    public void showUsers(ArrayList<User> list) {
-        mList.clear();
-        NestingItem item = new NestingItem("2", String.format("%s-%s-选择人员", mDepartment, mSubDepartment), "重置");
-        item.setItems(list);
-        mList.add(item);
-        mSelectAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showCars(ArrayList<Car> list) {
-        mList.clear();
-        NestingItem item = new NestingItem("2", String.format("%s-选择车辆", mDepartment), "重置");
-        item.setItems(list);
-        mList.add(item);
-        mSelectAdapter.notifyDataSetChanged();
+        SelectAdapter mSelectAdapter = new SelectAdapter(list, R.layout.adapter_select_short);
+        mViewOptions.setAdapter(mSelectAdapter);
+        mSelectAdapter.setItemClickListener(new SelectAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SelectItem item) {
+                parseOptionClick(item);
+            }
+        });
     }
 
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        mSelectedItems.clear();
+        mSelectedAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -170,11 +165,7 @@ public class SelectFragment extends Fragment implements SelectContrast.View {
         mPresenter = presenter;
     }
 
-    public List<SelectItem> getSelectItems() {
-        return mSelectItems;
-    }
-
-    public void setMultiSelection(boolean multiSelection) {
-        mMultiSelection = multiSelection;
+    public List<SettingItem> getSelectedItems() {
+        return mSelectedItems;
     }
 }

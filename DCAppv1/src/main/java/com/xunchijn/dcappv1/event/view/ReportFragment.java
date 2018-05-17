@@ -32,12 +32,10 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.BaseConfig;
-import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
-import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
-import com.xunchijn.dcappv1.event.contract.ReportContract;
-import com.xunchijn.dcappv1.event.model.SettingItem;
-import com.xunchijn.dcappv1.map.view.PositionActivity;
-import com.xunchijn.dcappv1.test.TestData;
+import com.xunchijn.dcappv1.adapter.PictureAdapter;
+import com.xunchijn.dcappv1.adapter.SettingAdapter;
+import com.xunchijn.dcappv1.event.presenter.ReportContract;
+import com.xunchijn.dcappv1.common.module.SettingItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,7 +47,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ReportFragment extends Fragment implements ReportContract.View {
     private List<String> mUrls = new ArrayList<>();
-    private ReportSettingAdapter mSettingAdapter;
+    private SettingAdapter mSettingAdapter;
     private ReportContract.Presenter mPresenter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
@@ -88,9 +86,9 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mSettingItems = BaseConfig.getSettingItems();
-        mSettingAdapter = new ReportSettingAdapter(mSettingItems);
+        mSettingAdapter = new SettingAdapter(mSettingItems);
         mViewSettings.setAdapter(mSettingAdapter);
-        mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
+        mSettingAdapter.setItemClickListener(new SettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
                 if (item.getIndex() == 0) {

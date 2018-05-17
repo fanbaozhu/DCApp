@@ -3,8 +3,8 @@ package com.xunchijn.dcappv1.statistic;
 import android.util.Log;
 
 import com.xunchijn.dcappv1.common.module.CommonResult;
-import com.xunchijn.dcappv1.data.CommonService;
-import com.xunchijn.dcappv1.util.Result;
+import com.xunchijn.dcappv1.common.module.CommonService;
+import com.xunchijn.dcappv1.base.Result;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

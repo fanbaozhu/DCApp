@@ -7,11 +7,9 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
-import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.event.model.SelectItem;
-import com.xunchijn.dcappv1.location.LocationActivity;
+import com.xunchijn.dcappv1.util.TitleFragment;
+import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.map.presenter.SelectPresenter;
-import com.xunchijn.dcappv1.trace.TraceActivity;
 
 import java.util.List;
 
@@ -49,20 +47,16 @@ public class SelectUsersActivity extends AbsBaseActivity {
 
     private void selectResult() {
 
-        List<SelectItem> items = selectFragment.getSelectItems();
-        if (items == null || items.size() == 0) {
+        List<SettingItem> items = selectFragment.getSelectedItems();
+        if (items == null || items.size() < 3) {
             Toast.makeText(this, "请先选择一位人员", Toast.LENGTH_SHORT).show();
             return;
         }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            builder.append(items.get(i).getId());
-            builder.append(",");
-        }
+
         if (mType.equals("定位")) {
-            LocationActivity.newInstance(this, "人员", builder.substring(0, builder.lastIndexOf(",")));
+            LocationActivity.newInstance(this, "人员", items.get(2).getId());
         } else {
-            TraceActivity.newInstance(this, "人员", builder.substring(0, builder.lastIndexOf(",")));
+            TraceActivity.newInstance(this, "人员", items.get(2).getId());
         }
         finish();
     }
@@ -74,7 +68,6 @@ public class SelectUsersActivity extends AbsBaseActivity {
             return;
         }
         selectFragment = SelectFragment.newInstance("人员");
-        selectFragment.setMultiSelection(mType.equals("地图定位"));
         new SelectPresenter(selectFragment);
         getSupportFragmentManager()
                 .beginTransaction()

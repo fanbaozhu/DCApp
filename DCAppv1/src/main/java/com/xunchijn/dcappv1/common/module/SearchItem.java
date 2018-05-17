@@ -1,7 +1,5 @@
 package com.xunchijn.dcappv1.common.module;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Administrator on 2018/5/16 0016.
  */

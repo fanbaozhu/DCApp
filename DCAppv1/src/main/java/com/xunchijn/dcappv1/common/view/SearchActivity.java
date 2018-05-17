@@ -8,14 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.base.TitleFragment;
-import com.xunchijn.dcappv1.common.adapter.SearchAdapter;
-import com.xunchijn.dcappv1.common.contract.SearchContrast;
+import com.xunchijn.dcappv1.util.TitleFragment;
+import com.xunchijn.dcappv1.adapter.SearchAdapter;
+import com.xunchijn.dcappv1.common.presenter.SearchContrast;
 import com.xunchijn.dcappv1.common.module.SearchItem;
 import com.xunchijn.dcappv1.common.presenter.SearchPresenter;
 

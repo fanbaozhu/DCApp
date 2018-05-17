@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.adapter.StatisticAdapter;
+import com.xunchijn.dcappv1.util.TitleFragment;
 
 import java.util.List;
 

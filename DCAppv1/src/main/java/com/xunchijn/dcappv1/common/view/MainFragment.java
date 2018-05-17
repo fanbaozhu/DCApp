@@ -10,11 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.BaseConfig;
-import com.xunchijn.dcappv1.common.adapter.SubTitleAdapter;
-import com.xunchijn.dcappv1.common.adapter.TitleAdapter;
+import com.xunchijn.dcappv1.adapter.SubTitleAdapter;
+import com.xunchijn.dcappv1.adapter.TitleAdapter;
 import com.xunchijn.dcappv1.common.module.SubTitleItem;
 import com.xunchijn.dcappv1.event.view.HistoryActivity;
 import com.xunchijn.dcappv1.event.view.ReportActivity;
@@ -49,11 +50,15 @@ public class MainFragment extends Fragment {
     private void parseClick(int witch, String title) {
         switch (witch) {
             case 1:
+                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
+                break;
             case 2:
             case 3:
                 SelectCarsActivity.newInstance(getContext(), title);
                 break;
             case 4:
+                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
+                break;
             case 5:
             case 6:
                 SelectUsersActivity.newInstance(getContext(), title);

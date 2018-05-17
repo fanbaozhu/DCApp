@@ -2,10 +2,9 @@ package com.xunchijn.dcappv1.event.presenter;
 
 import android.util.Log;
 
-import com.xunchijn.dcappv1.data.EventService;
-import com.xunchijn.dcappv1.event.contract.SelectOptionsContrast;
+import com.xunchijn.dcappv1.event.model.EventService;
 import com.xunchijn.dcappv1.event.model.EventResult;
-import com.xunchijn.dcappv1.util.Result;
+import com.xunchijn.dcappv1.base.Result;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

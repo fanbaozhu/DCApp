@@ -1,6 +1,7 @@
 package com.xunchijn.dcappv1.common.module;
 
 import com.google.gson.annotations.SerializedName;
+import com.xunchijn.dcappv1.base.UserInfo;
 import com.xunchijn.dcappv1.statistic.StatisticItem;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.xunchijn.dcappv1.base;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.SubTitleItem;
 import com.xunchijn.dcappv1.common.module.TitleItem;
-import com.xunchijn.dcappv1.event.model.SettingItem;
+import com.xunchijn.dcappv1.common.module.SettingItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +52,21 @@ public class BaseConfig {
         SettingItem item3 = new SettingItem(2, "子部门", "");
         SettingItem item4 = new SettingItem(3, "考核类型", "");
         SettingItem item5 = new SettingItem(4, "考核项目", "");
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        return items;
+    }
+
+    public static List<SettingItem> getMineSettings() {
+        List<SettingItem> items = new ArrayList<>();
+        SettingItem item1 = new SettingItem(0, "消息通知", "");
+        SettingItem item2 = new SettingItem(1, "修改密码", "");
+        SettingItem item3 = new SettingItem(2, "清除缓存", "");
+        SettingItem item4 = new SettingItem(3, "关于我们", "");
+        SettingItem item5 = new SettingItem(4, "退出登录", "");
         items.add(item1);
         items.add(item2);
         items.add(item3);

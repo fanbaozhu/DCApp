@@ -2,10 +2,9 @@ package com.xunchijn.dcappv1.common.presenter;
 
 import android.util.Log;
 
-import com.xunchijn.dcappv1.common.contract.SearchContrast;
 import com.xunchijn.dcappv1.common.module.CommonResult;
-import com.xunchijn.dcappv1.data.CommonService;
-import com.xunchijn.dcappv1.util.Result;
+import com.xunchijn.dcappv1.common.module.CommonService;
+import com.xunchijn.dcappv1.base.Result;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
