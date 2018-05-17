@@ -15,6 +15,8 @@ import java.util.List;
 public class SelectAdapter extends RecyclerView.Adapter {
     private List<? extends SelectItem> mList;
     private int mLayoutId;
+    private boolean mMultiSelection;
+    private SelectItem mLastSelected;
 
     public SelectAdapter(List<? extends SelectItem> list, int layoutId) {
         mList = list;
@@ -35,6 +37,7 @@ public class SelectAdapter extends RecyclerView.Adapter {
         }
         SelectItem item = mList.get(position);
         if (item != null && holder instanceof SelectView) {
+            item.setIndex(position);
             ((SelectView) holder).bindSubDepartment(item);
         }
     }
@@ -60,6 +63,17 @@ public class SelectAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mMultiSelection) {
+                        item.setSelected(!item.isSelected());
+                    } else {
+                        if (mLastSelected != null) {
+                            mLastSelected.setSelected(false);
+                            notifyItemChanged(mLastSelected.getIndex());
+                        }
+                        item.setSelected(true);
+                    }
+                    mLastSelected = item;
+                    notifyItemChanged(item.getIndex());
                     mItemClickListener.onItemClick(item);
                 }
             });
@@ -74,5 +88,9 @@ public class SelectAdapter extends RecyclerView.Adapter {
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
+    }
+
+    public void setMultiSelection(boolean multiSelection) {
+        mMultiSelection = multiSelection;
     }
 }

@@ -39,7 +39,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         titleFragment.setRightDrawableId(R.mipmap.ic_picture_delete);
         getSupportFragmentManager().beginTransaction().add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
-        titleFragment.setConfirmListener(new TitleFragment.OnItemClickListener() {
+        titleFragment.setItemClickListener(new TitleFragment.OnItemClickListener() {
             @Override
             public void onBack() {
                 finish();

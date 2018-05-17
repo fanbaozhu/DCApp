@@ -1,36 +1,51 @@
 package com.xunchijn.dcappv1.event.view;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.base.AbsBaseActivity;
+import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.base.TitleFragment.OnItemClickListener;
+import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 
-public class ReportActivity extends AppCompatActivity {
-    private ReportFragment reportFragment;
+public class ReportActivity extends AbsBaseActivity {
+    private ReportFragment mReportFragment;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initTitle() {
+        TitleFragment titleFragment = TitleFragment.newInstance("事件上报", true, true);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.layout_title, titleFragment)
+                .show(titleFragment)
+                .commit();
 
-        initView();
+        titleFragment.setItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onBack() {
+                onBackPressed();
+            }
+
+            @Override
+            public void onConfirm() {
+                mReportFragment.Report();
+            }
+        });
     }
 
-    private void initView() {
-        setContentView(R.layout.activity_report);
-
-        reportFragment = new ReportFragment();
+    @Override
+    public void initContent() {
+        mReportFragment = new ReportFragment();
+        new ReportPresenter(mReportFragment);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, reportFragment)
-                .show(reportFragment)
+                .add(R.id.layout_container, mReportFragment)
+                .show(mReportFragment)
                 .commit();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (reportFragment != null) {
-            reportFragment.onActivityResult(requestCode, resultCode, data);
+        if (mReportFragment != null) {
+            mReportFragment.onActivityResult(requestCode, resultCode, data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

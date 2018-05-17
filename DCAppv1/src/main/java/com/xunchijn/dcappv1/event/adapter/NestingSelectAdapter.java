@@ -81,7 +81,8 @@ public class NestingSelectAdapter extends RecyclerView.Adapter {
                 return;
             }
             mViewSubDepartment.setLayoutManager(new GridLayoutManager(mContext, 3));
-            SelectAdapter adapter = new SelectAdapter(nestingItem.getItems(), R.layout.adapter_select_item);
+            SelectAdapter adapter = new SelectAdapter(nestingItem.getItems(), R.layout.adapter_select_short);
+            adapter.setMultiSelection(mMultiSelection);
             mViewSubDepartment.setAdapter(adapter);
             adapter.setItemClickListener(new SelectAdapter.OnItemClickListener() {
                 @Override
@@ -105,5 +106,11 @@ public class NestingSelectAdapter extends RecyclerView.Adapter {
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
+    }
+
+    private boolean mMultiSelection;
+
+    public void setMultiSelection(boolean multiSelection) {
+        mMultiSelection = multiSelection;
     }
 }

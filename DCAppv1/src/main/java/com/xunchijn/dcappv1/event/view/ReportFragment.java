@@ -31,15 +31,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.base.TitleFragment;
+import com.xunchijn.dcappv1.base.BaseConfig;
 import com.xunchijn.dcappv1.event.adapter.PictureAdapter;
 import com.xunchijn.dcappv1.event.adapter.ReportSettingAdapter;
-import com.xunchijn.dcappv1.event.adapter.SelectAdapter;
 import com.xunchijn.dcappv1.event.contract.ReportContract;
-import com.xunchijn.dcappv1.event.model.SelectItem;
 import com.xunchijn.dcappv1.event.model.SettingItem;
-import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
-import com.xunchijn.dcappv1.event.widget.SelectDialog;
+import com.xunchijn.dcappv1.map.view.PositionActivity;
 import com.xunchijn.dcappv1.test.TestData;
 
 import java.io.File;
@@ -51,20 +48,28 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class ReportFragment extends Fragment implements ReportContract.View {
-    private ReportContract.Presenter mPresenter;
+    private List<String> mUrls = new ArrayList<>();
     private ReportSettingAdapter mSettingAdapter;
+    private ReportContract.Presenter mPresenter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
-    private List<String> mUrls = new ArrayList<>();
+    private EditText mInputDescribe;
     private Activity mActivity;
     private File mPicture;
-    private EditText mInputDescribe;
+
+    private final int REQUEST_CODE_PERMISSION = 0x1000;
+
+    private final int REQUEST_CODE_SHOW_PICTURE = 0x1001;
+    private final int REQUEST_CODE_CAMERA = 0x1002;
+    private final int REQUEST_CODE_CROP_PHOTO = 0x1003;
+    private final int REQUEST_CODE_PICK_PHOTO = 0x1004;
+    private final int REQUEST_CODE_SELECT_OPTIONS = 0x1005;
+    private final int REQUEST_CODE_SELECT_POSITION = 0x1006;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
-        mPresenter = new ReportPresenter(this);
     }
 
     @Nullable
@@ -72,33 +77,33 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         mInputDescribe = view.findViewById(R.id.edit_describe);
-        initTitle();
+
         initPictureView(view);
         initSettingView(view);
         return view;
     }
 
-    //初始化标题栏
-    private void initTitle() {
-        final TitleFragment mTitleFragment = TitleFragment.newInstance("事件上报", true, true);
+    private void initSettingView(View view) {
+        RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
+        mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        getFragmentManager().beginTransaction().add(R.id.layout_title, mTitleFragment)
-                .show(mTitleFragment).commit();
-
-        mTitleFragment.setConfirmListener(new TitleFragment.OnItemClickListener() {
+        mSettingItems = BaseConfig.getSettingItems();
+        mSettingAdapter = new ReportSettingAdapter(mSettingItems);
+        mViewSettings.setAdapter(mSettingAdapter);
+        mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
             @Override
-            public void onBack() {
-                mActivity.onBackPressed();
-            }
-
-            @Override
-            public void onConfirm() {
-                report();
+            public void onItemClick(SettingItem item) {
+                if (item.getIndex() == 0) {
+                    Toast.makeText(getContext(), "定位", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(getContext(), PositionActivity.class), REQUEST_CODE_SELECT_POSITION);
+                } else {
+                    startActivityForResult(new Intent(getContext(), SelectOptionsActivity.class), REQUEST_CODE_SELECT_OPTIONS);
+                }
             }
         });
     }
 
-    private void report() {
+    public void Report() {
         String describe = mInputDescribe.getText().toString();
         if (TextUtils.isEmpty(describe)) {
             showError("事件描述不能为空！");
@@ -108,13 +113,31 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             showError("请选择至少一张图片");
             return;
         }
+        String position = mSettingItems.get(0).getSubtitle();
+        String point = mSettingItems.get(0).getId();
+        if (TextUtils.isEmpty(position) || TextUtils.isEmpty(point)) {
+            showError("请设置所在位置");
+            return;
+        }
+        String mSubDepartmentId = mSettingItems.get(2).getId();
+        if (TextUtils.isEmpty(mSubDepartmentId)) {
+            showError("请设置子部门");
+            return;
+        }
+        String mTypeId = mSettingItems.get(3).getId();
+        if (TextUtils.isEmpty(position)) {
+            showError("请设置考核类型");
+            return;
+        }
+        String mContentId = mSettingItems.get(4).getId();
+        if (TextUtils.isEmpty(position)) {
+            showError("请设置考核内容");
+            return;
+        }
         if (mPresenter != null) {
-            mPresenter.report(describe, mUrls, "山东省济南市高新区", "135.24,35.35", mSubDepartmentId,
-                    mTypeId, mContentId, "巡查员");
+            mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, mTypeId, mContentId, "巡查员");
         }
     }
-
-    private final int REQUEST_CODE_SHOW_PICTURE = 0x1000;
 
     //初始化图片列表
     private void initPictureView(View view) {
@@ -145,10 +168,6 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         });
     }
 
-    private final int REQUEST_CODE_CAMERA = 0x1002;
-    private final int REQUEST_CODE_CROP_PHOTO = 0x1003;
-    private final int REQUEST_CODE_PICK_PHOTO = 0x1004;
-    private final int REQUEST_CODE_PERMISSION = 0x1005;
 
     //调用相机拍照
     public void intentToCamera() {
@@ -256,6 +275,33 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             }
             return;
         }
+        if (requestCode == REQUEST_CODE_SELECT_OPTIONS && resultCode == RESULT_OK) {
+            Bundle bundle = data.getBundleExtra("args");
+            if (bundle == null) {
+                return;
+            }
+            ArrayList<SettingItem> list = (ArrayList<SettingItem>) bundle.getSerializable("selected");
+            if (list != null) {
+                SettingItem item = mSettingItems.get(0);
+                mSettingItems.clear();
+                mSettingItems.add(item);
+                mSettingItems.addAll(list);
+                mSettingAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
+        if (requestCode == REQUEST_CODE_SELECT_POSITION && resultCode == RESULT_OK) {
+            String position = data.getStringExtra("position");
+            String point = data.getStringExtra("point");
+            if (TextUtils.isEmpty(position) || TextUtils.isEmpty(point)) {
+                showError("定位失败，请重新设置所在位置");
+            } else {
+                mSettingItems.get(0).setSubtitle(position);
+                mSettingItems.get(0).setId(point);
+                mSettingAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -326,111 +372,10 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         }
     }
 
-    private void initSettingView(View view) {
-        RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
-        mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSettingItems = TestData.getSettingItems();
-        mSettingAdapter = new ReportSettingAdapter(mSettingItems);
-        mViewSettings.setAdapter(mSettingAdapter);
-        mSettingAdapter.setItemClickListener(new ReportSettingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SettingItem item) {
-                getSettingItems(item.getIndex());
-            }
-        });
-    }
-
-    private String mDepartmentId = "";
-    private String mSubDepartmentId = "";
-    private String mTypeId = "";
-    private String mContentId = "";
-
-    private void getSettingItems(int witch) {
-        if (mPresenter == null) {
-            return;
-        }
-        switch (witch) {
-            case 1:
-                mPresenter.getDepartment();
-                break;
-            case 2:
-                mPresenter.getSubDepartment(mDepartmentId);
-                break;
-            case 3:
-                mPresenter.getCheckType();
-                break;
-            case 4:
-                mPresenter.getCheckContent(mTypeId);
-                break;
-        }
-    }
-
-    @Override
-    public void showDepartment(List<SelectItem> list) {
-        showSettingDialog("考核部门", list, new SelectAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SelectItem item) {
-                mDepartmentId = item.getId();
-                mSettingItems.get(1).setSubtitle(item.getName());
-                mSettingAdapter.notifyItemChanged(1);
-                dialog.dismiss();
-            }
-        });
-    }
-
-    @Override
-    public void showSubDepartment(List<SelectItem> list) {
-        showSettingDialog("考核子部门", list, new SelectAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SelectItem item) {
-                mSubDepartmentId = item.getId();
-                mSettingItems.get(2).setSubtitle(item.getName());
-                mSettingAdapter.notifyItemChanged(2);
-                dialog.dismiss();
-            }
-        });
-    }
-
-    @Override
-    public void showCheckType(List<SelectItem> list) {
-        showSettingDialog("考核类型", list, new SelectAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SelectItem item) {
-                mTypeId = item.getId();
-                mSettingItems.get(3).setSubtitle(item.getName());
-                mSettingAdapter.notifyItemChanged(3);
-                dialog.dismiss();
-            }
-        });
-    }
-
-    @Override
-    public void showCheckContent(List<SelectItem> list) {
-        showSettingDialog("考核内容", list, new SelectAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SelectItem item) {
-                mContentId = item.getId();
-                mSettingItems.get(4).setSubtitle(item.getName());
-                mSettingAdapter.notifyItemChanged(4);
-                dialog.dismiss();
-            }
-        });
-    }
-
     @Override
     public void reportSuccess() {
         showError("上报成功");
         mActivity.onBackPressed();
-    }
-
-    SelectDialog dialog;
-
-    private void showSettingDialog(String title, List<SelectItem> list, SelectAdapter.OnItemClickListener listener) {
-        dialog = new SelectDialog();
-        dialog.setTitle(title);
-        dialog.setList(list);
-        dialog.setItemClickListener(listener);
-        dialog.show(getFragmentManager(), title);
     }
 
     @Override

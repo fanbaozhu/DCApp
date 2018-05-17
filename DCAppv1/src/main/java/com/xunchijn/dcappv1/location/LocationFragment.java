@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.map.view;
+package com.xunchijn.dcappv1.location;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,7 +24,6 @@ import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.common.module.UserInfo;
-import com.xunchijn.dcappv1.map.contract.LocationContrast;
 import com.xunchijn.dcappv1.map.model.Car;
 import com.xunchijn.dcappv1.map.model.CarInfo;
 import com.xunchijn.dcappv1.map.model.User;
@@ -43,34 +42,13 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
     private MapView mMapView;
     private BaiduMap mMap;
 
-    public static LocationFragment newInstance(Bundle bundle) {
+    public static LocationFragment newInstance(String type, String id) {
         LocationFragment fragment = new LocationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        bundle.putString("id", id);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initData();
-    }
-
-    private void initData() {
-        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
-        Bundle bundle = getArguments();
-        if (bundle == null || mPresenter == null) {
-            return;
-        }
-        boolean isAll = bundle.getBoolean("isAll");
-        String id = bundle.getString("id");
-        if (TextUtils.isEmpty(id)) {
-            return;
-        }
-        if (isAll) {
-            mPresenter.getUsers(id);
-        } else {
-            mPresenter.getUser(id);
-        }
     }
 
     @Nullable
@@ -82,7 +60,6 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
         return view;
     }
 
-
     private void initMap(View view) {
         mMapView = view.findViewById(R.id.bmapView);
         //获取地图控件引用
@@ -90,6 +67,26 @@ public class LocationFragment extends Fragment implements LocationContrast.View 
 
         MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.0f);
         mMap.setMapStatus(msu);
+
+        initData();
+    }
+
+    private void initData() {
+        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_gps_point);
+        Bundle bundle = getArguments();
+        if (bundle == null || mPresenter == null) {
+            return;
+        }
+        String type = bundle.getString("type");
+        String id = bundle.getString("id");
+        if (TextUtils.isEmpty(id) || TextUtils.isEmpty(type)) {
+            return;
+        }
+        if (type.equals("人员")) {
+            mPresenter.getUser(id);
+        } else {
+            mPresenter.getCar(id);
+        }
     }
 
     @Override

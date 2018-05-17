@@ -33,18 +33,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".common.view.MainActivity">
+        <activity
+            android:name=".common.view.MainActivity"
+            android:theme="@style/AppMain">
 
         </activity>
         <activity android:name=".event.view.ShowPictureActivity" />
         <activity
             android:name=".common.view.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".event.view.ReportActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".map.view.MapActivity" />
-        <activity android:name=".map.view.SelectActivity" />
+        <activity android:name=".trace.TraceActivity" />
         <activity android:name=".statistic.StatisticActivity" />
         <activity android:name=".common.view.SearchActivity" />
         <activity android:name=".event.view.HistoryActivity" />
@@ -64,7 +65,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".map.view.SelectUserActivity" />
+        <activity android:name=".map.view.SelectUsersActivity" />
+        <activity android:name=".location.LocationActivity" />
+        <activity android:name=".map.view.SelectCarsActivity" />
+        <activity android:name=".event.view.SelectOptionsActivity" />
+        <activity android:name=".map.view.PositionActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

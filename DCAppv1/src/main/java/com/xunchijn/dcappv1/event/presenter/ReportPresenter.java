@@ -63,22 +63,6 @@ public class ReportPresenter implements ReportContract.Presenter {
             if (result.getData() == null) {
                 return;
             }
-            if (result.getData().getCheckDepartment() != null) {
-                mView.showDepartment(result.getData().getCheckDepartment());
-                return;
-            }
-            if (result.getData().getCheckSubDepartment() != null) {
-                mView.showSubDepartment(result.getData().getCheckSubDepartment());
-                return;
-            }
-            if (result.getData().getCheckType() != null) {
-                mView.showCheckType(result.getData().getCheckType());
-                return;
-            }
-            if (result.getData().getCheckContent() != null) {
-                mView.showCheckContent(result.getData().getCheckContent());
-                return;
-            }
             String fileName = result.getData().getFileName();
             if (!TextUtils.isEmpty(fileName)) {
                 mMap.put("pictureName", fileName);
@@ -94,34 +78,17 @@ public class ReportPresenter implements ReportContract.Presenter {
         }
     }
 
-    @Override
-    public void getDepartment() {
-        mEventService.getDepartments().observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+    private void report() {
+        if (mMap == null) {
+            mView.showError("参数不能为null");
+            return;
+        }
+        mEventService.report(mMap).observeOn(AndroidSchedulers.mainThread()).subscribe(mObserver);
     }
 
     @Override
-    public void getSubDepartment(String departmentId) {
-        mEventService.getSubDepartments(departmentId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
-    }
-
-    @Override
-    public void getCheckType() {
-        mEventService.getCheckType().observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
-    }
-
-    @Override
-    public void getCheckContent(String typeId) {
-        mEventService.getCheckContent(typeId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
-    }
-
-    @Override
-    public void report(String describe, List<String> urls, String address, String point, String subDepartment, String type, String content, String accountId) {
-        uploadPic(urls);
-
+    public void report(String describe, List<String> urls, String address, String point,
+                       String subDepartment, String type, String content, String accountId) {
         mMap = new HashMap<>();
         mMap.put("describe", describe);
         mMap.put("subDepartment", subDepartment);
@@ -130,16 +97,7 @@ public class ReportPresenter implements ReportContract.Presenter {
         mMap.put("accountId", accountId);
         mMap.put("point", point);
         mMap.put("address", address);
-    }
-
-    private void report() {
-        if (mMap == null) {
-            mView.showError("参数不能为null");
-            return;
-        }
-        mEventService.report(mMap)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+        uploadPic(urls);
     }
 
     private void uploadPic(List<String> urls) {
@@ -156,7 +114,6 @@ public class ReportPresenter implements ReportContract.Presenter {
             RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
             reqMap.put(String.format("picPath\";filename=\"%s", file.getName()), requestFile);
         }
-        mEventService.uploadPic(reqMap).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mObserver);
+        mEventService.uploadPic(reqMap).observeOn(AndroidSchedulers.mainThread()).subscribe(mObserver);
     }
 }

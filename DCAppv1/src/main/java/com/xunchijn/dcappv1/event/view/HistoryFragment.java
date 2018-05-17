@@ -23,12 +23,6 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     private HistoryContract.Presenter mPresenter;
     private RecyclerView viewHistory;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPresenter = new HistoryPresenter(this);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.map.contract;
+package com.xunchijn.dcappv1.location;
 
 import com.xunchijn.dcappv1.base.BaseView;
 import com.xunchijn.dcappv1.common.module.UserInfo;

@@ -1,9 +1,9 @@
-package com.xunchijn.dcappv1.map.presenter;
+package com.xunchijn.dcappv1.location;
 
 import android.util.Log;
 
 import com.xunchijn.dcappv1.data.MapService;
-import com.xunchijn.dcappv1.map.contract.TraceContrast;
+import com.xunchijn.dcappv1.location.LocationContrast;
 import com.xunchijn.dcappv1.map.model.MapResult;
 import com.xunchijn.dcappv1.util.Result;
 
@@ -12,13 +12,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
-public class TracePresenter implements TraceContrast.Presenter {
-    private static final String TAG = "Trace";
-    private TraceContrast.View mView;
+/**
+ * Created by Administrator on 2018/5/9 0009.
+ */
+
+public class LocationPresenter implements LocationContrast.Presenter {
+    private static final String TAG = "Location";
+    private LocationContrast.View mView;
     private MapService mMapService;
     private Observer<Response<Result<MapResult>>> mObserver;
 
-    public TracePresenter(TraceContrast.View view) {
+    public LocationPresenter(LocationContrast.View view) {
         mView = view;
         mView.setPresenter(this);
         mMapService = new MapService();
@@ -54,12 +58,20 @@ public class TracePresenter implements TraceContrast.Presenter {
             if (result.getData() == null) {
                 return;
             }
-            if (result.getData().getUserTraceList() != null) {
-                mView.showUserTrace(result.getData().getUserTraceList());
+            if (result.getData().getUserInfo() != null) {
+                mView.showUser(result.getData().getUserInfo());
                 return;
             }
-            if (result.getData().getCarTraceList() != null) {
-                mView.showCarTrace(result.getData().getCarTraceList());
+            if (result.getData().getUserList() != null) {
+                mView.showUsers(result.getData().getUserList());
+                return;
+            }
+            if (result.getData().getCarList() != null) {
+                mView.showCars(result.getData().getCarList());
+                return;
+            }
+            if (result.getData().getCarInformation() != null) {
+                mView.showCar(result.getData().getCarInformation());
             }
         } else {
             mView.showError(result.getMessage());
@@ -67,16 +79,26 @@ public class TracePresenter implements TraceContrast.Presenter {
     }
 
     @Override
-    public void getUserTrace(String userAccount, String startTime, String endTime) {
-        mMapService.getUserTrace(userAccount, startTime, endTime)
-                .observeOn(AndroidSchedulers.mainThread())
+    public void getUsers(String subDepartmentId) {
+        mMapService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 
     @Override
-    public void getCarTrace(String carId, String startTime, String endTime) {
-        mMapService.getCarTrace(carId, startTime, endTime)
-                .observeOn(AndroidSchedulers.mainThread())
+    public void getUser(String userId) {
+        mMapService.getUserInfo(userId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
+    }
+
+    @Override
+    public void getCars(String subDepartmentId) {
+        mMapService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
+    }
+
+    @Override
+    public void getCar(String carId) {
+        mMapService.getCarInfo(carId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 }

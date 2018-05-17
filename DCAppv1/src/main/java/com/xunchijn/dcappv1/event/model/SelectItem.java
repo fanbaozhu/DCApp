@@ -9,6 +9,8 @@ public class SelectItem implements Serializable {
     private String mId;
     @SerializedName("name")
     private String mName;
+    private int mIndex;
+    private boolean mSelected;
 
     public SelectItem(String id, String name) {
         mId = id;
@@ -21,5 +23,31 @@ public class SelectItem implements Serializable {
 
     public String getName() {
         return mName;
+    }
+
+    public int getIndex() {
+        return mIndex;
+    }
+
+    public void setIndex(int index) {
+        mIndex = index;
+    }
+
+    public boolean isSelected() {
+        return mSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        mSelected = selected;
+    }
+
+    @Override
+    public String toString() {
+        return "SelectItem{" +
+                "mId='" + mId + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mIndex=" + mIndex +
+                ", mSelected=" + mSelected +
+                '}';
     }
 }

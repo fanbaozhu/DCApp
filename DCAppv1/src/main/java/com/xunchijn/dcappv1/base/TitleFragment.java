@@ -124,7 +124,7 @@ public class TitleFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public void setConfirmListener(OnItemClickListener confirmListener) {
+    public void setItemClickListener(OnItemClickListener confirmListener) {
         mConfirmListener = confirmListener;
     }
 

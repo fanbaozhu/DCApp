@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.map.view;
+package com.xunchijn.dcappv1.trace;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,9 +30,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.map.contract.TraceContrast;
 import com.xunchijn.dcappv1.map.model.TraceInfo;
-import com.xunchijn.dcappv1.map.presenter.TracePresenter;
 import com.xunchijn.dcappv1.test.TimePickerDialog;
 
 import java.util.ArrayList;
@@ -59,12 +57,15 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
 
     //通过设置间隔时间和距离可以控制速度和图标移动的距离
     private int mTimeInterval = 80;
-    private static final double mDistance = 0.00002;
+    private static final double mDistance = 0.00001;
     private BitmapDescriptor bitmap;
     private List<LatLng> options;
 
-    public static TraceFragment newInstance(Bundle bundle) {
+    public static TraceFragment newInstance(String type, String id) {
         TraceFragment fragment = new TraceFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        bundle.putString("id", id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -126,13 +127,16 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
             return;
         }
         String type = bundle.getString("type");
-        if (TextUtils.isEmpty(type)) {
+        String id = bundle.getString("id");
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(id)) {
             return;
         }
         if (type.equals("人员")) {
-            mPresenter.getUserTrace("17360782514", "1524600000", "1524622000");
+            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.arrow);
+            mPresenter.getUserTrace(id, "1524600000", "1524622000");
         } else {
-            mPresenter.getCarTrace("13819020864", "1524600000", "1524622000");
+            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_trace_car);
+            mPresenter.getCarTrace(id, "1524600000", "1524622000");
         }
     }
 
@@ -176,7 +180,6 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
         builder.zoom(16.0f);
         mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 
-        bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_trace_car);
         mHandler = new Handler(Looper.getMainLooper());
         drawPolyLine(list);
         moveLooper();

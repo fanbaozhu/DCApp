@@ -56,7 +56,7 @@ public class SelectDialog extends DialogFragment {
             mViewSelects.setLayoutParams(params);
         }
         mViewSelects.setLayoutManager(new LinearLayoutManager(getContext()));
-        SelectAdapter adapter = new SelectAdapter(mList, R.layout.adapter_select_dialog);
+        SelectAdapter adapter = new SelectAdapter(mList, R.layout.adapter_select_long);
         mViewSelects.setAdapter(adapter);
         adapter.setItemClickListener(mItemClickListener);
     }
