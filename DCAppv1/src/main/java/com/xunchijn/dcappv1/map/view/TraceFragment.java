@@ -31,8 +31,8 @@ import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.map.model.TraceInfo;
-import com.xunchijn.dcappv1.util.TimePickerDialog;
 import com.xunchijn.dcappv1.map.presenter.TraceContrast;
+import com.xunchijn.dcappv1.util.TimePickerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,7 @@ import java.util.List;
  * Time:2018/5/9   下午1:55
  * Description:轨迹回放页面
  **/
-public class TraceFragment extends Fragment implements TraceContrast.View {
-    private String TAG = "Trace";
+public class TraceFragment extends Fragment implements TraceContrast.View, View.OnClickListener {
     private TraceContrast.Presenter mPresenter;
     private Polyline mPolyline;
     private Marker mMoveMarker;
@@ -55,9 +54,10 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
     private TimePickerDialog timePickerDialog;
     private long mStartTime;
     private long mEndTime;
+    private boolean mFollow;
 
     //通过设置间隔时间和距离可以控制速度和图标移动的距离
-    private int mTimeInterval = 80;
+    private int mTimeInterval = 50;
     private static final double mDistance = 0.00001;
     private BitmapDescriptor bitmap;
     private List<LatLng> options;
@@ -79,69 +79,21 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
         mMapView.onCreate(getContext(), savedInstanceState);
         mMap = mMapView.getMap();
         ImageView viewQuick = view.findViewById(R.id.image_trace_quick);
-        viewQuick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: " + mTimeInterval);
-                if (mTimeInterval > 60) {
-                    mTimeInterval = mTimeInterval - 10;
-                    Toast.makeText(getContext(), "速度+1", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "最大速度", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        viewQuick.setOnClickListener(this);
         mViewPlay = view.findViewById(R.id.image_trace_play);
-        mViewPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveLooper();
-            }
-        });
+        mViewPlay.setOnClickListener(this);
         ImageView viewSlow = view.findViewById(R.id.image_trace_slow);
-        viewSlow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: " + mTimeInterval);
-                if (mTimeInterval < 100) {
-                    mTimeInterval = mTimeInterval + 10;
-                    Toast.makeText(getContext(), "速度—1", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "最小速度", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        viewSlow.setOnClickListener(this);
         mViewSelectTime = view.findViewById(R.id.text_select_time);
-        mViewSelectTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectStartTime();
-            }
-        });
-        initData();
+        mViewSelectTime.setOnClickListener(this);
+        mViewPlay.setEnabled(false);
+        selectStartTime();
         return view;
     }
 
-    private void initData() {
-        Bundle bundle = getArguments();
-        if (bundle == null) {
-            return;
-        }
-        String type = bundle.getString("type");
-        String id = bundle.getString("id");
-        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(id)) {
-            return;
-        }
-        if (type.equals("人员")) {
-            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.arrow);
-            mPresenter.getUserTrace(id, "1524600000", "1524622000");
-        } else {
-            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_trace_car);
-            mPresenter.getCarTrace(id, "1524600000", "1524622000");
-        }
-    }
-
     private void selectStartTime() {
+        mStartTime = 0;
+        mEndTime = 0;
         timePickerDialog = new TimePickerDialog();
         timePickerDialog.setTitle("开始时间");
         timePickerDialog.setOnConfirmClickListener(new TimePickerDialog.OnConfirmClickListener() {
@@ -159,10 +111,58 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
                 } else {
                     mEndTime = time;
                     mViewSelectTime.append(String.format("\n结束时间：%s", timestamp));
+                    getTrace();
                 }
             }
         });
-        timePickerDialog.show(getFragmentManager(), "");
+        timePickerDialog.show(getFragmentManager(), "timePickerDialog");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.text_select_time:
+                selectStartTime();
+                break;
+            case R.id.image_trace_quick:
+                if (mTimeInterval > 20) {
+                    mTimeInterval = mTimeInterval - 10;
+                    Toast.makeText(getContext(), "速度+1", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "最大速度", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.image_trace_play:
+                moveLooper();
+                break;
+            case R.id.image_trace_slow:
+                if (mTimeInterval < 100) {
+                    mTimeInterval = mTimeInterval + 10;
+                    Toast.makeText(getContext(), "速度—1", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "最小速度", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    private void getTrace() {
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            return;
+        }
+        String type = bundle.getString("type");
+        String id = bundle.getString("id");
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(id)) {
+            return;
+        }
+        if (type.equals("人员")) {
+            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.arrow);
+            mPresenter.getUserTrace(id, String.valueOf(mStartTime), String.valueOf(mEndTime));
+        } else {
+            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_trace_car);
+            mPresenter.getCarTrace(id, String.valueOf(mStartTime), String.valueOf(mEndTime));
+        }
     }
 
     private void selectEndTime() {
@@ -171,7 +171,7 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
         }
         timePickerDialog.setTitle("结束时间");
         timePickerDialog.setFixedDate(false);
-        timePickerDialog.show(getFragmentManager(), "");
+        timePickerDialog.show(getFragmentManager(), "timePickerDialog");
     }
 
     private void initMap(List<TraceInfo> list) {
@@ -302,11 +302,13 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
 
     @Override
     public void showUserTrace(List<TraceInfo> list) {
+        mViewPlay.setEnabled(true);
         initMap(list);
     }
 
     @Override
     public void showCarTrace(List<TraceInfo> list) {
+        mViewPlay.setEnabled(true);
         initMap(list);
     }
 
@@ -364,7 +366,9 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
                                 return;
                             }
                             mMoveMarker.setPosition(finalLatLng);
-                            mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().target(finalLatLng).build()));
+                            if (mFollow) {
+                                mMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().target(finalLatLng).build()));
+                            }
                         }
                     });
                     try {
@@ -389,4 +393,8 @@ public class TraceFragment extends Fragment implements TraceContrast.View {
             });
         }
     };
+
+    public void setFollow() {
+        mFollow = !mFollow;
+    }
 }
