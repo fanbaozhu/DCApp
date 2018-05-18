@@ -42,6 +42,7 @@ public class SplashActivity extends AppCompatActivity implements LoginContrast.V
     public void showError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

@@ -9,6 +9,6 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_splash" />
+        android:src="@mipmap/ic_splash_1" />
 
 </LinearLayout>
