@@ -4,9 +4,9 @@ import android.content.Intent;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
+import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 import com.xunchijn.dcappv1.util.TitleFragment;
 import com.xunchijn.dcappv1.util.TitleFragment.OnItemClickListener;
-import com.xunchijn.dcappv1.event.presenter.ReportPresenter;
 
 public class ReportActivity extends AbsBaseActivity {
     private ReportFragment mReportFragment;
@@ -35,7 +35,7 @@ public class ReportActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         mReportFragment = new ReportFragment();
-        new ReportPresenter(mReportFragment);
+        new ReportPresenter(mReportFragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, mReportFragment)
                 .show(mReportFragment)

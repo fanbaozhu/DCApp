@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.adapter.SettingAdapter;
 import com.xunchijn.dcappv1.base.BaseConfig;
 import com.xunchijn.dcappv1.base.UserInfo;
-import com.xunchijn.dcappv1.adapter.SettingAdapter;
 import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.common.presenter.MineContrast;
 import com.xunchijn.dcappv1.util.PreferHelper;
@@ -54,6 +54,18 @@ public class MineFragment extends Fragment implements MineContrast.View {
         settingAdapter.setItemClickListener(new SettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
+                if (item.getIndex() == 1) {
+                    startActivity(new Intent(getContext(), ResetPassActivity.class));
+                    return;
+                }
+                if (item.getIndex() == 2) {
+                    startActivity(new Intent(getContext(), FeedbackActivity.class));
+                    return;
+                }
+                if (item.getIndex() == 3) {
+                    startActivity(new Intent(getContext(), AboutUsActivity.class));
+                    return;
+                }
                 if (item.getIndex() == 4) {
                     logout();
                 }

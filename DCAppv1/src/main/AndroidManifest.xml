@@ -61,6 +61,9 @@
         <activity android:name=".map.view.SelectCarsActivity" />
         <activity android:name=".event.view.SelectOptionsActivity" />
         <activity android:name=".event.view.PositionActivity" />
+        <activity android:name=".common.view.ResetPassActivity" />
+        <activity android:name=".common.view.FeedbackActivity" />
+        <activity android:name=".common.view.AboutUsActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

@@ -1,11 +1,13 @@
 package com.xunchijn.dcappv1.event.presenter;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.xunchijn.dcappv1.event.model.EventService;
-import com.xunchijn.dcappv1.event.model.EventResult;
 import com.xunchijn.dcappv1.base.Result;
+import com.xunchijn.dcappv1.event.model.EventResult;
+import com.xunchijn.dcappv1.event.model.EventService;
+import com.xunchijn.dcappv1.util.PhotoUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,11 +27,13 @@ public class ReportPresenter implements ReportContract.Presenter {
     private EventService mEventService;
     private Observer<Response<Result<EventResult>>> mObserver;
     private Map<String, String> mMap;
+    private PhotoUtils mPhotoUtils;
 
-    public ReportPresenter(ReportContract.View view) {
+    public ReportPresenter(ReportContract.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
+        mPhotoUtils = new PhotoUtils(context);
         mObserver = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -104,8 +108,9 @@ public class ReportPresenter implements ReportContract.Presenter {
             mView.showError("图片不能为空");
             return;
         }
+        List<String> compressUrls = mPhotoUtils.CompressPictures(urls);
         Map<String, RequestBody> reqMap = new HashMap<>();
-        for (String url : urls) {
+        for (String url : compressUrls) {
             File file = new File(url);
             if (!file.exists()) {
                 continue;

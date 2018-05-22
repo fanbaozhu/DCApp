@@ -1,14 +1,16 @@
 package com.xunchijn.dcappv1.base;
 
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.common.module.SubTitleItem;
 import com.xunchijn.dcappv1.common.module.TitleItem;
-import com.xunchijn.dcappv1.common.module.SettingItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BaseConfig {
+    public static final String WEBSITE = "http://www.xunchijn.com/Reception/About.aspx";
+
     public static List<TitleItem> getMainTitles() {
         List<TitleItem> titleItems = new ArrayList<>();
         List<SubTitleItem> list = new ArrayList<>();
@@ -41,7 +43,6 @@ public class BaseConfig {
         TitleItem titleItem2 = new TitleItem("事件与其他", R.mipmap.ic_report_manage, list2);
         titleItems.add(titleItem2);
 
-
         return titleItems;
     }
 
@@ -64,7 +65,7 @@ public class BaseConfig {
         List<SettingItem> items = new ArrayList<>();
         SettingItem item1 = new SettingItem(0, "消息通知", "");
         SettingItem item2 = new SettingItem(1, "修改密码", "");
-        SettingItem item3 = new SettingItem(2, "清除缓存", "");
+        SettingItem item3 = new SettingItem(2, "意见反馈", "");
         SettingItem item4 = new SettingItem(3, "关于我们", "");
         SettingItem item5 = new SettingItem(4, "退出登录", "");
         items.add(item1);
