@@ -67,7 +67,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             mViewStatus = itemView.findViewById(R.id.text_status);
         }
 
-        void bindEvent(EventItem eventItem) {
+        void bindEvent(final EventItem eventItem) {
             if (eventItem.getEventStatus().equals("新上报")) {
                 mViewStatus.setText("新上报");
                 mViewStatus.setBackgroundResource(R.drawable.bg_gray_round_rect_8dp);
@@ -84,6 +84,25 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             mViewReportTime.setText(eventItem.getReportTime());
             mViewReportLocation.setText(eventItem.getEventPosition());
             mViewReportDescribe.setText(eventItem.getEventDescribe());
+            if (mOnItemClickListener == null) {
+                return;
+            }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(eventItem);
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(EventItem item);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 }

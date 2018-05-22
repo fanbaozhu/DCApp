@@ -1,10 +1,14 @@
 package com.xunchijn.dcappv1.event.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class EventResult {
     private String fileName;//上传文件返回的文件名
     private Integer reportStatus;//上报事件状态标志
+    @SerializedName("eventInfomation")
+    private EventItem mEventItem;
     private List<EventItem> eventHistory;
     private List<SelectItem> checkDepartment;
     private List<SelectItem> checkSubDepartment;
@@ -39,4 +43,7 @@ public class EventResult {
         return eventHistory;
     }
 
+    public EventItem getEventItem() {
+        return mEventItem;
+    }
 }

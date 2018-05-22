@@ -64,6 +64,7 @@
         <activity android:name=".common.view.ResetPassActivity" />
         <activity android:name=".common.view.FeedbackActivity" />
         <activity android:name=".common.view.AboutUsActivity" />
+        <activity android:name=".event.view.EventInfoActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

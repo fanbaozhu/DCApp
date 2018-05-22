@@ -50,4 +50,8 @@ public interface EventApi {
     //获取考核内容
     @GET("API/tmd/GetCheckContent")
     Observable<Response<Result<EventResult>>> GetCheckContent(@Query("typeId") String typeId);
+
+    //获取事件详情
+    @GET("API/tmd/GetInfomation")
+    Observable<Response<Result<EventResult>>> GetEventInfo(@Query("id") String typeId);
 }
