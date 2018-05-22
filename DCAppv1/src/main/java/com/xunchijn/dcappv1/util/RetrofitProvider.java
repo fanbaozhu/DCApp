@@ -21,13 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2018/5/4 0004.
  */
 
-public class RetrofitProvider {
+public class   RetrofitProvider {
     //发布
     private static final String RELEASE = "http://192.168.1.221:8097";
     //预发布
-    private static final String PRE_RELEASE = "http://192.168.1.221:8097";
+    private static final String PRE_RELEASE = "http://219.148.91.210:8091";
     //开发
-    public static final String BASE_URL = "http://49.4.69.187:8099";
+//    public static final String BASE_URL = "http://49.4.69.187:8099";
+    public static final String BASE_URL = "http://219.148.91.210:8091";
 
     @NonNull
     public static Retrofit get(){
@@ -51,39 +52,5 @@ public class RetrofitProvider {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-    }
-
-    @NonNull
-    public static Retrofit getProgressClient(HttpUrl url, Interceptor projressInterceptor){
-        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        builder.readTimeout(10,TimeUnit.SECONDS);
-        builder.connectTimeout(9,TimeUnit.SECONDS);
-        if(projressInterceptor != null){
-            builder.addNetworkInterceptor(projressInterceptor);
-        }
-        if(BuildConfig.DEBUG){
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(interceptor);
-        }
-        return new Retrofit.Builder().baseUrl(BASE_URL)
-                .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-    }
-
-    @NonNull
-    public static String getDiskCacheDir(Context context){
-        File cachePath;
-        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()){
-            cachePath = context.getExternalCacheDir();
-        }else{
-            cachePath = context.getCacheDir();
-        }
-        if(cachePath == null){
-            return "";
-        }
-        return cachePath.getPath();
     }
 }
