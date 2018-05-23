@@ -4,7 +4,7 @@ import com.xunchijn.dcappv1.base.BaseView;
 
 public interface FeedBackContrast {
     interface Presenter {
-        void feedback(String feedback);
+        void feedback(String title, String feedback, String userPhone);
     }
 
     interface View extends BaseView<Presenter> {

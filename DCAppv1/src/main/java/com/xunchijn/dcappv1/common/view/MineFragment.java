@@ -54,6 +54,10 @@ public class MineFragment extends Fragment implements MineContrast.View {
         settingAdapter.setItemClickListener(new SettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
+                if (item.getIndex() == 0) {
+                    startActivity(new Intent(getContext(), MessagesActivity.class));
+                    return;
+                }
                 if (item.getIndex() == 1) {
                     startActivity(new Intent(getContext(), ResetPassActivity.class));
                     return;

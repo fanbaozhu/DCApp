@@ -2,6 +2,7 @@ package com.xunchijn.dcappv1.common.view;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
+import com.xunchijn.dcappv1.common.presenter.ResetPassPresenter;
 import com.xunchijn.dcappv1.util.TitleFragment;
 
 public class ResetPassActivity extends AbsBaseActivity {
@@ -30,7 +31,7 @@ public class ResetPassActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         mResetPassFragment = new ResetPassFragment();
-        //todo 初始化设置密码的presenter
+        new ResetPassPresenter(mResetPassFragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, mResetPassFragment)
                 .show(mResetPassFragment)

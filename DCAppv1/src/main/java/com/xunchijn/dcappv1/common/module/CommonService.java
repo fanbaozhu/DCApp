@@ -3,8 +3,9 @@ package com.xunchijn.dcappv1.common.module;
 import com.xunchijn.dcappv1.base.Result;
 import com.xunchijn.dcappv1.util.RetrofitProvider;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
@@ -23,10 +24,22 @@ public class CommonService {
     }
 
     public Observable<Response<Result<CommonResult>>> statistic() {
-        return mCommonApi.Statistic().observeOn(AndroidSchedulers.mainThread());
+        return mCommonApi.Statistic().subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<CommonResult>>> getSearch(String name) {
         return mCommonApi.GetSearch(name).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<CommonResult>>> resetPass(Map<String, String> map) {
+        return mCommonApi.ResetPass(map).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<CommonResult>>> getMessages(Map<String, String> map) {
+        return mCommonApi.GetMessages(map).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<Response<Result<CommonResult>>> feedback(Map<String, String> map) {
+        return mCommonApi.Feedback(map).subscribeOn(Schedulers.io());
     }
 }

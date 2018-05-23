@@ -65,6 +65,7 @@
         <activity android:name=".common.view.FeedbackActivity" />
         <activity android:name=".common.view.AboutUsActivity" />
         <activity android:name=".event.view.EventInfoActivity" />
+        <activity android:name=".common.view.MessagesActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

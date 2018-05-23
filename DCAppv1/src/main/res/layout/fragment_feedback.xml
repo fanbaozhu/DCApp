@@ -6,14 +6,36 @@
     android:padding="16dp">
 
     <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_gray_round_line_4dp"
+        android:hint="标题"
+        android:inputType="text"
+        android:padding="8dp"
+        android:textSize="16sp" />
+
+    <EditText
         android:id="@+id/edit_feedback"
         android:layout_width="match_parent"
         android:layout_height="168dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bg_gray_round_line_4dp"
         android:gravity="top"
         android:hint="请写下您的意见或者建议"
         android:inputType="text"
         android:padding="8dp"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_gray_round_line_4dp"
+        android:hint="请留下您的联系方式"
+        android:inputType="phone"
+        android:padding="8dp"
+        android:textSize="14sp" />
 
 </LinearLayout>

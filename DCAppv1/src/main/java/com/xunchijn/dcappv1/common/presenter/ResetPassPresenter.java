@@ -1,37 +1,41 @@
-package com.xunchijn.dcappv1.statistic;
+package com.xunchijn.dcappv1.common.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.xunchijn.dcappv1.base.Result;
 import com.xunchijn.dcappv1.common.module.CommonResult;
 import com.xunchijn.dcappv1.common.module.CommonService;
-import com.xunchijn.dcappv1.base.Result;
+import com.xunchijn.dcappv1.util.PreferHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-/**
- * Created by Administrator on 2018/5/9 0009.
- */
+public class ResetPassPresenter implements ResetPassContrast.Presenter {
+    private String TAG = "ResetPass";
+    private ResetPassContrast.View mView;
+    private CommonService mCommonService;
+    private PreferHelper mPreferHelper;
 
-public class StatisticPresenter implements StatisticContrast.Presenter {
-    private final String TAG = "Statistic";
-    private StatisticContrast.View mView;
-    private CommonService mService;
-
-    public StatisticPresenter(StatisticContrast.View view) {
+    public ResetPassPresenter(ResetPassContrast.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
-        mService = new CommonService();
+        mCommonService = new CommonService();
+        mPreferHelper = new PreferHelper(context);
     }
 
-    public void getStatistic() {
-        mService.statistic()
-                //在主线程执行
-                .observeOn(AndroidSchedulers.mainThread())
-                //返回的结果
+    @Override
+    public void resetPassword(String oldPassword, String newPassword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", mPreferHelper.getUserAccount().getUserAccount());
+        map.put("oldPassword", oldPassword);
+        map.put("newPassword", newPassword);
+        mCommonService.resetPass(map).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<Result<CommonResult>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -49,7 +53,7 @@ public class StatisticPresenter implements StatisticContrast.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError: " + e);
+                        Log.e(TAG, "onError: ", e);
                     }
 
                     @Override
@@ -64,8 +68,8 @@ public class StatisticPresenter implements StatisticContrast.Presenter {
             if (result.getData() == null) {
                 return;
             }
-            if (result.getData().getStatisticList() != null) {
-                mView.showStatistics(result.getData().getStatisticList());
+            if (result.getData().getResetPassStatus() != null && result.getData().getResetPassStatus() == 1) {
+                mView.resetSuccess();
             }
         } else {
             mView.showError(result.getMessage());

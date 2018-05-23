@@ -2,13 +2,17 @@ package com.xunchijn.dcappv1.common.module;
 
 import com.xunchijn.dcappv1.base.Result;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by Administrator on 2018/5/7 0007.
@@ -41,4 +45,17 @@ public interface CommonApi {
     //查询
     @GET("API/tmd/GetUserSearch")
     Observable<Response<Result<CommonResult>>> GetSearch(@Query("Name") String name);
+
+    //修改密码
+    @GET("API/tmd/resetPass")
+    Observable<Response<Result<CommonResult>>> ResetPass(@FieldMap Map<String, String> map);
+
+    //获取消息通知
+    @GET("API/tmd/GetMessages")
+    Observable<Response<Result<CommonResult>>> GetMessages(@QueryMap Map<String, String> map);
+
+    //意见反馈
+    @FormUrlEncoded
+    @POST("API/tmd/feedback")
+    Observable<Response<Result<CommonResult>>> Feedback(@FieldMap Map<String, String> map);
 }

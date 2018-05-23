@@ -15,6 +15,9 @@ public class CommonResult {
     private List<StatisticItem> StatisticList;
     @SerializedName("SearchItemList")
     private List<SearchItem> mSearchItemList;
+    private Integer feedbackStatus;
+    private Integer resetPassStatus;
+    private List<MessageItem> messages;
 
     public List<SearchItem> getSearchItemList() {
         return mSearchItemList;
@@ -26,5 +29,17 @@ public class CommonResult {
 
     public List<StatisticItem> getStatisticList() {
         return StatisticList;
+    }
+
+    public Integer getFeedbackStatus() {
+        return feedbackStatus;
+    }
+
+    public Integer getResetPassStatus() {
+        return resetPassStatus;
+    }
+
+    public List<MessageItem> getMessages() {
+        return messages;
     }
 }

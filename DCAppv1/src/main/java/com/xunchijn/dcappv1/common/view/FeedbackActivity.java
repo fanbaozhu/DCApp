@@ -2,6 +2,7 @@ package com.xunchijn.dcappv1.common.view;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
+import com.xunchijn.dcappv1.common.presenter.FeedbackPresenter;
 import com.xunchijn.dcappv1.util.TitleFragment;
 
 public class FeedbackActivity extends AbsBaseActivity {
@@ -30,7 +31,7 @@ public class FeedbackActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         mFeedbackFragment = new FeedbackFragment();
-        //Todo 初始化意见反馈presenter
+        new FeedbackPresenter(mFeedbackFragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, mFeedbackFragment)
                 .show(mFeedbackFragment)
