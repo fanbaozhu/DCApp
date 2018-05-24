@@ -7,7 +7,7 @@ android {
     aaptOptions.useNewCruncher = false
 
     defaultConfig {
-        applicationId "com.xunchijn.dcappv1"
+        applicationId "com.xunchijn.sichuan"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1

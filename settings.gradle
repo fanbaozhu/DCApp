@@ -1,1 +1,1 @@
-include ':app', ':DCAppv1'
+include  ':DCAppv1'

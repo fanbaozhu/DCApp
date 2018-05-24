@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login_bg"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -14,62 +15,61 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_app_logo" />
+            android:src="@mipmap/login_logo" />
+
+        <EditText
+            android:id="@+id/login_userName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入您的账号"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorGray" />
+
+        <EditText
+            android:id="@+id/login_userPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入您的密码"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/login_confirm"
+            android:layout_width="280dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_blue_round_rect_4dp"
+            android:gravity="center"
+            android:text="登陆"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Intelligent sanitation"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_gray_round_line_4dp"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/login_userName"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:gravity="center"
-                android:hint="请输入您的账号"
-                android:inputType="textPersonName"
-                android:singleLine="true"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/colorGray" />
-
-            <EditText
-                android:id="@+id/login_userPassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="2dp"
-                android:background="@null"
-                android:gravity="center"
-                android:hint="请输入您的密码"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/login_confirm"
-            android:layout_width="280dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_blue_round_rect_4dp"
-            android:text="登陆"
-            android:textColor="@color/colorWhite"
+            android:padding="16dp"
+            android:text="忘记密码？"
             android:textSize="16sp" />
     </LinearLayout>
 

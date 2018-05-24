@@ -38,8 +38,7 @@
             android:id="@+id/image_view_title"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_subtitle_car" />
+            android:contentDescription="@string/app_name" />
 
         <Space
             android:layout_width="8dp"

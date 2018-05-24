@@ -10,9 +10,7 @@
         android:id="@+id/image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/bg_black_round_line_24dp"
         android:contentDescription="@string/app_name"
-        android:padding="6dp"
         android:src="@mipmap/ic_car_info" />
 
     <Space

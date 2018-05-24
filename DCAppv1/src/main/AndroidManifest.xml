@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xunchijn.dcappv1">
+    package="com.xunchijn.sichuan">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -32,23 +32,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".common.view.MainActivity"
-            android:theme="@style/AppMain">
-
-        </activity>
-        <activity android:name=".event.view.ShowPictureActivity" />
-        <activity
-            android:name=".common.view.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".event.view.ReportActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".map.view.TraceActivity" />
-        <activity android:name=".statistic.view.StatisticActivity" />
-        <activity android:name=".common.view.SearchActivity" />
-        <activity android:name=".event.view.HistoryActivity" />
-        <activity
             android:name=".common.view.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,20 +41,64 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".map.view.SelectUsersActivity" />
-        <activity android:name=".map.view.LocationActivity" />
-        <activity android:name=".map.view.SelectCarsActivity" />
-        <activity android:name=".event.view.SelectOptionsActivity" />
-        <activity android:name=".event.view.PositionActivity" />
-        <activity android:name=".common.view.ResetPassActivity" />
-        <activity android:name=".common.view.FeedbackActivity" />
-        <activity android:name=".common.view.AboutUsActivity" />
-        <activity android:name=".event.view.EventInfoActivity" />
-        <activity android:name=".common.view.MessagesActivity" />
+        <activity
+            android:name=".common.view.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppMain" />
+        <activity android:name=".event.view.ShowPictureActivity" />
+        <activity
+            android:name=".common.view.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullscreen" />
+        <activity
+            android:name=".event.view.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".map.view.TraceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".statistic.view.StatisticActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.view.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.view.HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".map.view.SelectUsersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".map.view.LocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".map.view.SelectCarsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.view.SelectOptionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.view.PositionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.view.ResetPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.view.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.view.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.view.EventInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.view.MessagesActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="7Rv8oROgk5wq6IKDSF72rg8GRGI7Mw7w" />
+            android:value="IkWmRj79FSbeATNVKTe29VgoOhXfX1CF" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -77,14 +106,13 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.xunchijn.dcappv1.fileprovider"
+            android:authorities="com.xunchijn.sichuan.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
     </application>
 
