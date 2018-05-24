@@ -44,7 +44,7 @@
             android:name=".event.view.ReportActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".map.view.TraceActivity" />
-        <activity android:name=".statistic.StatisticActivity" />
+        <activity android:name=".statistic.view.StatisticActivity" />
         <activity android:name=".common.view.SearchActivity" />
         <activity android:name=".event.view.HistoryActivity" />
         <activity

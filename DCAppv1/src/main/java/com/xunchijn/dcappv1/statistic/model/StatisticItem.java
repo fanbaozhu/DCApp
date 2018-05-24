@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.statistic;
+package com.xunchijn.dcappv1.statistic.model;
 
 import android.text.TextUtils;
 

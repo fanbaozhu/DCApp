@@ -21,7 +21,7 @@ import com.xunchijn.dcappv1.event.view.HistoryActivity;
 import com.xunchijn.dcappv1.event.view.ReportActivity;
 import com.xunchijn.dcappv1.map.view.SelectCarsActivity;
 import com.xunchijn.dcappv1.map.view.SelectUsersActivity;
-import com.xunchijn.dcappv1.statistic.StatisticActivity;
+import com.xunchijn.dcappv1.statistic.view.StatisticActivity;
 
 public class MainFragment extends Fragment {
 

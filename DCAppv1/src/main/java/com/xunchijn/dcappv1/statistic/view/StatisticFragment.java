@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.statistic;
+package com.xunchijn.dcappv1.statistic.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.adapter.StatisticAdapter;
+import com.xunchijn.dcappv1.statistic.model.StatisticItem;
+import com.xunchijn.dcappv1.statistic.presenter.StatisticContrast;
+import com.xunchijn.dcappv1.statistic.presenter.StatisticPresenter;
 import com.xunchijn.dcappv1.util.TitleFragment;
 
 import java.util.List;

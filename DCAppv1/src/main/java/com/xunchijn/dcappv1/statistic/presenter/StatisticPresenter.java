@@ -1,4 +1,4 @@
-package com.xunchijn.dcappv1.statistic;
+package com.xunchijn.dcappv1.statistic.presenter;
 
 import android.util.Log;
 
@@ -9,7 +9,6 @@ import com.xunchijn.dcappv1.base.Result;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 /**

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
-import com.xunchijn.dcappv1.statistic.StatisticItem;
+import com.xunchijn.dcappv1.statistic.model.StatisticItem;
 
 import java.util.List;
 

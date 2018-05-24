@@ -1,6 +1,7 @@
-package com.xunchijn.dcappv1.statistic;
+package com.xunchijn.dcappv1.statistic.presenter;
 
 import com.xunchijn.dcappv1.base.BaseView;
+import com.xunchijn.dcappv1.statistic.model.StatisticItem;
 
 import java.util.List;
 
