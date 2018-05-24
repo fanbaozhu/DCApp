@@ -35,6 +35,7 @@ public class FeedbackPresenter implements FeedBackContrast.Presenter {
         Map<String, String> map = new HashMap<>();
         UserAccount account = mPreferHelper.getUserAccount();
         map.put("userId", account.getUserAccount());
+        map.put("userName", account.getUserAccount());
         map.put("title", title);
         map.put("content", content);
         map.put("userPhone", userPhone);

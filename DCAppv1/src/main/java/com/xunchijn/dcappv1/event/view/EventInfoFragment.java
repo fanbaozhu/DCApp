@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,9 +22,9 @@ import com.xunchijn.dcappv1.base.BaseConfig;
 import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.event.model.EventItem;
 import com.xunchijn.dcappv1.event.presenter.EventInfoContract;
+import com.xunchijn.dcappv1.util.RetrofitProvider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EventInfoFragment extends Fragment implements EventInfoContract.View {
@@ -56,9 +57,9 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
         mViewReportTime = view.findViewById(R.id.text_report_time);
 
         RecyclerView viewPictures = view.findViewById(R.id.recycler_view_picture);
-        viewPictures.setLayoutManager(new LinearLayoutManager(getContext()));
+        viewPictures.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mPictures = new ArrayList<>();
-        mPictureAdapter = new PictureAdapter(mPictures);
+        mPictureAdapter = new PictureAdapter(mPictures, 2);
         viewPictures.setAdapter(mPictureAdapter);
         mPictureAdapter.setItemClickListener(mOnPictureClick);
 
@@ -66,6 +67,7 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
         viewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
         mSettingItems = BaseConfig.getSettingItems();
         mSettingAdapter = new SettingAdapter(mSettingItems);
+        viewSettings.setAdapter(mSettingAdapter);
 
         initData();
     }
@@ -73,7 +75,6 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
     private OnItemClickListener mOnPictureClick = new PictureAdapter.OnItemClickListener() {
         @Override
         public void onPictureClick(String url) {
-
         }
 
         @Override
@@ -100,11 +101,15 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
         mViewReportTime.setText(item.getReportTime());
         if (!TextUtils.isEmpty(item.getEventPictureName())) {
             String[] urls = item.getEventPictureName().split(",");
-            Collections.addAll(mPictures, urls);
+            mPictures.clear();
+            for (String url : urls) {
+                mPictures.add(String.format("%s/UploadImg/%s", RetrofitProvider.BASE_URL, url));
+            }
         }
         if (mPictures.size() != 0) {
             mPictureAdapter.notifyDataSetChanged();
         }
+
         if (!TextUtils.isEmpty(item.getEventPosition())) {
             mSettingItems.get(0).setSubtitle(item.getEventPosition());
         }

@@ -19,6 +19,7 @@ public class MessagesActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         MessagesFragment messagesFragment = new MessagesFragment();
+        messagesFragment.setPageCount(20);
         new MessagesPresenter(messagesFragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, messagesFragment)

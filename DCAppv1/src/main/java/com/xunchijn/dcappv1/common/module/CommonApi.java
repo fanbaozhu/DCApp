@@ -19,11 +19,6 @@ import retrofit2.http.QueryMap;
  */
 
 public interface CommonApi {
-//    //账号登录
-//    @FormUrlEncoded
-//    @POST("API/Login")
-//    Observable<Response<Result<CommonResult>>> Login1(@FieldMap Map<String, String> map);
-
 
     //账号登录
     @FormUrlEncoded
@@ -47,7 +42,8 @@ public interface CommonApi {
     Observable<Response<Result<CommonResult>>> GetSearch(@Query("Name") String name);
 
     //修改密码
-    @GET("API/tmd/resetPass")
+    @FormUrlEncoded
+    @POST("API/tmd/ResetPass")
     Observable<Response<Result<CommonResult>>> ResetPass(@FieldMap Map<String, String> map);
 
     //获取消息通知
@@ -56,6 +52,6 @@ public interface CommonApi {
 
     //意见反馈
     @FormUrlEncoded
-    @POST("API/tmd/feedback")
+    @POST("API/tmd/Feedback")
     Observable<Response<Result<CommonResult>>> Feedback(@FieldMap Map<String, String> map);
 }

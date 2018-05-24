@@ -23,7 +23,7 @@
         android:background="@drawable/bg_gray_round_line_4dp"
         android:gravity="top"
         android:hint="请写下您的意见或者建议"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:padding="8dp"
         android:textSize="14sp" />
 

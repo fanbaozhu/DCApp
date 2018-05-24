@@ -6,6 +6,7 @@ import android.util.Log;
 import com.xunchijn.dcappv1.base.Result;
 import com.xunchijn.dcappv1.common.module.CommonResult;
 import com.xunchijn.dcappv1.common.module.CommonService;
+import com.xunchijn.dcappv1.common.module.UserAccount;
 import com.xunchijn.dcappv1.util.PreferHelper;
 
 import java.util.HashMap;
@@ -29,12 +30,16 @@ public class ResetPassPresenter implements ResetPassContrast.Presenter {
         mPreferHelper = new PreferHelper(context);
     }
 
+    private UserAccount mUserAccount;
+
     @Override
     public void resetPassword(String oldPassword, String newPassword) {
         Map<String, String> map = new HashMap<>();
-        map.put("userId", mPreferHelper.getUserAccount().getUserAccount());
-        map.put("oldPassword", oldPassword);
-        map.put("newPassword", newPassword);
+        mUserAccount = mPreferHelper.getUserAccount();
+        mUserAccount.setUserPassword(newPassword);
+        map.put("userName", mUserAccount.getUserAccount());
+        map.put("passWord", oldPassword);
+        map.put("newPass", newPassword);
         mCommonService.resetPass(map).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<Result<CommonResult>>>() {
                     @Override
@@ -69,6 +74,7 @@ public class ResetPassPresenter implements ResetPassContrast.Presenter {
                 return;
             }
             if (result.getData().getResetPassStatus() != null && result.getData().getResetPassStatus() == 1) {
+                mPreferHelper.saveUserAccount(mUserAccount);
                 mView.resetSuccess();
             }
         } else {

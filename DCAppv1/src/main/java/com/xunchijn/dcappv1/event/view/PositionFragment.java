@@ -58,7 +58,7 @@ public class PositionFragment extends Fragment {
         //设置经纬度返回类型
         option.setCoorType("bd09ll");
         //设置发送定位请求的时间间隔，0代表单次定位，多次必须大于1000
-        option.setScanSpan(1000);//
+        option.setScanSpan(0);//
         //设置是否使用GPS
         option.setOpenGps(true);
         //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果

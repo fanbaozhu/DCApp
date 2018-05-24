@@ -27,8 +27,8 @@ public class   RetrofitProvider {
     //预发布
     private static final String PRE_RELEASE = "http://219.148.91.210:8091";
     //开发
-//    public static final String BASE_URL = "http://49.4.69.187:8099";
-    public static final String BASE_URL = "http://219.148.91.210:8091";
+    public static final String BASE_URL = "http://49.4.69.187:8099";
+//    public static final String BASE_URL = "http://219.148.91.210:8091";
 
     @NonNull
     public static Retrofit get(){

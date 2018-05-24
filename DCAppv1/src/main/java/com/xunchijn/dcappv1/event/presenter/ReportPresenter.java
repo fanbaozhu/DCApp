@@ -1,6 +1,6 @@
 package com.xunchijn.dcappv1.event.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -29,7 +29,7 @@ public class ReportPresenter implements ReportContract.Presenter {
     private Map<String, String> mMap;
     private PhotoUtils mPhotoUtils;
 
-    public ReportPresenter(ReportContract.View view, Context context) {
+    public ReportPresenter(ReportContract.View view, Activity context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();

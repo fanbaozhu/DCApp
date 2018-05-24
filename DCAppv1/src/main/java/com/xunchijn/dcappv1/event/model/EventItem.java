@@ -8,9 +8,9 @@ import com.xunchijn.dcappv1.util.TimeUtils;
 public class EventItem {
     private String eventId;
     private String eventDescribe;
-    @SerializedName("eventPositon")
     private String eventPosition;
     private String eventPictureName;
+    @SerializedName("checkDepartment")
     private String eventDepartment;
     private String eventSubDepartment;
     private String checkType;

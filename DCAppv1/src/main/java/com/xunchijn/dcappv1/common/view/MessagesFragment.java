@@ -23,7 +23,7 @@ public class MessagesFragment extends Fragment implements MessagesContrast.View 
     private MessagesContrast.Presenter mPresenter;
     private MessagesAdapter mMessagesAdapter;
     private List<MessageItem> mList;
-    private int pageIndex = 1;
+    private int pageIndex = 0;
     private int pageCount = 20;
 
     @Nullable

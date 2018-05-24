@@ -16,4 +16,12 @@ public class UserAccount {
     public String getUserPassword() {
         return mUserPassword;
     }
+
+    public void setUserAccount(String userAccount) {
+        mUserAccount = userAccount;
+    }
+
+    public void setUserPassword(String userPassword) {
+        mUserPassword = userPassword;
+    }
 }
