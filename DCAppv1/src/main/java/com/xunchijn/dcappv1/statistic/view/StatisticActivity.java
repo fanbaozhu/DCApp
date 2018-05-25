@@ -5,7 +5,7 @@ import android.widget.DatePicker;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.base.AbsBaseActivity;
-import com.xunchijn.dcappv1.statistic.presenter.DomainRecordsPresenter;
+import com.xunchijn.dcappv1.statistic.presenter.DomainPresenter;
 import com.xunchijn.dcappv1.statistic.presenter.DomainsContrast;
 import com.xunchijn.dcappv1.util.TitleFragment;
 
@@ -45,7 +45,7 @@ public class StatisticActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         DomainRecordsFragment fragment = new DomainRecordsFragment();
-        mPresenter = new DomainRecordsPresenter(fragment);
+        mPresenter = new DomainPresenter(fragment);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)
                 .show(fragment)

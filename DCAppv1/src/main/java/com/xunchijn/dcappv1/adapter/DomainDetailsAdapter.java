@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.statistic.model.DomainItem;
+import com.xunchijn.dcappv1.util.TimeUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +20,15 @@ import java.util.List;
 
 public class DomainDetailsAdapter extends RecyclerView.Adapter {
     private List<DomainItem> mList;
+
     public DomainDetailsAdapter(List<DomainItem> list) {
         mList = list;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_statistic_domain_details, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_domain_details, parent, false);
         return new DomainDetailsAdapter.DomainDetailView(view);
     }
 
@@ -45,12 +46,6 @@ public class DomainDetailsAdapter extends RecyclerView.Adapter {
         return mList == null ? 0 : mList.size();
     }
 
-    public static String getDateToString(long milSecond, String pattern) {
-        Date date = new Date(milSecond*1000);
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        return format.format(date);
-    }
-
     private class DomainDetailView extends RecyclerView.ViewHolder {
         private TextView mViewName;
         private TextView mViewDept;
@@ -65,18 +60,10 @@ public class DomainDetailsAdapter extends RecyclerView.Adapter {
 
         void bindDomains(DomainItem item) {
             if (!TextUtils.isEmpty(item.getStartTime())) {
-                String start = item.getStartTime();
-                String startTime="";
-                long time = Long.valueOf(start);
-                startTime = DomainDetailsAdapter.getDateToString(time,"yyyy-MM-dd HH:mm:ss");
-                mViewName.setText(String.format("进区域：%s", startTime));
+                mViewName.setText(String.format("进区域：%s", TimeUtils.getStrTime(item.getStartTime())));
             }
             if (!TextUtils.isEmpty(item.getEndTime())) {
-                String end = item.getEndTime();
-                String endTime="";
-                long time = Long.valueOf(end);
-                endTime = DomainDetailsAdapter.getDateToString(time,"yyyy-MM-dd HH:mm:ss");
-                mViewDept.setText(String.format("出区域：%s", endTime));
+                mViewDept.setText(String.format("出区域：%s", TimeUtils.getStrTime(item.getEndTime())));
             }
             if (!TextUtils.isEmpty(item.getTimeDifference())) {
                 mViewTimes.setText(String.format("时长：%s分钟", item.getTimeDifference()));

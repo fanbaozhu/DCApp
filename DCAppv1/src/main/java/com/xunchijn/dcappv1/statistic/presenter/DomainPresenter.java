@@ -11,13 +11,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
-public class DomainRecordsPresenter implements DomainsContrast.Presenter {
+public class DomainPresenter implements DomainsContrast.Presenter {
     private String TAG = "";
     private DomainsContrast.View mView;
     private StatisticService mStatisticService;
     private Observer<Response<Result<StatisticResult>>> mResultObserver;
 
-    public DomainRecordsPresenter(DomainsContrast.View view) {
+    public DomainPresenter(DomainsContrast.View view) {
         mView = view;
         mView.setPresenter(this);
         mStatisticService = new StatisticService();

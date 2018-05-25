@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.adapter.DomainDetailsAdapter;
-import com.xunchijn.dcappv1.adapter.DomainsAdapter;
 import com.xunchijn.dcappv1.statistic.model.DomainItem;
 import com.xunchijn.dcappv1.statistic.presenter.DomainsContrast;
 
@@ -49,24 +48,24 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
         initData();
     }
 
-    private void initData(){
+    private void initData() {
         Activity activity = getActivity();
-        if (activity==null){
+        if (activity == null) {
             return;
         }
         Intent intent = activity.getIntent();
-        if (intent==null){
+        if (intent == null) {
             return;
         }
         String gps_simId = intent.getStringExtra("gps_simId");
         String startTime = intent.getStringExtra("startTime");
-        if (TextUtils.isEmpty(gps_simId)||TextUtils.isEmpty(startTime)){
+        if (TextUtils.isEmpty(gps_simId) || TextUtils.isEmpty(startTime)) {
             return;
         }
-        if (mPresenter==null){
+        if (mPresenter == null) {
             return;
         }
-        mPresenter.getCarDomainDetails(startTime,gps_simId);
+        mPresenter.getCarDomainDetails(startTime, gps_simId);
     }
 
     public void showError(String error) {

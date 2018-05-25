@@ -46,6 +46,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
             @Override
             public void onItemClick(DomainItem item) {
                 Intent intent = new Intent(getContext(), DomainDetailsActivity.class);
+                intent.putExtra("carName", item.getCarName());
                 intent.putExtra("gps_simId", item.getCarId());
                 StatisticActivity activity = (StatisticActivity) getActivity();
                 if (activity == null) {
