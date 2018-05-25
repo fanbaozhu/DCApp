@@ -56,22 +56,41 @@ public class DomainsAdapter extends RecyclerView.Adapter {
             mViewTimes = itemView.findViewById(R.id.text_car_times);
         }
 
-        void bindDomains(DomainItem item) {
+        void bindDomains(final DomainItem item) {
             if (!TextUtils.isEmpty(item.getCarName())) {
                 mViewName.setText(String.format("车牌号：%s", item.getCarName()));
             }
-            if (!TextUtils.isEmpty(item.getCarName())) {
+            if (!TextUtils.isEmpty(item.getCarType())) {
                 mViewType.setText(String.format("车辆类型：%s", item.getCarType()));
             }
-            if (!TextUtils.isEmpty(item.getCarName())) {
+            if (!TextUtils.isEmpty(item.getCarDept())) {
                 mViewDept.setText(String.format("所在部门：%s", item.getCarDept()));
             }
-            if (!TextUtils.isEmpty(item.getCarName())) {
+            if (!TextUtils.isEmpty(item.getFrequency())) {
                 mViewCount.setText(String.format("运行：%s次", item.getFrequency()));
             }
-            if (!TextUtils.isEmpty(item.getCarName())) {
+            if (!TextUtils.isEmpty(item.getTimeDifference())) {
                 mViewTimes.setText(String.format("累计时长：%s分钟", item.getTimeDifference()));
             }
+            if (mItemClickListener==null){
+                return;
+            }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mItemClickListener.onItemClick(item);
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener{
+        void  onItemClick(DomainItem item);
+    }
+
+    private OnItemClickListener mItemClickListener;
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        mItemClickListener = itemClickListener;
     }
 }

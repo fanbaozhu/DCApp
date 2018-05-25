@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 public class StatisticActivity extends AbsBaseActivity {
     private DomainsContrast.Presenter mPresenter;
+    private String mTimes;
 
     @Override
     public void initTitle() {
@@ -67,9 +68,14 @@ public class StatisticActivity extends AbsBaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                mPresenter.getCarRecords(String.valueOf(times));
+                mTimes=String.valueOf(times);
+                mPresenter.getCarRecords(mTimes);
             }
         }, year, month, day);
         dialog.show();
+    }
+
+    public String getTimes() {
+        return mTimes;
     }
 }
