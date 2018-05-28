@@ -27,7 +27,7 @@ import java.util.List;
 public class PhotoUtils {
     public static final int REQUEST_CODE_PICK_PHOTO = 0x1001;
     public static final int REQUEST_CODE_CAMERA = 0x1002;
-    public final int REQUEST_CODE_PERMISSION = 0x10003;
+    public final int REQUEST_CODE_PERMISSION = 0x1003;
     private Activity mActivity;
     private File mPicture;
 
@@ -79,13 +79,13 @@ public class PhotoUtils {
     public void intentToCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_PERMISSION);
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
                 return;
             }
         }
         String fileName = String.format("%sDC_%s_img.jpg", mActivity.getExternalCacheDir(), System.currentTimeMillis());
         mPicture = new File(fileName);
-        Uri mUri = FileProvider.getUriForFile(mActivity, "com.xunchijn.dcappv1.fileprovider", mPicture);
+        Uri mUri = FileProvider.getUriForFile(mActivity, "com.xunchijn.tongshan.fileprovider", mPicture);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
         mActivity.startActivityForResult(intent, REQUEST_CODE_CAMERA);
@@ -95,7 +95,7 @@ public class PhotoUtils {
     public void intentToPick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
                 return;
             }
         }
