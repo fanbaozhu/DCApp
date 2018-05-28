@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xunchijn.dcappv1.common.view.MainActivity">
+    tools:context="com.xunchijn.tongshan.common.view.MainActivity">
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation_bar"
