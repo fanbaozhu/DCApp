@@ -1,17 +1,12 @@
 package com.xunchijn.tongshan.util;
 
-import android.content.Context;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.baidubce.BuildConfig;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.xunchijn.tongshan.BuildConfig;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,17 +16,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2018/5/4 0004.
  */
 
-public class   RetrofitProvider {
+public class RetrofitProvider {
     //发布
-    private static final String RELEASE = "http://192.168.1.221:8097";
+    private static final String RELEASE = "http://192.168.1.221:8076";
     //预发布
     private static final String PRE_RELEASE = "http://219.148.91.210:8091";
     //开发
-    public static final String BASE_URL = "http://49.4.69.187:8099";
+ //   public static final String BASE_URL = "http://49.4.69.187:8099";
 //    public static final String BASE_URL = "http://219.148.91.210:8091";
+    public static final String BASE_URL = "http://192.168.1.221:8076";
 
     @NonNull
-    public static Retrofit get(){
+    public static Retrofit get() {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         //读取超时
         builder.readTimeout(10, TimeUnit.SECONDS);
@@ -39,7 +35,7 @@ public class   RetrofitProvider {
         builder.connectTimeout(9, TimeUnit.SECONDS);
 
         //DeBug模式下
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(interceptor);
