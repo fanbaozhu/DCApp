@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.base.BaseConfig;
 import com.xunchijn.tongshan.adapter.SubTitleAdapter;
 import com.xunchijn.tongshan.adapter.TitleAdapter;
+import com.xunchijn.tongshan.base.BaseConfig;
 import com.xunchijn.tongshan.common.module.SubTitleItem;
 import com.xunchijn.tongshan.event.view.HistoryActivity;
 import com.xunchijn.tongshan.event.view.ReportActivity;
@@ -50,7 +50,7 @@ public class MainFragment extends Fragment {
     private void parseClick(int witch, String title) {
         switch (witch) {
             case 1:
-                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
+                SelectCarsActivity.newInstance(getContext(), title);
                 break;
             case 2:
             case 3:

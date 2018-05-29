@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
+import com.xunchijn.tongshan.event.view.DetailsActivity;
 import com.xunchijn.tongshan.util.TitleFragment;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.map.presenter.SelectPresenter;
@@ -54,8 +55,10 @@ public class SelectCarsActivity extends AbsBaseActivity {
 
         if (mType.equals("定位")) {
             LocationActivity.newInstance(this, "车辆", items.get(1).getId());
-        } else {
+        } else if (mType.equals("轨迹")){
             TraceActivity.newInstance(this, "车辆", items.get(1).getId());
+        } else {
+            DetailsActivity.newInstance(this, "车辆", items.get(1).getId());
         }
         finish();
     }

@@ -7,15 +7,23 @@ import com.xunchijn.tongshan.util.TimeUtils;
 
 public class EventItem {
     private String eventId;
+    //描述
     private String eventDescribe;
+    //位置
     private String eventPosition;
+    //照片
     private String eventPictureName;
     @SerializedName("checkDepartment")
     private String eventDepartment;
+    //子部门
     private String eventSubDepartment;
+    //考核类型
     private String checkType;
+    //考核详情
     private String checkContent;
+    //状态
     private String eventStatus;
+    //上报时间
     private String reportTime;
 
     public String getEventId() {

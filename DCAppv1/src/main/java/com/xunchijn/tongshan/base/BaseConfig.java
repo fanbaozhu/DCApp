@@ -4,6 +4,7 @@ import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.common.module.SubTitleItem;
 import com.xunchijn.tongshan.common.module.TitleItem;
+import com.xunchijn.tongshan.event.model.DetailsItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,19 @@ public class BaseConfig {
         items.add(item1);
         items.add(item2);
         items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        return items;
+    }
+
+    public static List<SettingItem> getEventInFoSettingItems() {
+        List<SettingItem> items = new ArrayList<>();
+        SettingItem item1 = new SettingItem(0, "所在位置", "");
+        SettingItem item2 = new SettingItem(1, "部门", "");
+        SettingItem item4 = new SettingItem(2, "考核类型", "");
+        SettingItem item5 = new SettingItem(3, "考核项目", "");
+        items.add(item1);
+        items.add(item2);
         items.add(item4);
         items.add(item5);
         return items;

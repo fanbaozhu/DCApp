@@ -54,4 +54,8 @@ public interface EventApi {
     //获取事件详情
     @GET("API/tmd/GetInfomation")
     Observable<Response<Result<EventResult>>> GetEventInfo(@Query("id") String typeId);
+
+    //获取事件详情
+    @GET("API/tmd/GetCarinFormation")
+    Observable<Response<Result<DetailsResult>>> GetCarinFormation(@Query("id") String typeId);
 }
