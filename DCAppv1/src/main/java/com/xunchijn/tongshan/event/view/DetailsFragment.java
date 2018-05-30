@@ -4,25 +4,24 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.adapter.DetailsAdapter;
 import com.xunchijn.tongshan.event.model.DetailsItem;
 import com.xunchijn.tongshan.event.presenter.DetailsContract;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DetailsFragment extends Fragment implements DetailsContract.View {
     private DetailsContract.Presenter mPresenter;
-    private RecyclerView viewDetails;
+    private TextView tvName;
+    private TextView tvDept;
+    private TextView tvZone;
+    private TextView tvStatus;
+    private TextView tvAddress;
 
     public static DetailsFragment newInstance(String eventId) {
         DetailsFragment detailsFragment = new DetailsFragment();
@@ -41,8 +40,11 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
     }
 
     private void initView(View view) {
-        viewDetails = view.findViewById(R.id.recycler_view_details);
-        viewDetails.setLayoutManager(new LinearLayoutManager(getContext()));
+        tvName = view.findViewById(R.id.tvName);
+        tvDept = view.findViewById(R.id.tvDept);
+        tvZone = view.findViewById(R.id.tvZone);
+        tvStatus = view.findViewById(R.id.tvStatus);
+        tvAddress = view.findViewById(R.id.tvAddress);
         Bundle bundle = getArguments();
         if (bundle == null || mPresenter == null) {
             return;
@@ -56,10 +58,11 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
 
     @Override
     public void showCarDetails(DetailsItem item) {
-        List<DetailsItem> list = new ArrayList<>();
-        list.add(item);
-        DetailsAdapter mDetailsAdapter = new DetailsAdapter(list);
-        viewDetails.setAdapter(mDetailsAdapter);
+        tvName.setText(String.format("车牌名称：%s", item.getCarName()));
+        tvDept.setText(String.format("所属部门：%s", item.getCarDept()));
+        tvZone.setText(String.format("所属区域：%s", item.getCarZone()));
+        tvStatus.setText(String.format("当前状态：%s", item.getCarStatus()));
+        tvAddress.setText(String.format("当前位置：%s", item.getCarAddress()));
     }
 
     @Override

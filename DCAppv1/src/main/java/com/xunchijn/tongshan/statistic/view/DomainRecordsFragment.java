@@ -64,10 +64,8 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
     }
 
     private void initData() {
-        mTime = String.valueOf(new Date().getTime() - 24 * 60 * 60);
-        if (mTime.length() == 13) {
-            mTime = mTime.substring(0, 10);
-        }
+        mTime = String.valueOf(new Date().getTime() - 24 * 60 * 60 * 1000);
+        mTime = mTime.substring(0, 10);
         if (mPresenter == null) {
             return;
         }
