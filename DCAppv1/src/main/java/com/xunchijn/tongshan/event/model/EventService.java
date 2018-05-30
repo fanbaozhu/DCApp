@@ -1,6 +1,7 @@
 package com.xunchijn.tongshan.event.model;
 
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.map.model.DetailsResult;
 import com.xunchijn.tongshan.util.RetrofitProvider;
 
 import java.util.Map;

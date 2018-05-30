@@ -70,8 +70,15 @@ public class MainFragment extends Fragment {
                 startActivity(new Intent(getContext(), HistoryActivity.class));
                 break;
             case 9:
-                startActivity(new Intent(getContext(), ReportActivity.class));
+                ReportActivity.start(getContext(), true);
                 break;
+            case 10:
+                startActivity(new Intent(getContext(), HistoryActivity.class));
+                break;
+            case 11:
+                ReportActivity.start(getContext(), false);
+                break;
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.xunchijn.tongshan.event.view;
+package com.xunchijn.tongshan.map.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,7 @@ import android.text.TextUtils;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
-import com.xunchijn.tongshan.event.presenter.DetailsPresenter;
-import com.xunchijn.tongshan.map.view.TraceActivity;
+import com.xunchijn.tongshan.map.presenter.DetailsPresenter;
 import com.xunchijn.tongshan.util.TitleFragment;
 
 public class DetailsActivity extends AbsBaseActivity {

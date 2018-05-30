@@ -1,9 +1,9 @@
-package com.xunchijn.tongshan.event.presenter;
+package com.xunchijn.tongshan.map.presenter;
 
 import android.util.Log;
 
 import com.xunchijn.tongshan.base.Result;
-import com.xunchijn.tongshan.event.model.DetailsResult;
+import com.xunchijn.tongshan.map.model.DetailsResult;
 import com.xunchijn.tongshan.event.model.EventService;
 
 import io.reactivex.Observer;

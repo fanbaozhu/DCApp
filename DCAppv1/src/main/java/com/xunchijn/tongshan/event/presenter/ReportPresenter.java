@@ -103,6 +103,17 @@ public class ReportPresenter implements ReportContract.Presenter {
         uploadPic(urls);
     }
 
+    @Override
+    public void report(String describe, List<String> urls, String address, String point, String subDepartment, String accountId) {
+        mMap = new HashMap<>();
+        mMap.put("describe", describe);
+        mMap.put("subDepartment", subDepartment);
+        mMap.put("accountId", accountId);
+        mMap.put("point", point);
+        mMap.put("address", address);
+        uploadPic(urls);
+    }
+
     private void uploadPic(List<String> urls) {
         if (urls == null || urls.size() == 0) {
             mView.showError("图片不能为空");

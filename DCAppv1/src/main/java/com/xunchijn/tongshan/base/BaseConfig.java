@@ -4,7 +4,6 @@ import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.common.module.SubTitleItem;
 import com.xunchijn.tongshan.common.module.TitleItem;
-import com.xunchijn.tongshan.event.model.DetailsItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,11 @@ public class BaseConfig {
         SubTitleItem item = new SubTitleItem(1, "车辆信息", R.mipmap.ic_car_info);
         SubTitleItem item1 = new SubTitleItem(2, "车辆定位", R.mipmap.ic_location_car);
         SubTitleItem item2 = new SubTitleItem(3, "车辆轨迹", R.mipmap.ic_trace);
+        SubTitleItem item6 = new SubTitleItem(7, "统计报表", R.mipmap.ic_statistics);
         list.add(item);
         list.add(item1);
         list.add(item2);
+        list.add(item6);
         TitleItem titleItem = new TitleItem("车辆管理", R.mipmap.ic_car_manage, list);
         titleItems.add(titleItem);
 
@@ -35,12 +36,14 @@ public class BaseConfig {
 //        titleItems.add(titleItem1);
 
         List<SubTitleItem> list2 = new ArrayList<>();
-        SubTitleItem item6 = new SubTitleItem(7, "统计报表", R.mipmap.ic_statistics);
         SubTitleItem item7 = new SubTitleItem(8, "上报历史", R.mipmap.ic_report_history);
         SubTitleItem item8 = new SubTitleItem(9, "事件上报", R.mipmap.ic_report);
-        list2.add(item6);
+        SubTitleItem item9 = new SubTitleItem(10, "上报历史", R.mipmap.ic_report_history);
+        SubTitleItem item10 = new SubTitleItem(11, "事件上报", R.mipmap.ic_report);
         list2.add(item7);
         list2.add(item8);
+        list2.add(item9);
+        list2.add(item10);
         TitleItem titleItem2 = new TitleItem("事件与其他", R.mipmap.ic_report_manage, list2);
         titleItems.add(titleItem2);
 
@@ -59,6 +62,17 @@ public class BaseConfig {
         items.add(item3);
         items.add(item4);
         items.add(item5);
+        return items;
+    }
+
+    public static List<SettingItem> getSettingItemsWithoutType() {
+        List<SettingItem> items = new ArrayList<>();
+        SettingItem item1 = new SettingItem(0, "所在位置", "");
+        SettingItem item2 = new SettingItem(1, "部门", "");
+        SettingItem item3 = new SettingItem(2, "子部门", "");
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
         return items;
     }
 

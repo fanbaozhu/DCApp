@@ -1,5 +1,6 @@
 package com.xunchijn.tongshan.event.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,8 +18,8 @@ import android.widget.Toast;
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.adapter.SelectAdapter;
 import com.xunchijn.tongshan.adapter.SelectedAdapter;
-import com.xunchijn.tongshan.event.model.SelectItem;
 import com.xunchijn.tongshan.common.module.SettingItem;
+import com.xunchijn.tongshan.event.model.SelectItem;
 import com.xunchijn.tongshan.event.presenter.SelectOptionsContrast;
 
 import java.util.ArrayList;
@@ -117,7 +118,7 @@ public class SelectOptionsFragment extends Fragment implements SelectOptionsCont
             return;
         }
         if (mTitle.equals("子部门")) {
-            mPresenter.getCheckType();
+            showShortOptions("", null);
             return;
         }
         if (mTitle.equals("考核类型")) {
@@ -133,7 +134,16 @@ public class SelectOptionsFragment extends Fragment implements SelectOptionsCont
         if (mPresenter == null) {
             return;
         }
-        mPresenter.getDepartments();
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        boolean isCheckType = activity.getIntent().getBooleanExtra("isCheckType", false);
+        if (isCheckType) {
+            mPresenter.getCheckType();
+        } else {
+            mPresenter.getDepartments();
+        }
     }
 
     private String mTitle;

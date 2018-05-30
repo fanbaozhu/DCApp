@@ -1,4 +1,4 @@
-package com.xunchijn.tongshan.event.model;
+package com.xunchijn.tongshan.map.model;
 
 public class DetailsResult {
     private DetailsItem carInfomation;

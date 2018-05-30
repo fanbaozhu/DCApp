@@ -1,4 +1,4 @@
-package com.xunchijn.tongshan.event.view;
+package com.xunchijn.tongshan.map.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.event.model.DetailsItem;
-import com.xunchijn.tongshan.event.presenter.DetailsContract;
+import com.xunchijn.tongshan.map.model.DetailsItem;
+import com.xunchijn.tongshan.map.presenter.DetailsContract;
 
 public class DetailsFragment extends Fragment implements DetailsContract.View {
     private DetailsContract.Presenter mPresenter;

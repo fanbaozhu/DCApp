@@ -1,8 +1,10 @@
 package com.xunchijn.tongshan.event.presenter;
 
 import com.xunchijn.tongshan.base.BaseView;
+import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.event.model.SelectItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface SelectOptionsContrast {
@@ -22,5 +24,7 @@ public interface SelectOptionsContrast {
         void showShortOptions(String title, List<SelectItem> list);
 
         void showLongOptions(String title, List<SelectItem> list);
+
+        ArrayList<SettingItem> getSelectItems();
     }
 }

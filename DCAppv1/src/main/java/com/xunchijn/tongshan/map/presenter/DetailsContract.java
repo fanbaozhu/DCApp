@@ -1,9 +1,7 @@
-package com.xunchijn.tongshan.event.presenter;
+package com.xunchijn.tongshan.map.presenter;
 
 import com.xunchijn.tongshan.base.BaseView;
-import com.xunchijn.tongshan.event.model.DetailsItem;
-
-import java.util.List;
+import com.xunchijn.tongshan.map.model.DetailsItem;
 
 public interface DetailsContract {
     interface Presenter {

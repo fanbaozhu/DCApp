@@ -59,7 +59,7 @@ public class TitleAdapter extends RecyclerView.Adapter {
             mViewPicture = itemView.findViewById(R.id.image_view_title);
             mViewTitle = itemView.findViewById(R.id.text_view_title);
             mViewSubTitles = itemView.findViewById(R.id.recycler_view_title);
-            mViewSubTitles.setLayoutManager(new GridLayoutManager(mContext, 3));
+            mViewSubTitles.setLayoutManager(new GridLayoutManager(mContext, 4));
         }
 
         void bindTitleView(TitleItem item) {

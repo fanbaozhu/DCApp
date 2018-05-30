@@ -20,6 +20,9 @@ public interface ReportContract {
          * */
         void report(String describe, List<String> urls, String address, String point,
                     String subDepartment, String type, String content, String accountId);
+
+        void report(String describe, List<String> urls, String address, String point,
+                    String subDepartment, String accountId);
     }
 
     interface View extends BaseView<Presenter> {

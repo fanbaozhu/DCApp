@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.event.model.DetailsItem;
+import com.xunchijn.tongshan.map.model.DetailsItem;
 
 import java.util.List;
 

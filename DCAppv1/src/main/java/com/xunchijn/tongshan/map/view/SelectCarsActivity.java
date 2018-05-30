@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
-import com.xunchijn.tongshan.event.view.DetailsActivity;
 import com.xunchijn.tongshan.util.TitleFragment;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.map.presenter.SelectPresenter;

@@ -6,9 +6,9 @@ import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
-import com.xunchijn.tongshan.util.TitleFragment;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.event.presenter.SelectOptionsPresenter;
+import com.xunchijn.tongshan.util.TitleFragment;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class SelectOptionsActivity extends AbsBaseActivity {
             @Override
             public void onConfirm() {
                 ArrayList<SettingItem> list = mOptionsFragment.getSelectItems();
-                if (list != null && list.size() == 4) {
+                if (list != null && list.size() == 2) {
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("selected", list);

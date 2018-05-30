@@ -46,8 +46,14 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     private PhotoUtils mPhotoUtils;
 
     private final int REQUEST_CODE_SHOW_PICTURE = 0x001;
-    private final int REQUEST_CODE_SELECT_OPTIONS = 0x002;
-    private final int REQUEST_CODE_SELECT_POSITION = 0x003;
+    private final int REQUEST_CODE_SELECT_POSITION = 0x002;
+    private final int REQUEST_CODE_SELECT_DEPARTMENT = 0x003;
+    private final int REQUEST_CODE_SELECT_CHECK_TYPE = 0x004;
+    private boolean mHaveCheckType;
+
+    public void setHaveCheckType(boolean haveCheckType) {
+        mHaveCheckType = haveCheckType;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,17 +77,23 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         RecyclerView mViewSettings = view.findViewById(R.id.recycler_view_setting);
         mViewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mSettingItems = BaseConfig.getSettingItems();
+        if (mHaveCheckType) {
+            mSettingItems = BaseConfig.getSettingItems();
+        } else {
+            mSettingItems = BaseConfig.getSettingItemsWithoutType();
+        }
         mSettingAdapter = new SettingAdapter(mSettingItems);
         mViewSettings.setAdapter(mSettingAdapter);
         mSettingAdapter.setItemClickListener(new SettingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SettingItem item) {
                 if (item.getIndex() == 0) {
-                    Toast.makeText(getContext(), "定位", Toast.LENGTH_SHORT).show();
                     startActivityForResult(new Intent(getContext(), PositionActivity.class), REQUEST_CODE_SELECT_POSITION);
                 } else {
-                    startActivityForResult(new Intent(getContext(), SelectOptionsActivity.class), REQUEST_CODE_SELECT_OPTIONS);
+                    Intent intent = new Intent(getContext(), SelectOptionsActivity.class);
+                    intent.putExtra("isCheckType", item.getIndex() > 2);
+                    startActivityForResult(intent,
+                            item.getIndex() > 2 ? REQUEST_CODE_SELECT_CHECK_TYPE : REQUEST_CODE_SELECT_DEPARTMENT);
                 }
             }
         });
@@ -106,6 +118,12 @@ public class ReportFragment extends Fragment implements ReportContract.View {
         String mSubDepartmentId = mSettingItems.get(2).getId();
         if (TextUtils.isEmpty(mSubDepartmentId)) {
             showError("请设置子部门");
+            return;
+        }
+        if (mSettingItems.size() == 3) {
+            if (mPresenter != null) {
+                mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, "巡查员");
+            }
             return;
         }
         String mTypeId = mSettingItems.get(3).getId();
@@ -195,16 +213,29 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             return;
         }
         //设置选项
-        if (requestCode == REQUEST_CODE_SELECT_OPTIONS && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SELECT_DEPARTMENT && resultCode == RESULT_OK) {
             Bundle bundle = data.getBundleExtra("args");
             if (bundle == null) {
                 return;
             }
             ArrayList<SettingItem> list = (ArrayList<SettingItem>) bundle.getSerializable("selected");
             if (list != null) {
-                SettingItem item = mSettingItems.get(0);
-                mSettingItems.clear();
-                mSettingItems.add(item);
+                mSettingItems.remove(2);
+                mSettingItems.remove(1);
+                mSettingItems.addAll(1, list);
+                mSettingAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
+        if (requestCode == REQUEST_CODE_SELECT_CHECK_TYPE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getBundleExtra("args");
+            if (bundle == null) {
+                return;
+            }
+            ArrayList<SettingItem> list = (ArrayList<SettingItem>) bundle.getSerializable("selected");
+            if (list != null) {
+                mSettingItems.remove(4);
+                mSettingItems.remove(3);
                 mSettingItems.addAll(list);
                 mSettingAdapter.notifyDataSetChanged();
             }
