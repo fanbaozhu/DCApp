@@ -27,7 +27,7 @@ import java.util.List;
 public class PhotoUtils {
     public static final int REQUEST_CODE_PICK_PHOTO = 0x1001;
     public static final int REQUEST_CODE_CAMERA = 0x1002;
-    public final int REQUEST_CODE_PERMISSION = 0x10003;
+    public final int REQUEST_CODE_PERMISSION = 0x1003;
     private Activity mActivity;
     private File mPicture;
 
