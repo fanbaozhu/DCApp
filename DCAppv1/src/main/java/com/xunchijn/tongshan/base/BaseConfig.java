@@ -38,8 +38,8 @@ public class BaseConfig {
         List<SubTitleItem> list2 = new ArrayList<>();
         SubTitleItem item7 = new SubTitleItem(8, "上报历史", R.mipmap.ic_report_history);
         SubTitleItem item8 = new SubTitleItem(9, "事件上报", R.mipmap.ic_report);
-        SubTitleItem item9 = new SubTitleItem(10, "上报历史", R.mipmap.ic_report_history);
-        SubTitleItem item10 = new SubTitleItem(11, "事件上报", R.mipmap.ic_report);
+        SubTitleItem item9 = new SubTitleItem(10, "交流历史", R.mipmap.ic_report_history);
+        SubTitleItem item10 = new SubTitleItem(11, "信息交流", R.mipmap.ic_report);
         list2.add(item7);
         list2.add(item8);
         list2.add(item9);
