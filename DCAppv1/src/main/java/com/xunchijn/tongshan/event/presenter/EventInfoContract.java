@@ -6,6 +6,8 @@ import com.xunchijn.tongshan.event.model.EventItem;
 public interface EventInfoContract {
     interface Presenter {
         void getEventInfo(String id);
+
+        void getInfo(String id);
     }
 
     interface View extends BaseView<Presenter> {

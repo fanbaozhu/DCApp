@@ -41,12 +41,12 @@
             android:name=".common.view.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".event.view.ReportActivity"
+            android:name=".event.view.EventReportActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".map.view.TraceActivity" />
         <activity android:name=".statistic.view.StatisticActivity" />
         <activity android:name=".common.view.SearchActivity" />
-        <activity android:name=".event.view.HistoryActivity" />
+        <activity android:name=".event.view.EventHistoryActivity" />
         <activity
             android:name=".common.view.SplashActivity"
             android:theme="@style/AppFullscreen">

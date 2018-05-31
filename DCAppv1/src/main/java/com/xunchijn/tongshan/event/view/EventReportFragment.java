@@ -24,7 +24,7 @@ import com.xunchijn.tongshan.adapter.PictureAdapter;
 import com.xunchijn.tongshan.adapter.SettingAdapter;
 import com.xunchijn.tongshan.base.BaseConfig;
 import com.xunchijn.tongshan.common.module.SettingItem;
-import com.xunchijn.tongshan.event.presenter.ReportContract;
+import com.xunchijn.tongshan.event.presenter.EventReportContract;
 import com.xunchijn.tongshan.util.PhotoUtils;
 
 import java.io.File;
@@ -35,10 +35,10 @@ import static android.app.Activity.RESULT_OK;
 import static com.xunchijn.tongshan.util.PhotoUtils.REQUEST_CODE_CAMERA;
 import static com.xunchijn.tongshan.util.PhotoUtils.REQUEST_CODE_PICK_PHOTO;
 
-public class ReportFragment extends Fragment implements ReportContract.View {
+public class EventReportFragment extends Fragment implements EventReportContract.View {
     private List<String> mUrls = new ArrayList<>();
     private SettingAdapter mSettingAdapter;
-    private ReportContract.Presenter mPresenter;
+    private EventReportContract.Presenter mPresenter;
     private List<SettingItem> mSettingItems;
     private PictureAdapter mPictureAdapter;
     private EditText mInputDescribe;
@@ -280,7 +280,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
     }
 
     @Override
-    public void setPresenter(ReportContract.Presenter presenter) {
+    public void setPresenter(EventReportContract.Presenter presenter) {
         mPresenter = presenter;
     }
 }

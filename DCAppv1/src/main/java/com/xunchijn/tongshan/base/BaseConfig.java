@@ -89,6 +89,15 @@ public class BaseConfig {
         return items;
     }
 
+    public static List<SettingItem> getInfo() {
+        List<SettingItem> items = new ArrayList<>();
+        SettingItem item1 = new SettingItem(0, "所在位置", "");
+        SettingItem item2 = new SettingItem(1, "部门", "");
+        items.add(item1);
+        items.add(item2);
+        return items;
+    }
+
     public static List<SettingItem> getMineSettings() {
         List<SettingItem> items = new ArrayList<>();
         SettingItem item1 = new SettingItem(0, "消息通知", "");

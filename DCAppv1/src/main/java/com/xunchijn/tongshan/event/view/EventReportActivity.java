@@ -5,15 +5,15 @@ import android.content.Intent;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
-import com.xunchijn.tongshan.event.presenter.ReportPresenter;
+import com.xunchijn.tongshan.event.presenter.EventReportPresenter;
 import com.xunchijn.tongshan.util.TitleFragment;
 import com.xunchijn.tongshan.util.TitleFragment.OnItemClickListener;
 
-public class ReportActivity extends AbsBaseActivity {
-    private ReportFragment mReportFragment;
+public class EventReportActivity extends AbsBaseActivity {
+    private EventReportFragment mReportFragment;
 
     public static void start(Context context, boolean haveCheckType) {
-        Intent intent = new Intent(context, ReportActivity.class);
+        Intent intent = new Intent(context, EventReportActivity.class);
         intent.putExtra("haveCheckType", haveCheckType);
         context.startActivity(intent);
     }
@@ -41,10 +41,10 @@ public class ReportActivity extends AbsBaseActivity {
 
     @Override
     public void initContent() {
-        mReportFragment = new ReportFragment();
+        mReportFragment = new EventReportFragment();
         boolean haveCheckType = getIntent().getBooleanExtra("haveCheckType", true);
         mReportFragment.setHaveCheckType(haveCheckType);
-        new ReportPresenter(mReportFragment, this);
+        new EventReportPresenter(mReportFragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, mReportFragment)
                 .show(mReportFragment)

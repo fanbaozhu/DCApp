@@ -21,15 +21,16 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class ReportPresenter implements ReportContract.Presenter {
+public class EventReportPresenter implements EventReportContract.Presenter {
     private final String TAG = "Report";
-    private ReportContract.View mView;
+    private EventReportContract.View mView;
     private EventService mEventService;
     private Observer<Response<Result<EventResult>>> mObserver;
     private Map<String, String> mMap;
     private PhotoUtils mPhotoUtils;
+    private boolean mReport = true;
 
-    public ReportPresenter(ReportContract.View view, Activity context) {
+    public EventReportPresenter(EventReportContract.View view, Activity context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
@@ -86,7 +87,11 @@ public class ReportPresenter implements ReportContract.Presenter {
             mView.showError("参数不能为null");
             return;
         }
-        mEventService.report(mMap).observeOn(AndroidSchedulers.mainThread()).subscribe(mObserver);
+        if (mReport) {
+            mEventService.report(mMap).observeOn(AndroidSchedulers.mainThread()).subscribe(mObserver);
+        } else {
+            mEventService.InsertMessages(mMap).observeOn(AndroidSchedulers.mainThread()).subscribe(mObserver);
+        }
     }
 
     @Override
@@ -100,6 +105,7 @@ public class ReportPresenter implements ReportContract.Presenter {
         mMap.put("accountId", accountId);
         mMap.put("point", point);
         mMap.put("address", address);
+        mReport = true;
         uploadPic(urls);
     }
 
@@ -111,6 +117,7 @@ public class ReportPresenter implements ReportContract.Presenter {
         mMap.put("accountId", accountId);
         mMap.put("point", point);
         mMap.put("address", address);
+        mReport = false;
         uploadPic(urls);
     }
 

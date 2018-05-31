@@ -11,9 +11,10 @@ import com.xunchijn.tongshan.util.TitleFragment;
 
 public class EventInfoActivity extends AbsBaseActivity {
 
-    public static void start(Context context, String eventId) {
+    public static void start(Context context, String eventId, boolean isEvent) {
         Intent intent = new Intent(context, EventInfoActivity.class);
         intent.putExtra("eventId", eventId);
+        intent.putExtra("isEvent", isEvent);
         context.startActivity(intent);
     }
 
@@ -32,7 +33,9 @@ public class EventInfoActivity extends AbsBaseActivity {
         if (TextUtils.isEmpty(eventId)) {
             return;
         }
+        boolean isEvent = getIntent().getBooleanExtra("isEvent", true);
         EventInfoFragment fragment = EventInfoFragment.newInstance(eventId);
+        fragment.setEvent(isEvent);
         new EventInfoPresenter(fragment);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)

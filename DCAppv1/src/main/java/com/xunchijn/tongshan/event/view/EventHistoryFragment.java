@@ -14,13 +14,14 @@ import android.widget.Toast;
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.adapter.HistoryAdapter;
 import com.xunchijn.tongshan.event.model.EventItem;
-import com.xunchijn.tongshan.event.presenter.HistoryContract;
+import com.xunchijn.tongshan.event.presenter.EventHistoryContract;
 
 import java.util.List;
 
-public class HistoryFragment extends Fragment implements HistoryContract.View {
-    private HistoryContract.Presenter mPresenter;
+public class EventHistoryFragment extends Fragment implements EventHistoryContract.View {
+    private EventHistoryContract.Presenter mPresenter;
     private RecyclerView viewHistory;
+    private boolean mIsEvent;
 
     @Nullable
     @Override
@@ -33,7 +34,12 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     private void initView(View view) {
         viewHistory = view.findViewById(R.id.recycler_view_history);
         viewHistory.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (mPresenter != null) {
+        if (mPresenter == null) {
+            return;
+        }
+        if (mIsEvent) {
+            mPresenter.getEventHistory();
+        } else {
             mPresenter.getHistory();
         }
     }
@@ -45,7 +51,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         historyAdapter.setOnItemClickListener(new HistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(EventItem item) {
-                EventInfoActivity.start(getContext(), item.getEventId());
+                EventInfoActivity.start(getContext(), item.getEventId(), mIsEvent);
             }
         });
     }
@@ -56,7 +62,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     }
 
     @Override
-    public void setPresenter(HistoryContract.Presenter presenter) {
+    public void setPresenter(EventHistoryContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    public void setEvent(boolean event) {
+        mIsEvent = event;
     }
 }

@@ -4,7 +4,7 @@ import com.xunchijn.tongshan.base.BaseView;
 
 import java.util.List;
 
-public interface ReportContract {
+public interface EventReportContract {
     interface Presenter {
 
         /*

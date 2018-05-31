@@ -27,14 +27,19 @@ public interface EventApi {
     @GET("API/tmd/GetEventInfo")
     Observable<Response<Result<EventResult>>> GetEventHistory();
 
-    //获取事件详情
-    @GET("API/tmd/GetEventInfo")
-    Observable<Response<Result<EventResult>>> GetEventInfo();
-
     //事件上报
     @FormUrlEncoded
     @POST("API/tmd/InsertAssMain")
     Observable<Response<Result<EventResult>>> Report(@FieldMap Map<String, String> map);
+
+    //获取历史
+    @GET("API/tmd/GetMessageInfo")
+    Observable<Response<Result<EventResult>>> getHistory();
+
+    //事件上报
+    @FormUrlEncoded
+    @POST("API/tmd/InsertMessages")
+    Observable<Response<Result<EventResult>>> InsertMessages(@FieldMap Map<String, String> map);
 
     //获取部门
     @GET("API/tmd/GetDepartments")
@@ -56,7 +61,11 @@ public interface EventApi {
     @GET("API/tmd/GetInfomation")
     Observable<Response<Result<EventResult>>> GetEventInfo(@Query("id") String typeId);
 
-    //获取事件详情
+    //获取详情
+    @GET("API/tmd/GetMessageInfomation")
+    Observable<Response<Result<EventResult>>> GetInfo(@Query("id") String typeId);
+
+    //获取车辆详情
     @GET("API/tmd/GetCarinFormation")
     Observable<Response<Result<DetailsResult>>> GetCarinFormation(@Query("id") String typeId);
 }

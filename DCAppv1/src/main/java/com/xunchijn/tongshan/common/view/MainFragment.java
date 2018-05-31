@@ -17,8 +17,8 @@ import com.xunchijn.tongshan.adapter.SubTitleAdapter;
 import com.xunchijn.tongshan.adapter.TitleAdapter;
 import com.xunchijn.tongshan.base.BaseConfig;
 import com.xunchijn.tongshan.common.module.SubTitleItem;
-import com.xunchijn.tongshan.event.view.HistoryActivity;
-import com.xunchijn.tongshan.event.view.ReportActivity;
+import com.xunchijn.tongshan.event.view.EventHistoryActivity;
+import com.xunchijn.tongshan.event.view.EventReportActivity;
 import com.xunchijn.tongshan.map.view.SelectCarsActivity;
 import com.xunchijn.tongshan.map.view.SelectUsersActivity;
 import com.xunchijn.tongshan.statistic.view.StatisticActivity;
@@ -67,16 +67,16 @@ public class MainFragment extends Fragment {
                 startActivity(new Intent(getContext(), StatisticActivity.class));
                 break;
             case 8:
-                startActivity(new Intent(getContext(), HistoryActivity.class));
+                EventHistoryActivity.start(getContext(), true);
                 break;
             case 9:
-                ReportActivity.start(getContext(), true);
+                EventReportActivity.start(getContext(), true);
                 break;
             case 10:
-                startActivity(new Intent(getContext(), HistoryActivity.class));
+                EventHistoryActivity.start(getContext(), false);
                 break;
             case 11:
-                ReportActivity.start(getContext(), false);
+                EventReportActivity.start(getContext(), false);
                 break;
 
         }

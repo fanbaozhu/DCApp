@@ -29,6 +29,11 @@ public class EventService {
         return mEventApi.Report(map).subscribeOn(Schedulers.io());
     }
 
+    //上报
+    public Observable<Response<Result<EventResult>>> InsertMessages(Map<String, String> map) {
+        return mEventApi.InsertMessages(map).subscribeOn(Schedulers.io());
+    }
+
     //获取二级部门
     public Observable<Response<Result<EventResult>>> getDepartments() {
         return mEventApi.GetDepartments().subscribeOn(Schedulers.io());
@@ -49,14 +54,24 @@ public class EventService {
         return mEventApi.GetCheckContent(typeId).subscribeOn(Schedulers.io());
     }
 
-
+    //获取事件历史
     public Observable<Response<Result<EventResult>>> getEventHistory() {
         return mEventApi.GetEventHistory().subscribeOn(Schedulers.io());
+    }
+
+    //获取历史
+    public Observable<Response<Result<EventResult>>> getHistory() {
+        return mEventApi.getHistory().subscribeOn(Schedulers.io());
     }
 
     //获取历史详情
     public Observable<Response<Result<EventResult>>> getEventInfo(String eventId) {
         return mEventApi.GetEventInfo(eventId).subscribeOn(Schedulers.io());
+    }
+
+    //获取详情
+    public Observable<Response<Result<EventResult>>> GetInfo(String eventId) {
+        return mEventApi.GetInfo(eventId).subscribeOn(Schedulers.io());
     }
 
     //获取车辆实时信息

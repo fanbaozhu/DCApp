@@ -11,13 +11,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
-public class EventInfoPresenter implements EventInfoContract.Presenter {
-    private final String TAG = "EventInfo";
-    private EventInfoContract.View mView;
+public class EventHistoryPresenter implements EventHistoryContract.Presenter {
+    private String TAG = "History";
+    private EventHistoryContract.View mView;
     private EventService mEventService;
     private Observer<Response<Result<EventResult>>> mObserver;
 
-    public EventInfoPresenter(EventInfoContract.View view) {
+    public EventHistoryPresenter(EventHistoryContract.View view) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
@@ -30,7 +30,16 @@ public class EventInfoPresenter implements EventInfoContract.Presenter {
             @Override
             public void onNext(Response<Result<EventResult>> resultResponse) {
                 if (resultResponse.isSuccessful()) {
-                    parseResult(resultResponse.body());
+                    if (resultResponse.body().getCode() == 200) {
+                        if (resultResponse.body().getData() == null) {
+                            return;
+                        }
+                        if (resultResponse.body().getData().getEventHistory() != null) {
+                            mView.showHistory(resultResponse.body().getData().getEventHistory());
+                        }
+                    } else {
+                        mView.showError(resultResponse.body().getMessage());
+                    }
                 } else {
                     mView.showError(resultResponse.message());
                 }
@@ -38,7 +47,7 @@ public class EventInfoPresenter implements EventInfoContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "onError: ", e);
+                Log.d(TAG, "onError: " + e);
             }
 
             @Override
@@ -49,27 +58,14 @@ public class EventInfoPresenter implements EventInfoContract.Presenter {
     }
 
     @Override
-    public void getEventInfo(String id) {
-        mEventService.getEventInfo(id).observeOn(AndroidSchedulers.mainThread())
+    public void getHistory() {
+        mEventService.getHistory().observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 
     @Override
-    public void getInfo(String id) {
-        mEventService.GetInfo(id).observeOn(AndroidSchedulers.mainThread())
+    public void getEventHistory() {
+        mEventService.getEventHistory().observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
-    }
-
-    private void parseResult(Result<EventResult> result) {
-        if (result.getCode() == 200) {
-            if (result.getData() == null) {
-                return;
-            }
-            if (result.getData().getEventItem() != null) {
-                mView.showEventInfo(result.getData().getEventItem());
-            }
-        } else {
-            mView.showError(result.getMessage());
-        }
     }
 }

@@ -35,6 +35,7 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
     private SettingAdapter mSettingAdapter;
     private TextView mViewDescribe;
     private TextView mViewReportTime;
+    private boolean mIsEvent = true;
 
     public static EventInfoFragment newInstance(String eventId) {
         EventInfoFragment eventInfoFragment = new EventInfoFragment();
@@ -65,7 +66,11 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
 
         RecyclerView viewSettings = view.findViewById(R.id.recycler_view_setting);
         viewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSettingItems = BaseConfig.getEventInFoSettingItems();
+        if (mIsEvent) {
+            mSettingItems = BaseConfig.getEventInFoSettingItems();
+        } else {
+            mSettingItems = BaseConfig.getInfo();
+        }
         mSettingAdapter = new SettingAdapter(mSettingItems);
         viewSettings.setAdapter(mSettingAdapter);
 
@@ -92,7 +97,11 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
         if (TextUtils.isEmpty(eventId)) {
             return;
         }
-        mPresenter.getEventInfo(eventId);
+        if (mIsEvent) {
+            mPresenter.getEventInfo(eventId);
+        } else {
+            mPresenter.getInfo(eventId);
+        }
     }
 
     @Override
@@ -119,11 +128,13 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
 //        if (!TextUtils.isEmpty(item.getEventSubDepartment())) {
 //            mSettingItems.get(1).setSubtitle(item.getEventSubDepartment());
 //        }
-        if (!TextUtils.isEmpty(item.getCheckType())) {
-            mSettingItems.get(2).setSubtitle(item.getCheckType());
-        }
-        if (!TextUtils.isEmpty(item.getCheckContent())) {
-            mSettingItems.get(3).setSubtitle(item.getCheckContent());
+        if (mIsEvent) {
+            if (!TextUtils.isEmpty(item.getCheckType())) {
+                mSettingItems.get(2).setSubtitle(item.getCheckType());
+            }
+            if (!TextUtils.isEmpty(item.getCheckContent())) {
+                mSettingItems.get(3).setSubtitle(item.getCheckContent());
+            }
         }
         mSettingAdapter.notifyDataSetChanged();
     }
@@ -136,5 +147,9 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
     @Override
     public void setPresenter(EventInfoContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    public void setEvent(boolean event) {
+        mIsEvent = event;
     }
 }
