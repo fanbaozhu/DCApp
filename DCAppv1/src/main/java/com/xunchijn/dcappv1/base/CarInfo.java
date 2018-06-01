@@ -11,6 +11,11 @@ public class CarInfo {
     private String carAddress;
     private String carPoint;
     private String carGPSScanTime;
+    private String carDept;
+
+    public String getCarDept() {
+        return carDept;
+    }
 
     public String getCarId() {
         return carId;

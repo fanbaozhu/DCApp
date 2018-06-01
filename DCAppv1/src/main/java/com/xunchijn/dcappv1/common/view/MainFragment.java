@@ -50,7 +50,7 @@ public class MainFragment extends Fragment {
     private void parseClick(int witch, String title) {
         switch (witch) {
             case 1:
-                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
+                SelectCarsActivity.newInstance(getContext(), title);
                 break;
             case 2:
             case 3:

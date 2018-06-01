@@ -54,4 +54,5 @@ public interface CommonApi {
     @FormUrlEncoded
     @POST("API/tmd/Feedback")
     Observable<Response<Result<CommonResult>>> Feedback(@FieldMap Map<String, String> map);
+
 }
