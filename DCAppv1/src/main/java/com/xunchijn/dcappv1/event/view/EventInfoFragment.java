@@ -65,7 +65,7 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
 
         RecyclerView viewSettings = view.findViewById(R.id.recycler_view_setting);
         viewSettings.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSettingItems = BaseConfig.getSettingItems();
+        mSettingItems = BaseConfig.getHistorySettingItems();
         mSettingAdapter = new SettingAdapter(mSettingItems);
         viewSettings.setAdapter(mSettingAdapter);
 
@@ -116,14 +116,14 @@ public class EventInfoFragment extends Fragment implements EventInfoContract.Vie
         if (!TextUtils.isEmpty(item.getEventDepartment())) {
             mSettingItems.get(1).setSubtitle(item.getEventDepartment());
         }
-        if (!TextUtils.isEmpty(item.getEventSubDepartment())) {
-            mSettingItems.get(2).setSubtitle(item.getEventSubDepartment());
-        }
+//        if (!TextUtils.isEmpty(item.getEventSubDepartment())) {
+//            mSettingItems.get(2).setSubtitle(item.getEventSubDepartment());
+//        }
         if (!TextUtils.isEmpty(item.getCheckType())) {
-            mSettingItems.get(3).setSubtitle(item.getCheckType());
+            mSettingItems.get(2).setSubtitle(item.getCheckType());
         }
         if (!TextUtils.isEmpty(item.getCheckContent())) {
-            mSettingItems.get(4).setSubtitle(item.getCheckContent());
+            mSettingItems.get(3).setSubtitle(item.getCheckContent());
         }
         mSettingAdapter.notifyDataSetChanged();
     }
