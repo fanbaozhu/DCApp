@@ -57,7 +57,7 @@ public class SelectCarsActivity extends AbsBaseActivity {
         } else if (mType.equals("轨迹")) {
             TraceActivity.newInstance(this, "车辆", items.get(1).getId());
         } else {
-            Toast.makeText(this,"页面还没写",Toast.LENGTH_SHORT).show();
+            DetailsActivity.newInstance(this, "车辆", items.get(1).getId());
         }
         finish();
     }
