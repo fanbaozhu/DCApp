@@ -22,7 +22,32 @@ public class DetailsPresenter implements DetailsContrast.Presenter {
 
     @Override
     public void DetailsUser(String simId) {
+        mMapService.getUserInfo(simId).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<Result<MapResult>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(Response<Result<MapResult>> resultResponse) {
+                        if (resultResponse.isSuccessful()) {
+                            parseResult(resultResponse.body());
+                        } else {
+                            mView.showError(resultResponse.message());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
@@ -62,6 +87,9 @@ public class DetailsPresenter implements DetailsContrast.Presenter {
             }
             if (result.getData().getCarInformation() != null) {
                 mView.showCar(result.getData().getCarInformation());
+            }
+            if (result.getData().getUserInfo() != null) {
+                mView.showUser(result.getData().getUserInfo());
             }
         } else {
             mView.showError(result.getMessage());

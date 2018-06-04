@@ -57,7 +57,7 @@ public class SelectCarsActivity extends AbsBaseActivity {
         } else if (mType.equals("轨迹")) {
             TraceActivity.newInstance(this, "车辆", items.get(1).getId());
         } else {
-            DetailsActivity.newInstance(this, "车辆", items.get(1).getId());
+            DetailsCarActivity.newInstance(this, "车辆", items.get(1).getId());
         }
         finish();
     }

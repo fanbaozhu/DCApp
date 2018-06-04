@@ -57,7 +57,7 @@ public class MainFragment extends Fragment {
                 SelectCarsActivity.newInstance(getContext(), title);
                 break;
             case 4:
-                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
+                SelectUsersActivity.newInstance(getContext(), title);
                 break;
             case 5:
             case 6:

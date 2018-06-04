@@ -67,7 +67,8 @@
         <activity android:name=".event.view.EventInfoActivity" />
         <activity android:name=".common.view.MessagesActivity" />
         <activity android:name=".statistic.view.DomainDetailsActivity"/>
-        <activity android:name=".map.view.DetailsActivity"/>
+        <activity android:name=".map.view.DetailsCarActivity"/>
+        <activity android:name=".map.view.DetailsUserActivity"/>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

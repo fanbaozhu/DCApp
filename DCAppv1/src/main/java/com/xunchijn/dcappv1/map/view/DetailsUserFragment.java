@@ -16,28 +16,28 @@ import com.xunchijn.dcappv1.base.CarInfo;
 import com.xunchijn.dcappv1.base.UserInfo;
 import com.xunchijn.dcappv1.map.presenter.DetailsContrast;
 
-public class DetailsFragment extends Fragment implements DetailsContrast.View {
+public class DetailsUserFragment extends Fragment implements DetailsContrast.View {
     public static String ID = "eventId";
     private DetailsContrast.Presenter mPresenter;
-    private CarInfo mCarInfo;
+    private UserInfo mUserInfo;
     private TextView tvName;
     private TextView tvDept;
     private TextView tvZone;
     private TextView tvStatus;
     private TextView tvAddress;
 
-    public static DetailsFragment newInstance(String eventId) {
-        DetailsFragment detailsFragment = new DetailsFragment();
+    public static DetailsUserFragment newInstance(String eventId) {
+        DetailsUserFragment detailsCarFragment = new DetailsUserFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ID, eventId);
-        detailsFragment.setArguments(bundle);
-        return detailsFragment;
+        detailsCarFragment.setArguments(bundle);
+        return detailsCarFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(com.xunchijn.dcappv1.R.layout.fragment_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
         initView(view);
         return view;
     }
@@ -56,21 +56,21 @@ public class DetailsFragment extends Fragment implements DetailsContrast.View {
         if (TextUtils.isEmpty(eventId)) {
             return;
         }
-        mPresenter.DetailsCar(eventId);
+        mPresenter.DetailsUser(eventId);
     }
 
     @Override
     public void showUser(UserInfo userInfo) {
-
+        tvName.setText(String.format("人员姓名：%s", userInfo.getUserName()));
+        tvDept.setText(String.format("所属部门：%s", userInfo.getUserDept()));
+        tvZone.setText(String.format("所属区域：%s", userInfo.getUserZoon()));
+        tvStatus.setText(String.format("当前状态：%s", userInfo.getUserStatus()));
+        tvAddress.setText(String.format("当前位置：%s", userInfo.getUserAddress()));
     }
 
     @Override
     public void showCar(CarInfo carInfo) {
-        tvName.setText(String.format("车牌名称：%s", carInfo.getCarName()));
-        tvDept.setText(String.format("所属部门：%s", carInfo.getCarDept()));
-        tvZone.setText(String.format("所属区域：%s", carInfo.getCarZone()));
-        tvStatus.setText(String.format("当前状态：%s", carInfo.getCarStatus()));
-        tvAddress.setText(String.format("当前位置：%s", carInfo.getCarAddress()));
+
     }
 
     @Override

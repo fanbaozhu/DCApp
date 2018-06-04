@@ -9,16 +9,16 @@ import com.xunchijn.dcappv1.base.AbsBaseActivity;
 import com.xunchijn.dcappv1.map.presenter.DetailsPresenter;
 import com.xunchijn.dcappv1.util.TitleFragment;
 
-public class DetailsActivity extends AbsBaseActivity {
+public class DetailsUserActivity extends AbsBaseActivity {
     private static String ID = "eventId";
     public static void newInstance(Context context, String type, String id) {
-        Intent intent = new Intent(context, DetailsActivity.class);
+        Intent intent = new Intent(context, DetailsUserActivity.class);
         intent.putExtra(ID, id);
         context.startActivity(intent);
     }
     @Override
     public void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("车辆信息", true, false);
+        TitleFragment titleFragment = TitleFragment.newInstance("人员信息", true, false);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_title, titleFragment)
                 .show(titleFragment).commit();
@@ -30,11 +30,11 @@ public class DetailsActivity extends AbsBaseActivity {
         if (TextUtils.isEmpty(eventId)) {
             return;
         }
-        DetailsFragment detailsFragment = DetailsFragment.newInstance(eventId);
-        new DetailsPresenter(detailsFragment);
+        DetailsUserFragment detailsUserFragment = DetailsUserFragment.newInstance(eventId);
+        new DetailsPresenter(detailsUserFragment);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, detailsFragment)
-                .show(detailsFragment).commit();
+                .add(R.id.layout_container, detailsUserFragment)
+                .show(detailsUserFragment).commit();
     }
 }
 

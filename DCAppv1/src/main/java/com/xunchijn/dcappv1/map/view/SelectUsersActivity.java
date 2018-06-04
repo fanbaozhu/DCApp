@@ -55,8 +55,10 @@ public class SelectUsersActivity extends AbsBaseActivity {
 
         if (mType.equals("定位")) {
             LocationActivity.newInstance(this, "人员", items.get(2).getId());
-        } else {
+        } else if (mType.equals("轨迹")){
             TraceActivity.newInstance(this, "人员", items.get(2).getId());
+        } else {
+            DetailsUserActivity.newInstance(this, "人员", items.get(2).getId());
         }
         finish();
     }
