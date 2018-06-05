@@ -14,6 +14,7 @@ public class DetailsUserActivity extends AbsBaseActivity {
     public static void newInstance(Context context, String type, String id) {
         Intent intent = new Intent(context, DetailsUserActivity.class);
         intent.putExtra(ID, id);
+        intent.putExtra("type",type);
         context.startActivity(intent);
     }
     @Override
@@ -27,14 +28,15 @@ public class DetailsUserActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         String eventId = getIntent().getStringExtra(ID);
+        String type = getIntent().getStringExtra("type");
         if (TextUtils.isEmpty(eventId)) {
             return;
         }
-        DetailsUserFragment detailsUserFragment = DetailsUserFragment.newInstance(eventId);
-        new DetailsPresenter(detailsUserFragment);
+        DetailsFragment detailsFragment = DetailsFragment.newInstance(eventId, type);
+        new DetailsPresenter(detailsFragment);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, detailsUserFragment)
-                .show(detailsUserFragment).commit();
+                .add(R.id.layout_container, detailsFragment)
+                .show(detailsFragment).commit();
     }
 }
 

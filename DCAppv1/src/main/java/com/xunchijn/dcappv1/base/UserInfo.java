@@ -24,7 +24,7 @@ public class UserInfo implements Serializable {
     //用户状态
     private String userStatus;
     //用户区域
-    private String userZoon;
+    private String userZone;
     //用户最近一次上传的时间
     private String userGPSScanTime;
     //用户当前经纬度
@@ -40,8 +40,8 @@ public class UserInfo implements Serializable {
         return userStatus;
     }
 
-    public String getUserZoon() {
-        return userZoon;
+    public String getUserZone() {
+        return userZone;
     }
 
     public String getUserGPSScanTime() {
