@@ -23,7 +23,7 @@ public class HistoryActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         HistoryFragment historyFragment = new HistoryFragment();
-        new HistoryPresenter(historyFragment);
+        new HistoryPresenter(historyFragment,this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, historyFragment)
                 .show(historyFragment).commit();

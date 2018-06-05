@@ -15,12 +15,14 @@ import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.adapter.HistoryAdapter;
 import com.xunchijn.dcappv1.event.model.EventItem;
 import com.xunchijn.dcappv1.event.presenter.HistoryContract;
+import com.xunchijn.dcappv1.util.PreferHelper;
 
 import java.util.List;
 
 public class HistoryFragment extends Fragment implements HistoryContract.View {
     private HistoryContract.Presenter mPresenter;
     private RecyclerView viewHistory;
+
 
     @Nullable
     @Override
@@ -33,6 +35,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     private void initView(View view) {
         viewHistory = view.findViewById(R.id.recycler_view_history);
         viewHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+
         if (mPresenter != null) {
             mPresenter.getHistory();
         }

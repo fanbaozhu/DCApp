@@ -119,7 +119,7 @@ public class ReportFragment extends Fragment implements ReportContract.View {
             return;
         }
         if (mPresenter != null) {
-            mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, mTypeId, mContentId, "巡查员");
+            mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, mTypeId, mContentId);
         }
     }
 

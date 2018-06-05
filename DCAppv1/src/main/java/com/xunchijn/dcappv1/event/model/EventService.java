@@ -42,8 +42,8 @@ public class EventService {
         return mEventApi.GetCheckContent(typeId).subscribeOn(Schedulers.io());
     }
 
-    public Observable<Response<Result<EventResult>>> getEventHistory() {
-        return mEventApi.GetEventHistory().subscribeOn(Schedulers.io());
+    public Observable<Response<Result<EventResult>>> getEventHistory(String account) {
+        return mEventApi.GetEventHistory(account).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<EventResult>>> getEventInfo(String eventId) {

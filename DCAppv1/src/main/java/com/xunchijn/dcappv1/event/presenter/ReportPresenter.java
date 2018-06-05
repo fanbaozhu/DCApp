@@ -5,9 +5,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.xunchijn.dcappv1.base.Result;
+import com.xunchijn.dcappv1.common.module.UserAccount;
 import com.xunchijn.dcappv1.event.model.EventResult;
 import com.xunchijn.dcappv1.event.model.EventService;
 import com.xunchijn.dcappv1.util.PhotoUtils;
+import com.xunchijn.dcappv1.util.PreferHelper;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,12 +30,14 @@ public class ReportPresenter implements ReportContract.Presenter {
     private Observer<Response<Result<EventResult>>> mObserver;
     private Map<String, String> mMap;
     private PhotoUtils mPhotoUtils;
+    private PreferHelper mPreferHelper;
 
     public ReportPresenter(ReportContract.View view, Activity context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
         mPhotoUtils = new PhotoUtils(context);
+        mPreferHelper = new PreferHelper(context);
         mObserver = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,13 +95,16 @@ public class ReportPresenter implements ReportContract.Presenter {
 
     @Override
     public void report(String describe, List<String> urls, String address, String point,
-                       String subDepartment, String type, String content, String accountId) {
+                       String subDepartment, String type, String content) {
+
         mMap = new HashMap<>();
+        UserAccount account = mPreferHelper.getUserAccount();
+        String userAccount = account.getUserAccount();
         mMap.put("describe", describe);
         mMap.put("subDepartment", subDepartment);
         mMap.put("type", type);
         mMap.put("content", content);
-        mMap.put("accountId", accountId);
+        mMap.put("userAccount",userAccount);
         mMap.put("point", point);
         mMap.put("address", address);
         uploadPic(urls);

@@ -19,7 +19,7 @@ public interface ReportContract {
          * @Params accountId:事件描述
          * */
         void report(String describe, List<String> urls, String address, String point,
-                    String subDepartment, String type, String content, String accountId);
+                    String subDepartment, String type, String content);
     }
 
     interface View extends BaseView<Presenter> {
