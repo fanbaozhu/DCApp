@@ -63,9 +63,9 @@ public class MainFragment extends Fragment {
             case 6:
                 SelectUsersActivity.newInstance(getContext(), title);
                 break;
-            case 7:
-                startActivity(new Intent(getContext(), StatisticActivity.class));
-                break;
+//            case 7:
+//                startActivity(new Intent(getContext(), StatisticActivity.class));
+//                break;
             case 8:
                 startActivity(new Intent(getContext(), HistoryActivity.class));
                 break;
