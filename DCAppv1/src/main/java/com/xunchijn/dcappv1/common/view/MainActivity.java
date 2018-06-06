@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunchijn.dcappv1.R;
+import com.xunchijn.dcappv1.common.presenter.MinePresenter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private FragmentManager mFragmentManager;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         mMainFragment = new MainFragment();
         mMineFragment = new MineFragment();
+        new MinePresenter(mMineFragment, this);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
                 .add(R.id.layout_container, mMainFragment)

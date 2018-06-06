@@ -6,9 +6,13 @@ import com.xunchijn.dcappv1.base.UserInfo;
 public interface MineContrast {
     interface Presenter {
         void getUserInfo();
+
+        void logout();
     }
 
     interface View extends BaseView<Presenter> {
-        void showUserInfo(UserInfo userInfo);
+        void showUserInfo(String userName);
+
+        void logoutSuccess();
     }
 }

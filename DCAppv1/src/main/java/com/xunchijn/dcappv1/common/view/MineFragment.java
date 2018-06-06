@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.xunchijn.dcappv1.R;
 import com.xunchijn.dcappv1.adapter.SettingAdapter;
 import com.xunchijn.dcappv1.base.BaseConfig;
-import com.xunchijn.dcappv1.base.UserInfo;
 import com.xunchijn.dcappv1.common.module.SettingItem;
 import com.xunchijn.dcappv1.common.presenter.MineContrast;
-import com.xunchijn.dcappv1.util.PreferHelper;
 
 public class MineFragment extends Fragment implements MineContrast.View {
     private MineContrast.Presenter mPresenter;
-    private PreferHelper mPreferHelper;
     private ImageView mViewHead;
     private TextView mViewName;
     private TextView mViewSimId;
@@ -75,17 +70,22 @@ public class MineFragment extends Fragment implements MineContrast.View {
                 }
             }
         });
-
-        mPreferHelper = new PreferHelper(getContext());
+        mPresenter.getUserInfo();
     }
 
     @Override
-    public void showUserInfo(UserInfo userInfo) {
-        mViewName.setText(userInfo.getUserName());
-        mViewSimId.setText(userInfo.getUserId());
-        if (!TextUtils.isEmpty(userInfo.getUserPoint())) {
-            Glide.with(getContext()).load(userInfo.getUserPoint()).into(mViewHead);
-        }
+    public void showUserInfo(String userName) {
+        mViewName.setText(userName);
+//        mViewSimId.setText(userInfo.getUserId());
+//        if (!TextUtils.isEmpty(userInfo.getUserPoint())) {
+//            Glide.with(getContext()).load(userInfo.getUserPoint()).into(mViewHead);
+//        }
+    }
+
+    @Override
+    public void logoutSuccess() {
+        startActivity(new Intent(getContext(), LoginActivity.class));
+        getActivity().finish();
     }
 
     @Override
@@ -103,9 +103,7 @@ public class MineFragment extends Fragment implements MineContrast.View {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mPreferHelper.saveUserAccount(null);
-                        startActivity(new Intent(getContext(), LoginActivity.class));
-                        getActivity().finish();
+                        mPresenter.logout();
                     }
                 }).setNegativeButton("取消", null).create().show();
     }
