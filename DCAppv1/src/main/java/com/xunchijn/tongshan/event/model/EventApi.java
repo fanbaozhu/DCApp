@@ -24,8 +24,8 @@ public interface EventApi {
     Observable<Response<Result<EventResult>>> UploadPic(@PartMap Map<String, RequestBody> map);
 
     //获取事件历史
-    @GET("API/tmd/GetEventInfo")
-    Observable<Response<Result<EventResult>>> GetEventHistory();
+    @GET("API/tmd/GetEventHistory")
+    Observable<Response<Result<EventResult>>> GetEventHistory(@Query("account") String account);
 
     //事件上报
     @FormUrlEncoded

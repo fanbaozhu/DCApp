@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.adapter.SettingAdapter;
 import com.xunchijn.tongshan.base.BaseConfig;
-import com.xunchijn.tongshan.base.UserInfo;
 import com.xunchijn.tongshan.common.module.SettingItem;
 import com.xunchijn.tongshan.common.presenter.MineContrast;
 import com.xunchijn.tongshan.util.PreferHelper;
@@ -75,17 +72,22 @@ public class MineFragment extends Fragment implements MineContrast.View {
                 }
             }
         });
+        if (mPresenter != null) {
+            mPresenter.getUserInfo();
+        } ;
 
         mPreferHelper = new PreferHelper(getContext());
+
+
     }
 
     @Override
-    public void showUserInfo(UserInfo userInfo) {
-        mViewName.setText(userInfo.getUserName());
-        mViewSimId.setText(userInfo.getUserId());
-        if (!TextUtils.isEmpty(userInfo.getUserPoint())) {
-            Glide.with(getContext()).load(userInfo.getUserPoint()).into(mViewHead);
-        }
+    public void showUserInfo(String username) {
+        mViewName.setText(username);
+//        mViewSimId.setText(userInfo.getUserId());
+//        if (!TextUtils.isEmpty(userInfo.getUserPoint())) {
+//            Glide.with(getContext()).load(userInfo.getUserPoint()).into(mViewHead);
+//        }
     }
 
     @Override

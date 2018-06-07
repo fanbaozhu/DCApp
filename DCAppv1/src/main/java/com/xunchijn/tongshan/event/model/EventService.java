@@ -55,8 +55,8 @@ public class EventService {
     }
 
     //获取事件历史
-    public Observable<Response<Result<EventResult>>> getEventHistory() {
-        return mEventApi.GetEventHistory().subscribeOn(Schedulers.io());
+    public Observable<Response<Result<EventResult>>> getEventHistory(String acconut) {
+        return mEventApi.GetEventHistory(acconut).subscribeOn(Schedulers.io());
     }
 
     //获取历史

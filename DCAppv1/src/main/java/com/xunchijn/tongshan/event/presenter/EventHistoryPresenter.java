@@ -72,7 +72,9 @@ public class EventHistoryPresenter implements EventHistoryContract.Presenter {
 
     @Override
     public void getEventHistory() {
-        mEventService.getEventHistory().observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mEventService.getEventHistory(account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 }
