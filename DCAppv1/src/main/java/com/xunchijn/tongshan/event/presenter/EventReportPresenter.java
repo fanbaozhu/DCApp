@@ -5,9 +5,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.common.module.UserAccount;
 import com.xunchijn.tongshan.event.model.EventResult;
 import com.xunchijn.tongshan.event.model.EventService;
 import com.xunchijn.tongshan.util.PhotoUtils;
+import com.xunchijn.tongshan.util.PreferHelper;
 
 import java.io.File;
 import java.util.HashMap;
@@ -29,12 +31,14 @@ public class EventReportPresenter implements EventReportContract.Presenter {
     private Map<String, String> mMap;
     private PhotoUtils mPhotoUtils;
     private boolean mReport = true;
+    private PreferHelper mPreferHelper;
 
     public EventReportPresenter(EventReportContract.View view, Activity context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
         mPhotoUtils = new PhotoUtils(context);
+        mPreferHelper = new PreferHelper(context);
         mObserver = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -96,13 +100,15 @@ public class EventReportPresenter implements EventReportContract.Presenter {
 
     @Override
     public void report(String describe, List<String> urls, String address, String point,
-                       String subDepartment, String type, String content, String accountId) {
+                       String subDepartment, String type, String content) {
         mMap = new HashMap<>();
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
         mMap.put("describe", describe);
         mMap.put("subDepartment", subDepartment);
         mMap.put("type", type);
         mMap.put("content", content);
-        mMap.put("accountId", accountId);
+        mMap.put("account", account);
         mMap.put("point", point);
         mMap.put("address", address);
         mReport = true;
@@ -110,13 +116,14 @@ public class EventReportPresenter implements EventReportContract.Presenter {
     }
 
     @Override
-    public void report(String describe, List<String> urls, String address, String point, String subDepartment, String accountId) {
+    public void report(String describe, List<String> urls, String address, String point) {
         mMap = new HashMap<>();
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
         mMap.put("describe", describe);
-        mMap.put("subDepartment", subDepartment);
-        mMap.put("accountId", accountId);
         mMap.put("point", point);
         mMap.put("address", address);
+        mMap.put("account", account);
         mReport = false;
         uploadPic(urls);
     }

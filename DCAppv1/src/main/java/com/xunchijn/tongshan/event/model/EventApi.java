@@ -34,7 +34,7 @@ public interface EventApi {
 
     //获取历史
     @GET("API/tmd/GetMessageInfo")
-    Observable<Response<Result<EventResult>>> getHistory();
+    Observable<Response<Result<EventResult>>> getHistory(@Query("account") String account);
 
     //事件上报
     @FormUrlEncoded

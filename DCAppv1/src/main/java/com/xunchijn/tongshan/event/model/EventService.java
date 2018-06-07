@@ -60,8 +60,8 @@ public class EventService {
     }
 
     //获取历史
-    public Observable<Response<Result<EventResult>>> getHistory() {
-        return mEventApi.getHistory().subscribeOn(Schedulers.io());
+    public Observable<Response<Result<EventResult>>> getHistory(String acconut) {
+        return mEventApi.getHistory(acconut).subscribeOn(Schedulers.io());
     }
 
     //获取历史详情

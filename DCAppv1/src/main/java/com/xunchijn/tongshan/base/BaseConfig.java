@@ -68,11 +68,11 @@ public class BaseConfig {
     public static List<SettingItem> getSettingItemsWithoutType() {
         List<SettingItem> items = new ArrayList<>();
         SettingItem item1 = new SettingItem(0, "所在位置", "");
-        SettingItem item2 = new SettingItem(1, "部门", "");
-        SettingItem item3 = new SettingItem(2, "子部门", "");
+        //SettingItem item2 = new SettingItem(1, "部门", "");
+        //SettingItem item3 = new SettingItem(2, "子部门", "");
         items.add(item1);
-        items.add(item2);
-        items.add(item3);
+        //items.add(item2);
+        //items.add(item3);
         return items;
     }
 

@@ -19,10 +19,9 @@ public interface EventReportContract {
          * @Params accountId:事件描述
          * */
         void report(String describe, List<String> urls, String address, String point,
-                    String subDepartment, String type, String content, String accountId);
+                    String subDepartment, String type, String content);
 
-        void report(String describe, List<String> urls, String address, String point,
-                    String subDepartment, String accountId);
+        void report(String describe, List<String> urls, String address, String point);
     }
 
     interface View extends BaseView<Presenter> {
