@@ -68,7 +68,7 @@ public class SelectUsersActivity extends AbsBaseActivity {
             return;
         }
         selectFragment = SelectFragment.newInstance("人员");
-        new SelectPresenter(selectFragment);
+        new SelectPresenter(selectFragment,this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.layout_container, selectFragment)

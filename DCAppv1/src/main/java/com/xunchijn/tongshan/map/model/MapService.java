@@ -29,8 +29,8 @@ public class MapService {
         return mMapApi.GetUserInfo(userId).subscribeOn(Schedulers.io());
     }
 
-    public Observable<Response<Result<MapResult>>> getDepartmentCars(String subDepartmentId) {
-        return mMapApi.GetDepartmentCars(subDepartmentId).subscribeOn(Schedulers.io());
+    public Observable<Response<Result<MapResult>>> getDepartmentCars(String subDepartmentId, String account) {
+        return mMapApi.GetDepartmentCars(subDepartmentId, account).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<MapResult>>> getCarInfo(String id) {

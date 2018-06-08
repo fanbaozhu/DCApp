@@ -18,7 +18,7 @@ public class MinePresenter implements MineContrast.Presenter{
     }
     public void getUserInfo() {
         UserAccount userAccount = mPreferHelper.getUserAccount();
-        String account = userAccount.getUserAccount();
+        String account = userAccount.getUserEmpName();
         mView.showUserInfo(account);
 
     }

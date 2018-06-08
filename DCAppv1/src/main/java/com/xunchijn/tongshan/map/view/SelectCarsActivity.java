@@ -69,7 +69,7 @@ public class SelectCarsActivity extends AbsBaseActivity {
             return;
         }
         selectFragment = SelectFragment.newInstance("车辆");
-        new SelectPresenter(selectFragment);
+        new SelectPresenter(selectFragment,this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.layout_container, selectFragment)

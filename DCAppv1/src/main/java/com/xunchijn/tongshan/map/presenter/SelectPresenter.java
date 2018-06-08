@@ -1,12 +1,15 @@
 package com.xunchijn.tongshan.map.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.xunchijn.tongshan.common.module.UserAccount;
 import com.xunchijn.tongshan.event.model.EventService;
 import com.xunchijn.tongshan.map.model.MapService;
 import com.xunchijn.tongshan.event.model.EventResult;
 import com.xunchijn.tongshan.map.model.MapResult;
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.util.PreferHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,14 +21,16 @@ public class SelectPresenter implements SelectContrast.Presenter {
     private SelectContrast.View mView;
     private EventService mEventService;
     private MapService mMapService;
+    private PreferHelper mPreferHelper;
     private Observer<Response<Result<EventResult>>> mObserverCommon;
     private Observer<Response<Result<MapResult>>> mObserverMap;
 
-    public SelectPresenter(SelectContrast.View view) {
+    public SelectPresenter(SelectContrast.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
         mMapService = new MapService();
+        mPreferHelper = new PreferHelper(context);
         mObserverCommon = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -132,7 +137,9 @@ public class SelectPresenter implements SelectContrast.Presenter {
 
     @Override
     public void getCars(String subDepartmentId) {
-        mMapService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mMapService.getDepartmentCars(subDepartmentId,account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserverMap);
     }
 }

@@ -1,10 +1,13 @@
 package com.xunchijn.tongshan.map.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.xunchijn.tongshan.common.module.UserAccount;
 import com.xunchijn.tongshan.map.model.MapService;
 import com.xunchijn.tongshan.map.model.MapResult;
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.util.PreferHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,12 +22,14 @@ public class LocationPresenter implements LocationContrast.Presenter {
     private static final String TAG = "Location";
     private LocationContrast.View mView;
     private MapService mMapService;
+    private PreferHelper mPreferHelper;
     private Observer<Response<Result<MapResult>>> mObserver;
 
-    public LocationPresenter(LocationContrast.View view) {
+    public LocationPresenter(LocationContrast.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
         mMapService = new MapService();
+        mPreferHelper = new PreferHelper(context);
         mObserver = new Observer<Response<Result<MapResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,7 +96,9 @@ public class LocationPresenter implements LocationContrast.Presenter {
 
     @Override
     public void getCars(String subDepartmentId) {
-        mMapService.getDepartmentCars(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mMapService.getDepartmentCars(subDepartmentId, account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 

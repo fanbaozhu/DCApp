@@ -27,7 +27,7 @@ public interface MapApi {
 
     //获取车辆列表
     @GET("API/tmd/GetTruckByDept")
-    Observable<Response<Result<MapResult>>> GetDepartmentCars(@Query("dept") String subDepartmentId);
+    Observable<Response<Result<MapResult>>> GetDepartmentCars(@Query("dept") String subDepartmentId, @Query("Name") String acconut);
 
     //获取车辆详情
     @GET("API/tmd/GetCarInformation")

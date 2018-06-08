@@ -28,7 +28,7 @@ public class MineFragment extends Fragment implements MineContrast.View {
     private PreferHelper mPreferHelper;
     private ImageView mViewHead;
     private TextView mViewName;
-    private TextView mViewSimId;
+    //private TextView mViewSimId;
 
     @Nullable
     @Override
@@ -41,7 +41,7 @@ public class MineFragment extends Fragment implements MineContrast.View {
     private void initView(View view) {
         mViewHead = view.findViewById(R.id.image_user_head);
         mViewName = view.findViewById(R.id.text_user_name);
-        mViewSimId = view.findViewById(R.id.text_user_id);
+        //mViewSimId = view.findViewById(R.id.text_user_id);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_mine_setting);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

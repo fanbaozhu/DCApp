@@ -26,12 +26,12 @@
             android:text="用户名"
             android:textColor="@color/colorWhite" />
 
-        <TextView
-            android:id="@+id/text_user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="simId:17360782541"
-            android:textColor="@color/colorWhite" />
+        <!--<TextView-->
+            <!--android:id="@+id/text_user_id"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="simId:17360782541"-->
+            <!--android:textColor="@color/colorWhite" />-->
 
     </LinearLayout>
 

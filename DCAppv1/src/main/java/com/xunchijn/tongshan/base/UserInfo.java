@@ -31,6 +31,10 @@ public class UserInfo implements Serializable {
     private String userPoint;
     //用户当前位置
     private String userAddress="005";
+    //用户中文名字
+    private String userEmpName;
+    //用户标识
+    private String userBiaoShi;
 
     public String getUserAddress() {
         return userAddress;
@@ -38,6 +42,14 @@ public class UserInfo implements Serializable {
 
     public String getUserStatus() {
         return userStatus;
+    }
+
+    public String getUserEmpName() {
+        return userEmpName;
+    }
+
+    public String getUserBiaoShi() {
+        return userBiaoShi;
     }
 
     public String getUserZoon() {

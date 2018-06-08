@@ -33,7 +33,7 @@ public class LocationActivity extends AbsBaseActivity {
         String id = getIntent().getStringExtra("id");
 
         LocationFragment fragment = LocationFragment.newInstance(type, id);
-        new LocationPresenter(fragment);
+        new LocationPresenter(fragment,this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)
                 .show(fragment).commit();

@@ -15,6 +15,7 @@ public class PreferHelper {
     private static final String PREFERENCES = "PREFERENCES";
     private static final String USER_ACCOUNT = "UserName";
     private static final String USER_PASSWORD = "UserPassword";
+    private static final String USER_EMPNAME = "UserEmpName";
     private SharedPreferences mSharedPreferences;
 
     public PreferHelper(Context context) {
@@ -40,19 +41,22 @@ public class PreferHelper {
     public UserAccount getUserAccount() {
         String userAccount = get(USER_ACCOUNT);
         String userPassword = get(USER_PASSWORD);
-        if (TextUtils.isEmpty(userAccount) || TextUtils.isEmpty(userPassword)) {
+        String userEmpName = get(USER_EMPNAME);
+        if (TextUtils.isEmpty(userAccount) || TextUtils.isEmpty(userPassword) || TextUtils.isEmpty(userEmpName)) {
             return null;
         }
-        return new UserAccount(userAccount, userPassword);
+        return new UserAccount(userAccount, userPassword, userEmpName);
     }
 
     public void saveUserAccount(UserAccount account) {
         if (account == null) {
             save(USER_ACCOUNT, "");
             save(USER_PASSWORD, "");
+            save(USER_EMPNAME, "");
             return;
         }
         save(USER_ACCOUNT, account.getUserAccount());
         save(USER_PASSWORD, account.getUserPassword());
+        save(USER_EMPNAME, account.getUserEmpName());
     }
 }
