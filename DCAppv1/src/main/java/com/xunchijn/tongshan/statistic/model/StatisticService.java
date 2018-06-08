@@ -14,8 +14,8 @@ public class StatisticService {
         mStatisticApi = RetrofitProvider.get().create(StatisticApi.class);
     }
 
-    public Observable<Response<Result<StatisticResult>>> GetCarDomains(String startTime) {
-        return mStatisticApi.GetCarDomains(startTime).subscribeOn(Schedulers.io());
+    public Observable<Response<Result<StatisticResult>>> GetCarDomains(String startTime, String Name) {
+        return mStatisticApi.GetCarDomains(startTime, Name).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<StatisticResult>>> GetCarDomainsDetails(String startTime, String simId) {

@@ -34,7 +34,7 @@ public class DomainDetailsActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         DomainDetailsFragment fragment = new DomainDetailsFragment();
-        new DomainPresenter(fragment);
+        new DomainPresenter(fragment,this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)
                 .show(fragment)

@@ -1,10 +1,13 @@
 package com.xunchijn.tongshan.statistic.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.common.module.UserAccount;
 import com.xunchijn.tongshan.statistic.model.StatisticResult;
 import com.xunchijn.tongshan.statistic.model.StatisticService;
+import com.xunchijn.tongshan.util.PreferHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,12 +18,14 @@ public class DomainPresenter implements DomainsContrast.Presenter {
     private String TAG = "";
     private DomainsContrast.View mView;
     private StatisticService mStatisticService;
+    private PreferHelper mPreferHelper;
     private Observer<Response<Result<StatisticResult>>> mResultObserver;
 
-    public DomainPresenter(DomainsContrast.View view) {
+    public DomainPresenter(DomainsContrast.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
         mStatisticService = new StatisticService();
+        mPreferHelper = new PreferHelper(context);
         mResultObserver = new Observer<Response<Result<StatisticResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -67,7 +72,9 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 
     @Override
     public void getCarRecords(String time) {
-        mStatisticService.GetCarDomains(time).observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String Name = userAccount.getUserAccount();
+        mStatisticService.GetCarDomains(time, Name).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mResultObserver);
     }
 

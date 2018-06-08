@@ -45,7 +45,7 @@ public class StatisticActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         DomainRecordsFragment fragment = new DomainRecordsFragment();
-        mPresenter = new DomainPresenter(fragment);
+        mPresenter = new DomainPresenter(fragment,this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)
                 .show(fragment)

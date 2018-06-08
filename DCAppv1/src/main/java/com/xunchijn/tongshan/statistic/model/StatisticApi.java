@@ -11,7 +11,7 @@ public interface StatisticApi {
 
     //获取车辆出入表
     @GET("API/tmd/GetCarDiscrepancy")
-    Observable<Response<Result<StatisticResult>>> GetCarDomains(@Query("startTime") String startTime);
+    Observable<Response<Result<StatisticResult>>> GetCarDomains(@Query("startTime") String startTime, @Query("Name") String Name);
 
     //获取车辆出入详细表
     @GET("API/tmd/GetCarDiscrepancyDetails")
