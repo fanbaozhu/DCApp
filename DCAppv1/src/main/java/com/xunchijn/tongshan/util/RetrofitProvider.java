@@ -24,8 +24,8 @@ public class RetrofitProvider {
     //开发
  //   public static final String BASE_URL = "http://49.4.69.187:8099";
 //    public static final String BASE_URL = "http://219.148.91.210:8091";
-    public static final String BASE_URL = "http://192.168.1.221:8076";
-//    public static final String BASE_URL = "http://47.104.79.225:8022";
+//    public static final String BASE_URL = "http://192.168.1.221:8076";
+    public static final String BASE_URL = "http://47.104.79.225:8022";
 
     @NonNull
     public static Retrofit get() {
