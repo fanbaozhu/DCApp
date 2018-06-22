@@ -13,7 +13,7 @@ public class TimeUtils {
     //字符串转时间戳
     public static String getTime(String timeString) {
         String timeStamp = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         Date d;
         try {
             d = sdf.parse(timeString);
@@ -28,7 +28,7 @@ public class TimeUtils {
     //时间戳转字符串
     public static String getStrTime(String timeStamp) {
         String timeString = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         long l = Long.valueOf(timeStamp)*1000;
         timeString = sdf.format(new Date(l));//单位秒
         return timeString;

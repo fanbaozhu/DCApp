@@ -10,6 +10,10 @@ public interface DomainsContrast {
         void getCarRecords(String time);
 
         void getCarDomainDetails(String time, String carId);
+
+        void getRegionCar(String time, String type);
+
+        void getRegionCarDetails(String time, String carId);
     }
 
     interface View extends BaseView<Presenter> {

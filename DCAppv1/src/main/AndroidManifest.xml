@@ -44,7 +44,7 @@
             android:name=".event.view.EventReportActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".map.view.TraceActivity" />
-        <activity android:name=".statistic.view.StatisticActivity" />
+        <activity android:name=".statistic.view.DomainRecordsActivity" />
         <activity android:name=".common.view.SearchActivity" />
         <activity android:name=".event.view.EventHistoryActivity" />
         <activity
@@ -68,6 +68,7 @@
         <activity android:name=".common.view.MessagesActivity" />
         <activity android:name=".statistic.view.DomainDetailsActivity"/>
         <activity android:name=".map.view.DetailsActivity"/>
+        <activity android:name=".statistic.view.TableActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

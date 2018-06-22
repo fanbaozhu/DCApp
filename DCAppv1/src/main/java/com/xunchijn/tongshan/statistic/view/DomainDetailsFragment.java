@@ -1,6 +1,5 @@
 package com.xunchijn.tongshan.statistic.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.adapter.DomainDetailsAdapter;
+import com.xunchijn.tongshan.adapter.DomainsAdapter;
 import com.xunchijn.tongshan.statistic.model.DomainItem;
 import com.xunchijn.tongshan.statistic.presenter.DomainsContrast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +29,8 @@ import java.util.List;
 public class DomainDetailsFragment extends Fragment implements DomainsContrast.View {
     private DomainsContrast.Presenter mPresenter;
     private List<DomainItem> mList;
-    private DomainDetailsAdapter mDomainsAdapter;
+    private DomainsAdapter mDomainsAdapter;
+    private String mTime;
 
     @Nullable
     @Override
@@ -43,38 +44,36 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mList = new ArrayList<>();
-        mDomainsAdapter = new DomainDetailsAdapter(mList);
+        mDomainsAdapter = new DomainsAdapter(mList);
         recyclerView.setAdapter(mDomainsAdapter);
+        mDomainsAdapter.setItemClickListener(new DomainsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DomainItem item) {
+                Intent intent = new Intent(getContext(), DomainDetailsActivity.class);
+                intent.putExtra("carName", item.getCarName());
+                intent.putExtra("gps_simId", item.getCarId());
+                DomainRecordsActivity activity = (DomainRecordsActivity) getActivity();
+                if (activity == null) {
+                    return;
+                }
+                String time = activity.getTimes();
+                if (!TextUtils.isEmpty(time)) {
+                    mTime = time;
+                }
+                intent.putExtra("startTime", mTime);
+                startActivity(intent);
+            }
+        });
         initData();
     }
 
     private void initData() {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return;
-        }
-        Intent intent = activity.getIntent();
-        if (intent == null) {
-            return;
-        }
-        String gps_simId = intent.getStringExtra("gps_simId");
-        String startTime = intent.getStringExtra("startTime");
-        if (TextUtils.isEmpty(gps_simId) || TextUtils.isEmpty(startTime)) {
-            return;
-        }
+        mTime = String.valueOf(new Date().getTime() - 24 * 60 * 60 * 1000);
+        mTime = mTime.substring(0, 10);
         if (mPresenter == null) {
             return;
         }
-        mPresenter.getCarDomainDetails(startTime, gps_simId);
-    }
-
-    public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void setPresenter(DomainsContrast.Presenter presenter) {
-        mPresenter = presenter;
+        mPresenter.getCarRecords(mTime);
     }
 
     @Override
@@ -87,4 +86,13 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
         mDomainsAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(DomainsContrast.Presenter presenter) {
+        mPresenter = presenter;
+    }
 }

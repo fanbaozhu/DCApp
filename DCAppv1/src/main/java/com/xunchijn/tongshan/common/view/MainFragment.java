@@ -21,7 +21,7 @@ import com.xunchijn.tongshan.event.view.EventHistoryActivity;
 import com.xunchijn.tongshan.event.view.EventReportActivity;
 import com.xunchijn.tongshan.map.view.SelectCarsActivity;
 import com.xunchijn.tongshan.map.view.SelectUsersActivity;
-import com.xunchijn.tongshan.statistic.view.StatisticActivity;
+import com.xunchijn.tongshan.statistic.view.TableActivity;
 
 public class MainFragment extends Fragment {
 
@@ -64,7 +64,7 @@ public class MainFragment extends Fragment {
                 SelectUsersActivity.newInstance(getContext(), title);
                 break;
             case 7:
-                startActivity(new Intent(getContext(), StatisticActivity.class));
+                startActivity(new Intent(getContext(), TableActivity.class));
                 break;
             case 8:
                 EventHistoryActivity.start(getContext(), true);

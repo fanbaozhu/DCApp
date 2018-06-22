@@ -83,4 +83,17 @@ public class DomainPresenter implements DomainsContrast.Presenter {
         mStatisticService.GetCarDomainsDetails(time, carId).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mResultObserver);
     }
+
+    @Override
+    public void getRegionCar(String time, String type) {
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String Name = userAccount.getUserAccount();
+        mStatisticService.GetCarOtherDomains(time, Name, type).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mResultObserver);
+    }
+
+    @Override
+    public void getRegionCarDetails(String time, String carId) {
+
+    }
 }

@@ -112,4 +112,20 @@ public class BaseConfig {
         items.add(item5);
         return items;
     }
+
+    public static List<SettingItem> getTable() {
+        List<SettingItem> items = new ArrayList<>();
+        SettingItem item1 = new SettingItem(0, "车辆进出区域报表", "");
+        SettingItem item2 = new SettingItem(1, "车辆垃圾清运报表", "");
+        SettingItem item3 = new SettingItem(2, "车辆加水报表", "");
+        SettingItem item4 = new SettingItem(3, "人员考勤报表", "");
+        SettingItem item5 = new SettingItem(4, "人员工作报表", "");
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        return items;
+    }
+
 }

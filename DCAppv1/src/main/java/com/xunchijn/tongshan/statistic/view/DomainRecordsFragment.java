@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
     private List<DomainItem> mList;
     private DomainsAdapter mDomainsAdapter;
     private String mTime;
+    private String mType;
 
     @Nullable
     @Override
@@ -48,7 +50,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
                 Intent intent = new Intent(getContext(), DomainDetailsActivity.class);
                 intent.putExtra("carName", item.getCarName());
                 intent.putExtra("gps_simId", item.getCarId());
-                StatisticActivity activity = (StatisticActivity) getActivity();
+                DomainDetailsActivity activity = (DomainDetailsActivity) getActivity();
                 if (activity == null) {
                     return;
                 }
@@ -64,12 +66,23 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
     }
 
     private void initData() {
+        Log.d("Domain", "initView: " + mType);
         mTime = String.valueOf(new Date().getTime() - 24 * 60 * 60 * 1000);
         mTime = mTime.substring(0, 10);
         if (mPresenter == null) {
             return;
         }
-        mPresenter.getCarRecords(mTime);
+        switch (mType) {
+            case "车辆进出区域报表":
+                mPresenter.getCarRecords(mTime);
+                break;
+            case "车辆加水报表":
+                mPresenter.getRegionCar(mTime, "加水");
+                break;
+            case "车辆垃圾清运报表":
+                mPresenter.getRegionCar(mTime, "垃圾");
+                break;
+        }
     }
 
     @Override
@@ -90,5 +103,9 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
     @Override
     public void setPresenter(DomainsContrast.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    public void setType(String type) {
+        mType = type;
     }
 }

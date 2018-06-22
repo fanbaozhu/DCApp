@@ -7,9 +7,18 @@ public class DomainItem {
     private String carType;
     private String frequency;
     private String timeDifference;
-
+    private String quantity;
     private String startTime;
     private String endTime;
+    private String ton;
+
+    public String getTon() {
+        return ton;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
 
     public String getCarId() {
         return carId;

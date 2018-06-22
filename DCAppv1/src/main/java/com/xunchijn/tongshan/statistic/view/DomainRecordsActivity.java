@@ -1,6 +1,8 @@
 package com.xunchijn.tongshan.statistic.view;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.widget.DatePicker;
 
 import com.xunchijn.tongshan.R;
@@ -16,14 +18,24 @@ import java.util.Calendar;
 /**
  * Created by Administrator on 2018/5/9 0009.
  */
-
-public class StatisticActivity extends AbsBaseActivity {
+//报表展示页面
+public class DomainRecordsActivity extends AbsBaseActivity {
+    private static final String TYPE = "type";
     private DomainsContrast.Presenter mPresenter;
     private String mTimes;
+    private String mType;
+
+
+    public static void start(Context context, String type) {
+        Intent intent = new Intent(context, DomainDetailsActivity.class);
+        intent.putExtra(TYPE, type);
+        context.startActivity(intent);
+    }
 
     @Override
     public void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("车辆出入区域表", true, true);
+        mType = getIntent().getStringExtra(TYPE);
+        TitleFragment titleFragment = TitleFragment.newInstance(mType, true, true);
         titleFragment.setRightDrawableId(R.mipmap.ic_select_date);
         titleFragment.setItemClickListener(new TitleFragment.OnItemClickListener() {
             @Override
@@ -45,7 +57,8 @@ public class StatisticActivity extends AbsBaseActivity {
     @Override
     public void initContent() {
         DomainRecordsFragment fragment = new DomainRecordsFragment();
-        mPresenter = new DomainPresenter(fragment,this);
+        fragment.setType(mType);
+        mPresenter = new DomainPresenter(fragment, this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, fragment)
                 .show(fragment)
@@ -68,8 +81,19 @@ public class StatisticActivity extends AbsBaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                mTimes=String.valueOf(times);
-                mPresenter.getCarRecords(mTimes);
+                mTimes = String.valueOf(times);
+//                mPresenter.getCarRecords(mTimes);
+                switch (mType){
+                    case "车辆进出区域报表":
+                        mPresenter.getCarRecords(mTimes);
+                        break;
+                    case "车辆加水报表":
+                        mPresenter.getRegionCar(mTimes,"加水");
+                        break;
+                    case "车辆垃圾清运报表":
+                        mPresenter.getRegionCar(mTimes,"垃圾");
+                        break;
+                }
             }
         }, year, month, day);
         dialog.show();

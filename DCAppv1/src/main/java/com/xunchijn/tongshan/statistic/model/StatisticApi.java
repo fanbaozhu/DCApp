@@ -16,4 +16,9 @@ public interface StatisticApi {
     //获取车辆出入详细表
     @GET("API/tmd/GetCarDiscrepancyDetails")
     Observable<Response<Result<StatisticResult>>> GetCarDomainsDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId);
+
+    //获取车辆加水/垃圾倾倒表
+    @GET("API/tmd/GetCarRegionDiscrepancy")
+    Observable<Response<Result<StatisticResult>>> GetCarOtherDomains(@Query("startTime") String startTime, @Query("Name") String Name, @Query("type") String type);
+
 }
