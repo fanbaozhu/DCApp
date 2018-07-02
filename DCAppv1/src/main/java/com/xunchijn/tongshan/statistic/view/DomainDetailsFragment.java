@@ -35,7 +35,7 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         initView(view);
         return view;
     }

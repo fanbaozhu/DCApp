@@ -27,7 +27,7 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 
 
     public static void start(Context context, String type) {
-        Intent intent = new Intent(context, DomainDetailsActivity.class);
+        Intent intent = new Intent(context, DomainRecordsActivity.class);
         intent.putExtra(TYPE, type);
         context.startActivity(intent);
     }

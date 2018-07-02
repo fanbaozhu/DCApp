@@ -39,7 +39,7 @@
         <activity android:name=".event.view.ShowPictureActivity" />
         <activity
             android:name=".common.view.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".event.view.EventReportActivity"
             android:screenOrientation="portrait" />
@@ -66,14 +66,15 @@
         <activity android:name=".common.view.AboutUsActivity" />
         <activity android:name=".event.view.EventInfoActivity" />
         <activity android:name=".common.view.MessagesActivity" />
-        <activity android:name=".statistic.view.DomainDetailsActivity"/>
-        <activity android:name=".map.view.DetailsActivity"/>
+        <activity android:name=".statistic.view.DomainDetailsActivity" />
+        <activity android:name=".map.view.DetailsActivity" />
         <activity android:name=".statistic.view.TableActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="6G8eck9rldGoUph94mkGDSyZHt4QXHCP" />
-            //android:value="gX1Ud9B48jNXYNn8lZDVYptVV844F9o8"
+            android:value="gX1Ud9B48jNXYNn8lZDVYptVV844F9o8" />
+        //android:value="6G8eck9rldGoUph94mkGDSyZHt4QXHCP"
+
 
         <service
             android:name="com.baidu.location.f"
