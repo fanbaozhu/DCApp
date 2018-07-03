@@ -50,17 +50,25 @@ public class DomainDetailsAdapter extends RecyclerView.Adapter {
         private TextView mViewName;
         private TextView mViewDept;
         private TextView mViewTimes;
+        private TextView mViewNumber;
 
         DomainDetailView(View itemView) {
             super(itemView);
             mViewName = itemView.findViewById(R.id.text_car_name);
             mViewDept = itemView.findViewById(R.id.text_car_dept);
             mViewTimes = itemView.findViewById(R.id.text_car_times);
+            mViewNumber = itemView.findViewById(R.id.text_car_number);
         }
 
         void bindDomains(DomainItem item) {
             if (!TextUtils.isEmpty(item.getStartTime())) {
                 mViewName.setText(String.format("进区域：%s", TimeUtils.getStrTime(item.getStartTime())));
+            }
+            if (!TextUtils.isEmpty(item.getNumber())) {
+                mViewNumber.setVisibility(View.VISIBLE);
+                mViewNumber.setText(String.format("数量：%s", item.getNumber()));
+            }else {
+                mViewNumber.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(item.getEndTime())) {
                 mViewDept.setText(String.format("出区域：%s", TimeUtils.getStrTime(item.getEndTime())));

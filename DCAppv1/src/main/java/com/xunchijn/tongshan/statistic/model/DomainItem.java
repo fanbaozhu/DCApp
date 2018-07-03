@@ -11,6 +11,11 @@ public class DomainItem {
     private String startTime;
     private String endTime;
     private String ton;
+    private String number;
+
+    public String getNumber() {
+        return number;
+    }
 
     public String getTon() {
         return ton;

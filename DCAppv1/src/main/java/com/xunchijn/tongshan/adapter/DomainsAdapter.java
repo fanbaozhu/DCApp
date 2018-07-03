@@ -15,6 +15,7 @@ import java.util.List;
 
 public class DomainsAdapter extends RecyclerView.Adapter {
     private List<DomainItem> mList;
+    private String mType;
 
     public DomainsAdapter(List<DomainItem> list) {
         mList = list;
