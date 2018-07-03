@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.adapter.DomainDetailsAdapter;
+import com.xunchijn.tongshan.adapter.DomainsAdapter;
 import com.xunchijn.tongshan.statistic.model.DomainItem;
 import com.xunchijn.tongshan.statistic.presenter.DomainsContrast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,25 +61,13 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
         }
         String gps_simId = intent.getStringExtra("gps_simId");
         String startTime = intent.getStringExtra("startTime");
-        String mType = intent.getStringExtra("type");
         if (TextUtils.isEmpty(gps_simId) || TextUtils.isEmpty(startTime)) {
             return;
         }
         if (mPresenter == null) {
             return;
         }
-        switch (mType) {
-            case "车辆进出区域报表":
-                mPresenter.getCarDomainDetails(startTime, gps_simId);
-                break;
-            case "车辆加水报表":
-                mPresenter.getRegionCarDetails(startTime, gps_simId);
-                break;
-            case "车辆垃圾清运报表":
-                mPresenter.getRegionCarDetails(startTime, gps_simId);
-                break;
-        }
-
+        mPresenter.getCarDomainDetails(startTime, gps_simId);
     }
 
     public void showError(String error) {
