@@ -59,8 +59,9 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
         }
         String gps_simId = intent.getStringExtra("gps_simId");
         String startTime = intent.getStringExtra("startTime");
+        String user_simId = intent.getStringExtra("user_simId");
         String mType = intent.getStringExtra("type");
-        if (TextUtils.isEmpty(gps_simId) || TextUtils.isEmpty(startTime)) {
+        if (TextUtils.isEmpty(gps_simId) && TextUtils.isEmpty(startTime) && TextUtils.isEmpty(user_simId)) {
             return;
         }
         if (mPresenter == null) {
@@ -76,6 +77,8 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
             case "车辆垃圾清运报表":
                 mPresenter.getRegionCarDetails(startTime, gps_simId);
                 break;
+            case"人员工作报表":
+                mPresenter.getEmpDomainDetails(startTime, user_simId);
         }
 
     }
@@ -92,6 +95,15 @@ public class DomainDetailsFragment extends Fragment implements DomainsContrast.V
     @Override
     //分页查询时使用 后期会加上判断 上拉加载 下拉刷新 如果是下拉 那么先.clear清除 然后走addAll重新填充 如果是上拉 那么直接走addAll
     public void showCarRecords(List<DomainItem> list) {
+        mList.clear();
+        //继续加载
+        mList.addAll(list);
+        //更新列表
+        mDomainsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUserRecords(List<DomainItem> list) {
         mList.clear();
         //继续加载
         mList.addAll(list);

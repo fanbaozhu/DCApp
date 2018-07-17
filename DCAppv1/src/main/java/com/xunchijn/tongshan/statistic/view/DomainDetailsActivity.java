@@ -30,7 +30,7 @@ public class DomainDetailsActivity extends AbsBaseActivity {
         }
         String title = intent.getStringExtra("carName");
         if (TextUtils.isEmpty(title)) {
-            return;
+            title = intent.getStringExtra("userName");
         }
         TitleFragment titleFragment = TitleFragment.newInstance(title, true, false);
         getSupportFragmentManager().beginTransaction()

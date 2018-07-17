@@ -13,7 +13,7 @@ public interface StatisticApi {
     @GET("API/tmd/GetCarDiscrepancy")
     Observable<Response<Result<StatisticResult>>> GetCarDomains(@Query("startTime") String startTime, @Query("Name") String Name);
 
-    //获取车辆出入/加水/垃圾详细表
+    //获取车辆出入详细表
     @GET("API/tmd/GetCarDiscrepancyDetails")
     Observable<Response<Result<StatisticResult>>> GetCarDomainsDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId);
 
@@ -24,5 +24,13 @@ public interface StatisticApi {
     //获取车辆加水/垃圾详细表
     @GET("API/tmd/GetCarRegionDiscrepancyDetails")
     Observable<Response<Result<StatisticResult>>> GetCarOtherDomainsDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId);
+
+    //获取人员工作报表
+    @GET("API/tmd/GetUserWork")
+    Observable<Response<Result<StatisticResult>>> GetUserDomains(@Query("startTime") String startTime, @Query("Name") String Name);
+
+    //获取人员工作详细表
+    @GET("API/tmd/GetUserWorkDetails")
+    Observable<Response<Result<StatisticResult>>> GetUserWorkDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId);
 
 }

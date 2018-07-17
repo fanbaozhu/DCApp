@@ -78,4 +78,9 @@ public class EventService {
     public Observable<Response<Result<DetailsResult>>> GetCarinFormation(String eventId) {
         return mEventApi.GetCarinFormation(eventId).subscribeOn(Schedulers.io());
     }
+
+    //获取人员实时信息
+    public Observable<Response<Result<DetailsResult>>> GetUserinFormation(String eventId) {
+        return mEventApi.GetUserinFormation(eventId).subscribeOn(Schedulers.io());
+    }
 }

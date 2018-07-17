@@ -15,86 +15,107 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
 public class DomainPresenter implements DomainsContrast.Presenter {
-    private String TAG = "";
-    private DomainsContrast.View mView;
-    private StatisticService mStatisticService;
-    private PreferHelper mPreferHelper;
-    private Observer<Response<Result<StatisticResult>>> mResultObserver;
+	private String TAG = "";
+	private DomainsContrast.View mView;
+	private StatisticService mStatisticService;
+	private PreferHelper mPreferHelper;
+	private Observer<Response<Result<StatisticResult>>> mResultObserver;
 
-    public DomainPresenter(DomainsContrast.View view, Context context) {
-        mView = view;
-        mView.setPresenter(this);
-        mStatisticService = new StatisticService();
-        mPreferHelper = new PreferHelper(context);
-        mResultObserver = new Observer<Response<Result<StatisticResult>>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                Log.d(TAG, "onSubscribe: ");
-            }
+	public DomainPresenter(DomainsContrast.View view, Context context) {
+		mView = view;
+		mView.setPresenter(this);
+		mStatisticService = new StatisticService();
+		mPreferHelper = new PreferHelper(context);
+		mResultObserver = new Observer<Response<Result<StatisticResult>>>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+				Log.d(TAG, "onSubscribe: ");
+			}
 
-            @Override
-            public void onNext(Response<Result<StatisticResult>> resultResponse) {
-                if (resultResponse.isSuccessful()) {
-                    parseResult(resultResponse.body());
-                } else {
-                    mView.showError(resultResponse.message());
-                }
-            }
+			@Override
+			public void onNext(Response<Result<StatisticResult>> resultResponse) {
+				if (resultResponse.isSuccessful()) {
+					parseResult(resultResponse.body());
+				} else {
+					mView.showError(resultResponse.message());
+				}
+			}
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "onError: ", e);
-            }
+			@Override
+			public void onError(Throwable e) {
+				Log.e(TAG, "onError: ", e);
+			}
 
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-            }
-        };
-    }
+			@Override
+			public void onComplete() {
+				Log.d(TAG, "onComplete: ");
+			}
+		};
+	}
 
-    private void parseResult(Result<StatisticResult> resultResult) {
-        if (resultResult.getCode() == 200) {
-            if (resultResult.getData() == null) {
-                return;
-            }
-            if (resultResult.getData().getCarList() != null) {
-                mView.showCarRecords(resultResult.getData().getCarList());
-                return;
-            }
-            if (resultResult.getData().getCarDetails() != null) {
-                mView.showCarRecords(resultResult.getData().getCarDetails());
-            }
-        } else {
-            mView.showError(resultResult.getMessage());
-        }
-    }
+	private void parseResult(Result<StatisticResult> resultResult) {
+		if (resultResult.getCode() == 200) {
+			if (resultResult.getData() == null) {
+				return;
+			}
+			if (resultResult.getData().getCarList() != null) {
+				mView.showCarRecords(resultResult.getData().getCarList());
+				return;
+			}
+			if (resultResult.getData().getCarDetails() != null) {
+				mView.showCarRecords(resultResult.getData().getCarDetails());
+			}
+			if (resultResult.getData().getUserList() != null) {
+				mView.showUserRecords(resultResult.getData().getUserList());
+			}
+			if (resultResult.getData().getUserDetails() != null) {
+				mView.showUserRecords(resultResult.getData().getUserDetails());
+			}
 
-    @Override
-    public void getCarRecords(String time) {
-        UserAccount userAccount = mPreferHelper.getUserAccount();
-        String Name = userAccount.getUserAccount();
-        mStatisticService.GetCarDomains(time, Name).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mResultObserver);
-    }
+		} else {
+			mView.showError(resultResult.getMessage());
+		}
+	}
 
-    @Override
-    public void getCarDomainDetails(String time, String carId) {
-        mStatisticService.GetCarDomainsDetails(time, carId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mResultObserver);
-    }
+	@Override
+	public void getCarRecords(String time) {
+		UserAccount userAccount = mPreferHelper.getUserAccount();
+		String Name = userAccount.getUserAccount();
+		mStatisticService.GetCarDomains(time, Name).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
 
-    @Override
-    public void getRegionCar(String time, String type) {
-        UserAccount userAccount = mPreferHelper.getUserAccount();
-        String Name = userAccount.getUserAccount();
-        mStatisticService.GetCarOtherDomains(time, Name, type).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mResultObserver);
-    }
+	@Override
+	public void getCarDomainDetails(String time, String carId) {
+		mStatisticService.GetCarDomainsDetails(time, carId).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
 
-    @Override
-    public void getRegionCarDetails(String time, String carId) {
-        mStatisticService.GetCarOtherDomainsDetails(time, carId).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mResultObserver);
-    }
+	@Override
+	public void getRegionCar(String time, String type) {
+		UserAccount userAccount = mPreferHelper.getUserAccount();
+		String Name = userAccount.getUserAccount();
+		mStatisticService.GetCarOtherDomains(time, Name, type).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
+
+	@Override
+	public void getRegionCarDetails(String time, String carId) {
+		mStatisticService.GetCarOtherDomainsDetails(time, carId).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
+
+	@Override
+	public void getEmpWork(String time) {
+		UserAccount userAccount = mPreferHelper.getUserAccount();
+		String Name = userAccount.getUserAccount();
+		mStatisticService.GetUserDomains(time, Name).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
+
+	@Override
+	public void getEmpDomainDetails(String time, String userId) {
+		mStatisticService.GetUserWorkDetails(time, userId).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
 }

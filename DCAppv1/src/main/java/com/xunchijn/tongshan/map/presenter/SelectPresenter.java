@@ -131,7 +131,9 @@ public class SelectPresenter implements SelectContrast.Presenter {
 
     @Override
     public void getUsers(String subDepartmentId) {
-        mMapService.getDepartmentUsers(subDepartmentId).observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mMapService.getDepartmentUsers(subDepartmentId,account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserverMap);
     }
 

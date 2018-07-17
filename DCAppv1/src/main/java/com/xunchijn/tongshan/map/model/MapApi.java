@@ -18,12 +18,12 @@ public interface MapApi {
     /*地图相关*/
 
     //获取人员列表
-    @GET("API/tmd/GetEmpName")
-    Observable<Response<Result<MapResult>>> GetDepartmentUsers(@Query("deptid") String subDepartmentId);
+    @GET("API/tmd/GetEmpByDept")
+    Observable<Response<Result<MapResult>>> GetDepartmentUsers(@Query("deptid") String subDepartmentId, @Query("Name") String acconut);
 
     //获取用户详情
     @GET("API/tmd/GetEmpinformation")
-    Observable<Response<Result<MapResult>>> GetUserInfo(@Query("Name") String subDepartmentId);
+    Observable<Response<Result<MapResult>>> GetUserInfo(@Query("id") String subDepartmentId);
 
     //获取车辆列表
     @GET("API/tmd/GetTruckByDept")

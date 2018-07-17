@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.adapter.SubTitleAdapter;
@@ -25,60 +24,62 @@ import com.xunchijn.tongshan.statistic.view.TableActivity;
 
 public class MainFragment extends Fragment {
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        initView(view);
-        return view;
-    }
+	@Nullable
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_main, container, false);
+		initView(view);
+		return view;
+	}
 
-    private void initView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        TitleAdapter adapter = new TitleAdapter(BaseConfig.getMainTitles());
-        recyclerView.setAdapter(adapter);
-        adapter.setItemClickListener(new SubTitleAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SubTitleItem item) {
-                String title = item.getName().substring(2, 4);
-                parseClick(item.getId(), title);
-            }
-        });
-    }
+	private void initView(View view) {
+		RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+		TitleAdapter adapter = new TitleAdapter(BaseConfig.getMainTitles());
+		recyclerView.setAdapter(adapter);
+		adapter.setItemClickListener(new SubTitleAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(SubTitleItem item) {
+				String title = item.getName().substring(2, 4);
+				parseClick(item.getId(), title);
+			}
+		});
+	}
 
-    private void parseClick(int witch, String title) {
-        switch (witch) {
-            case 1:
-                SelectCarsActivity.newInstance(getContext(), title);
-                break;
-            case 2:
-            case 3:
-                SelectCarsActivity.newInstance(getContext(), title);
-                break;
-            case 4:
-                Toast.makeText(getContext(), "暂未开通该功能", Toast.LENGTH_SHORT).show();
-                break;
-            case 5:
-            case 6:
-                SelectUsersActivity.newInstance(getContext(), title);
-                break;
-            case 7:
-                startActivity(new Intent(getContext(), TableActivity.class));
-                break;
-            case 8:
-                EventHistoryActivity.start(getContext(), true);
-                break;
-            case 9:
-                EventReportActivity.start(getContext(), true);
-                break;
-            case 10:
-                EventHistoryActivity.start(getContext(), false);
-                break;
-            case 11:
-                EventReportActivity.start(getContext(), false);
-                break;
-
-        }
-    }
+	private void parseClick(int witch, String title) {
+		switch (witch) {
+			case 1:
+				SelectCarsActivity.newInstance(getContext(), title);
+				break;
+			case 2:
+			case 3:
+				SelectCarsActivity.newInstance(getContext(), title);
+				break;
+			case 4:
+				SelectUsersActivity.newInstance(getContext(), title);
+				break;
+			case 5:
+			case 6:
+				SelectUsersActivity.newInstance(getContext(), title);
+				break;
+			case 7:
+				TableActivity.newInstance(getContext(),witch);
+				break;
+			case 8:
+				EventHistoryActivity.start(getContext(), true);
+				break;
+			case 9:
+				EventReportActivity.start(getContext(), true);
+				break;
+			case 10:
+				EventHistoryActivity.start(getContext(), false);
+				break;
+			case 11:
+				EventReportActivity.start(getContext(), false);
+				break;
+			case 12:
+				TableActivity.newInstance(getContext(),witch);
+				break;
+		}
+	}
 }

@@ -2,6 +2,7 @@ package com.xunchijn.tongshan.event.model;
 
 import com.xunchijn.tongshan.base.Result;
 import com.xunchijn.tongshan.map.model.DetailsResult;
+import com.xunchijn.tongshan.map.model.MapResult;
 
 import java.util.Map;
 
@@ -68,4 +69,8 @@ public interface EventApi {
     //获取车辆详情
     @GET("API/tmd/GetCarinFormation")
     Observable<Response<Result<DetailsResult>>> GetCarinFormation(@Query("id") String typeId);
+
+    //获取用户详情
+    @GET("API/tmd/GetEmpinformation")
+    Observable<Response<Result<DetailsResult>>> GetUserinFormation(@Query("id") String typeId);
 }

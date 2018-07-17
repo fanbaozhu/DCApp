@@ -19,63 +19,69 @@ import java.util.List;
  */
 
 public class DomainDetailsAdapter extends RecyclerView.Adapter {
-    private List<DomainItem> mList;
+	private List<DomainItem> mList;
 
-    public DomainDetailsAdapter(List<DomainItem> list) {
-        mList = list;
-    }
+	public DomainDetailsAdapter(List<DomainItem> list) {
+		mList = list;
+	}
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_domain_details, parent, false);
-        return new DomainDetailsAdapter.DomainDetailView(view);
-    }
+	@NonNull
+	@Override
+	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_domain_details, parent, false);
+		return new DomainDetailsAdapter.DomainDetailView(view);
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+	@Override
+	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        DomainItem item = mList.get(position);
-        if (item != null && holder instanceof DomainDetailsAdapter.DomainDetailView) {
-            ((DomainDetailsAdapter.DomainDetailView) holder).bindDomains(item);
-        }
-    }
+		DomainItem item = mList.get(position);
+		if (item != null && holder instanceof DomainDetailsAdapter.DomainDetailView) {
+			((DomainDetailsAdapter.DomainDetailView) holder).bindDomains(item);
+		}
+	}
 
-    @Override
-    public int getItemCount() {
-        return mList == null ? 0 : mList.size();
-    }
+	@Override
+	public int getItemCount() {
+		return mList == null ? 0 : mList.size();
+	}
 
-    private class DomainDetailView extends RecyclerView.ViewHolder {
-        private TextView mViewName;
-        private TextView mViewDept;
-        private TextView mViewTimes;
-        private TextView mViewNumber;
+	private class DomainDetailView extends RecyclerView.ViewHolder {
+		private TextView mViewName;
+		private TextView mViewDept;
+		private TextView mViewTimes;
+		private TextView mViewNumber;
 
-        DomainDetailView(View itemView) {
-            super(itemView);
-            mViewName = itemView.findViewById(R.id.text_car_name);
-            mViewDept = itemView.findViewById(R.id.text_car_dept);
-            mViewTimes = itemView.findViewById(R.id.text_car_times);
-            mViewNumber = itemView.findViewById(R.id.text_car_number);
-        }
+		DomainDetailView(View itemView) {
+			super(itemView);
+			mViewName = itemView.findViewById(R.id.text_car_name);
+			mViewDept = itemView.findViewById(R.id.text_car_dept);
+			mViewTimes = itemView.findViewById(R.id.text_car_times);
+			mViewNumber = itemView.findViewById(R.id.text_car_number);
+		}
 
-        void bindDomains(DomainItem item) {
-            if (!TextUtils.isEmpty(item.getStartTime())) {
-                mViewName.setText(String.format("进区域：%s", TimeUtils.getStrTime(item.getStartTime())));
-            }
-            if (!TextUtils.isEmpty(item.getNumber())) {
-                mViewNumber.setVisibility(View.VISIBLE);
-                mViewNumber.setText(String.format("数量：%s", item.getNumber()));
-            }else {
-                mViewNumber.setVisibility(View.GONE);
-            }
-            if (!TextUtils.isEmpty(item.getEndTime())) {
-                mViewDept.setText(String.format("出区域：%s", TimeUtils.getStrTime(item.getEndTime())));
-            }
-            if (!TextUtils.isEmpty(item.getTimeDifference())) {
-                mViewTimes.setText(String.format("时长：%s分钟", item.getTimeDifference()));
-            }
-        }
-    }
+		void bindDomains(DomainItem item) {
+			if (! TextUtils.isEmpty(item.getStartTime())) {
+				mViewName.setText(String.format("进区域：%s", TimeUtils.getStrTime(item.getStartTime())));
+			}
+			if (! TextUtils.isEmpty(item.getNumber())) {
+				mViewNumber.setVisibility(View.VISIBLE);
+				mViewNumber.setText(String.format("数量：%s", item.getNumber()));
+			} else {
+				mViewNumber.setVisibility(View.GONE);
+			}
+			if (! TextUtils.isEmpty(item.getMileage())) {
+				mViewNumber.setVisibility(View.VISIBLE);
+				mViewNumber.setText(String.format("里程：%s", item.getMileage()));
+			} else {
+				mViewNumber.setVisibility(View.GONE);
+			}
+			if (! TextUtils.isEmpty(item.getEndTime())) {
+				mViewDept.setText(String.format("出区域：%s", TimeUtils.getStrTime(item.getEndTime())));
+			}
+			if (! TextUtils.isEmpty(item.getTimeDifference())) {
+				mViewTimes.setText(String.format("时长：%s分钟", item.getTimeDifference()));
+			}
+		}
+	}
 }

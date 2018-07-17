@@ -10,30 +10,41 @@ import com.xunchijn.tongshan.map.presenter.DetailsPresenter;
 import com.xunchijn.tongshan.util.TitleFragment;
 
 public class DetailsActivity extends AbsBaseActivity {
-private static String ID = "eventId";
-    public static void newInstance(Context context, String type, String id) {
-        Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra(ID, id);
-        context.startActivity(intent);
-    }
-    @Override
-    public void initTitle() {
-        TitleFragment titleFragment = TitleFragment.newInstance("车辆信息", true, false);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_title, titleFragment)
-                .show(titleFragment).commit();
-    }
+	private static String ID = "eventId";
+	private static String TYPE = "TYPE";
+	private String genre;
+	private TitleFragment titleFragment;
 
-    @Override
-    public void initContent() {
-        String eventId = getIntent().getStringExtra(ID);
-        if (TextUtils.isEmpty(eventId)) {
-            return;
-        }
-        DetailsFragment detailsFragment = DetailsFragment.newInstance(eventId);
-        new DetailsPresenter(detailsFragment);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_container, detailsFragment)
-                .show(detailsFragment).commit();
-    }
+	public static void newInstance(Context context, String type, String id) {
+		Intent intent = new Intent(context, DetailsActivity.class);
+		intent.putExtra(ID, id);
+		intent.putExtra(TYPE, type);
+		context.startActivity(intent);
+	}
+
+	@Override
+	public void initTitle() {
+		genre = getIntent().getStringExtra(TYPE);
+		if (genre.equals("车辆")) {
+			titleFragment = TitleFragment.newInstance("车辆信息", true, false);
+		} else {
+			titleFragment = TitleFragment.newInstance("人员信息", true, false);
+		}
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.layout_title, titleFragment)
+				.show(titleFragment).commit();
+	}
+
+	@Override
+	public void initContent() {
+		String eventId = getIntent().getStringExtra(ID);
+		if (TextUtils.isEmpty(eventId)) {
+			return;
+		}
+		DetailsFragment detailsFragment = DetailsFragment.newInstance(eventId,genre);
+		new DetailsPresenter(detailsFragment);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.layout_container, detailsFragment)
+				.show(detailsFragment).commit();
+	}
 }
