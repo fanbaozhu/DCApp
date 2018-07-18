@@ -35,6 +35,12 @@ public class UserInfo implements Serializable {
     private String userEmpName;
     //用户标识
     private String userBiaoShi;
+    //GPS剩余电量
+    private String userGPSElectric;
+
+    public String getUserGPSElectric() {
+        return userGPSElectric;
+    }
 
     public String getUserAddress() {
         return userAddress;

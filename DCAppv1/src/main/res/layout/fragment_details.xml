@@ -44,4 +44,13 @@
         android:layout_marginTop="10dp"
         android:text="地址："
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvGps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="电量："
+        android:visibility="gone"
+        android:textSize="16sp" />
 </LinearLayout>

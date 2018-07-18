@@ -23,6 +23,7 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
 	private TextView tvZone;
 	private TextView tvStatus;
 	private TextView tvAddress;
+	private TextView tvGps;
 
 	public static DetailsFragment newInstance(String eventId, String type) {
 		DetailsFragment detailsFragment = new DetailsFragment();
@@ -47,6 +48,7 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
 		tvZone = view.findViewById(R.id.tvZone);
 		tvStatus = view.findViewById(R.id.tvStatus);
 		tvAddress = view.findViewById(R.id.tvAddress);
+		tvGps = view.findViewById(R.id.tvGps);
 		Bundle bundle = getArguments();
 		if (bundle == null || mPresenter == null) {
 			return;
@@ -75,6 +77,8 @@ public class DetailsFragment extends Fragment implements DetailsContract.View {
 
 	@Override
 	public void showUserDetails(DetailsItem item) {
+		tvGps.setVisibility(View.VISIBLE);
+		tvGps.setText(String.format("剩余电量：%s", item.getUserGPSElectric()));
 		tvName.setText(String.format("人员姓名：%s", item.getUserName()));
 		tvDept.setText(String.format("所属部门：%s", item.getUserDept()));
 		tvZone.setText(String.format("所属区域：%s", item.getUserZone()));

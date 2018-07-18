@@ -30,6 +30,12 @@ public class DetailsItem {
 
 	private String userGPSScanTime;
 
+	private String userGPSElectric;
+
+	public String getUserGPSElectric() {
+		return userGPSElectric;
+	}
+
 	public String getUserGPSScanTime() {
 		return userGPSScanTime;
 	}
