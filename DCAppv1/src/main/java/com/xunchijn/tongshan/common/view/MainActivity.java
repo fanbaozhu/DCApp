@@ -3,20 +3,20 @@ package com.xunchijn.tongshan.common.view;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunchijn.tongshan.R;
-import com.xunchijn.tongshan.util.NoticeDialog;
 import com.xunchijn.tongshan.common.presenter.MinePresenter;
+import com.xunchijn.tongshan.util.DatePickerDialog;
+import com.xunchijn.tongshan.util.NoticeDialog;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private FragmentManager mFragmentManager;
     private MainFragment mMainFragment;
     private MineFragment mMineFragment;
-    private NoticeDialog mNoticeDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         mMainFragment = new MainFragment();
         mMineFragment = new MineFragment();
-        new MinePresenter(mMineFragment,this);
+        new MinePresenter(mMineFragment, this);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
                 .add(R.id.layout_container, mMainFragment)
@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .hide(mMineFragment)
                 .show(mMainFragment)
                 .commit();
-
-        mNoticeDialog = new NoticeDialog();
-        mNoticeDialog.setTitle("系统通知1");
-        mNoticeDialog.setContent("通知内容1");
-        mNoticeDialog.show(getSupportFragmentManager(),"noticeDialog");
     }
 
     private void initNavigationBar() {
