@@ -8,11 +8,13 @@ import android.view.KeyEvent;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunchijn.tongshan.R;
+import com.xunchijn.tongshan.util.NoticeDialog;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private FragmentManager mFragmentManager;
     private MainFragment mMainFragment;
     private MineFragment mMineFragment;
+    private NoticeDialog mNoticeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .hide(mMineFragment)
                 .show(mMainFragment)
                 .commit();
+
+        mNoticeDialog = new NoticeDialog();
+        mNoticeDialog.setTitle("系统通知1");
+        mNoticeDialog.setContent("通知内容1");
+        mNoticeDialog.show(getSupportFragmentManager(),"noticeDialog");
     }
 
     private void initNavigationBar() {
