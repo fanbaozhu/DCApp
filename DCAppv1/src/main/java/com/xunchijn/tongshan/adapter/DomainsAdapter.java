@@ -57,6 +57,7 @@ public class DomainsAdapter extends RecyclerView.Adapter {
 		private TextView mViewCount;
 		private TextView mViewTimes;
 		private TextView mViewStatus;
+		private TextView mViewEarlyRetreat;
 		private String flag;
 
 		DomainView(View itemView) {
@@ -67,6 +68,7 @@ public class DomainsAdapter extends RecyclerView.Adapter {
 			mViewCount = itemView.findViewById(R.id.text_car_count);
 			mViewTimes = itemView.findViewById(R.id.text_car_times);
 			mViewStatus = itemView.findViewById(R.id.text_car_status);
+			mViewEarlyRetreat = itemView.findViewById(R.id.text_car_earlyRetreat);
 		}
 
 		void bindDomains(final DomainItem item) {
@@ -74,44 +76,54 @@ public class DomainsAdapter extends RecyclerView.Adapter {
 			if (! TextUtils.isEmpty(item.getCarName())) {
 				mViewName.setText(String.format("车牌号：%s", item.getCarName()));
 			}
-			if (! TextUtils.isEmpty(item.getCarType())) {
-				mViewType.setText(String.format("车辆类型：%s", item.getCarType()));
-			}
-			if (! TextUtils.isEmpty(item.getCarDept())) {
-				mViewDept.setVisibility(View.VISIBLE);
-				mViewDept.setText(String.format("所在部门：%s", item.getCarDept()));
-			} else if (! TextUtils.isEmpty(item.getCarDept())) {
-				mViewDept.setVisibility(View.GONE);
-			}
-			if (! TextUtils.isEmpty(item.getFrequency())) {
-				mViewCount.setText(String.format("运行：%s次", item.getFrequency()));
-			}
 			if (! TextUtils.isEmpty(item.getUserName())) {
 				mViewName.setText(String.format("姓名：%s", item.getUserName()));
+			}
+			if (! TextUtils.isEmpty(item.getCarType())) {
+				mViewType.setText(String.format("车辆类型：%s", item.getCarType()));
 			}
 			if (! TextUtils.isEmpty(item.getUserDept())) {
 				mViewType.setText(String.format("所在部门：%s", item.getUserDept()));
 			}
-			if (! TextUtils.isEmpty(item.getUserStatus())) {
-				mViewStatus.setVisibility(View.VISIBLE);
-				if(item.getUserStatus().equals("1")){
-					mViewStatus.setText("状态: 工作");
-				}else if(item.getUserStatus().equals("2")){
-					mViewStatus.setText("状态: 越界");
-				}else if(item.getUserStatus().equals("3")){
-					mViewStatus.setText("状态: 滞留");
-				}else if(item.getUserStatus().equals("4")){
-					mViewStatus.setText("状态: 离线");
+			if (! TextUtils.isEmpty(item.getCarDept())) {
+				mViewDept.setVisibility(View.VISIBLE);
+				mViewDept.setText(String.format("所在部门：%s", item.getCarDept()));
+			} else if (! TextUtils.isEmpty(item.getLate())) {
+				mViewDept.setVisibility(View.VISIBLE);
+				mViewDept.setText(String.format("迟到：%s次", item.getLate()));
+			} else if (! TextUtils.isEmpty(item.getUserStatus())) {
+				mViewDept.setVisibility(View.VISIBLE);
+				if (item.getUserStatus().equals("1")) {
+					mViewDept.setText("状态: 工作");
+				} else if (item.getUserStatus().equals("2")) {
+					mViewDept.setText("状态: 越界");
+				} else if (item.getUserStatus().equals("3")) {
+					mViewDept.setText("状态: 滞留");
+				} else if (item.getUserStatus().equals("4")) {
+					mViewDept.setText("状态: 离线");
 				}
-			}else if (TextUtils.isEmpty(item.getUserStatus())) {
-				mViewStatus.setVisibility(View.GONE);
 			}
-			if (TextUtils.isEmpty(flag)) {
+			if (! TextUtils.isEmpty(item.getFrequency())) {
+				mViewCount.setText(String.format("运行：%s次", item.getFrequency()));
+			} else if (! TextUtils.isEmpty(item.getAbsenteeism())) {
+				mViewCount.setText(String.format("旷工：%s次", item.getAbsenteeism()));
+			}
+			if (! TextUtils.isEmpty(item.getOffLine())) {
+				mViewStatus.setVisibility(View.VISIBLE);
+				mViewStatus.setText(String.format("离线：%s次", item.getOffLine()));
+			}
+			if (! TextUtils.isEmpty(item.getTransboundary())) {
+				mViewTimes.setText(String.format("越界：%s次", item.getTransboundary()));
+			} else if (TextUtils.isEmpty(flag)) {
 				mViewTimes.setText(String.format("累计时长：%s分钟", item.getTimeDifference()));
 			} else if (flag.equals("加水")) {
-				mViewTimes.setText(String.format("累计加水：%s立方", item.getNumber()));
+				mViewTimes.setText(String.format("累计加水：%s方", item.getNumber()));
 			} else if (flag.equals("垃圾")) {
 				mViewTimes.setText(String.format("累计清理：%s吨", item.getNumber()));
+			}
+			if (! TextUtils.isEmpty(item.getEarlyRetreat())) {
+				mViewEarlyRetreat.setVisibility(View.VISIBLE);
+				mViewEarlyRetreat.setText(String.format("早退：%s次", item.getEarlyRetreat()));
 			}
 			if (mItemClickListener == null) {
 				return;

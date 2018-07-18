@@ -71,7 +71,9 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 			if (resultResult.getData().getUserDetails() != null) {
 				mView.showUserRecords(resultResult.getData().getUserDetails());
 			}
-
+			if (resultResult.getData().getUserAttendanceList() != null) {
+				mView.showUserRecords(resultResult.getData().getUserAttendanceList());
+			}
 		} else {
 			mView.showError(resultResult.getMessage());
 		}
@@ -116,6 +118,14 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 	@Override
 	public void getEmpDomainDetails(String time, String userId) {
 		mStatisticService.GetUserWorkDetails(time, userId).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
+
+	@Override
+	public void getEmpAttendance(String startTime, String endTime) {
+		UserAccount userAccount = mPreferHelper.getUserAccount();
+		String Name = userAccount.getUserAccount();
+		mStatisticService.GetUserAttendance(startTime, Name, endTime).observeOn(AndroidSchedulers.mainThread())
 				.subscribe(mResultObserver);
 	}
 }

@@ -7,6 +7,11 @@ public class StatisticResult {
 	private List<DomainItem> carDetails;
 	private List<DomainItem> userList;
 	private List<DomainItem> userDetails;
+	private List<DomainItem> userAttendanceList;
+
+	public List<DomainItem> getUserAttendanceList() {
+		return userAttendanceList;
+	}
 
 	public List<DomainItem> getUserList() {
 		return userList;

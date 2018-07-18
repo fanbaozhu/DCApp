@@ -43,4 +43,9 @@ public class StatisticService {
 	public Observable<Response<Result<StatisticResult>>> GetCarOtherDomainsDetails(String startTime, String simId) {
 		return mStatisticApi.GetCarOtherDomainsDetails(startTime, simId).subscribeOn(Schedulers.io());
 	}
+
+	//人员考勤报表
+	public Observable<Response<Result<StatisticResult>>> GetUserAttendance(String startTime, String Name, String endTime) {
+		return mStatisticApi.GetUserAttendance(startTime, Name, endTime).subscribeOn(Schedulers.io());
+	}
 }

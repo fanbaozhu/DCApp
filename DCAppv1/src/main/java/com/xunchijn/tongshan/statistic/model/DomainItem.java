@@ -23,6 +23,36 @@ public class DomainItem {
 	private String userStatus;
 	//里程
 	private String mileage;
+	//迟到
+	private String Late;
+	//旷工
+	private String Absenteeism;
+	//离线
+	private String OffLine;
+	//越界
+	private String Transboundary;
+	//早退
+	private String EarlyRetreat;
+
+	public String getLate() {
+		return Late;
+	}
+
+	public String getAbsenteeism() {
+		return Absenteeism;
+	}
+
+	public String getOffLine() {
+		return OffLine;
+	}
+
+	public String getTransboundary() {
+		return Transboundary;
+	}
+
+	public String getEarlyRetreat() {
+		return EarlyRetreat;
+	}
 
 	public String getMileage() {
 		return mileage;

@@ -18,6 +18,8 @@ public interface DomainsContrast {
 		void getEmpWork(String time);
 
 		void getEmpDomainDetails(String time, String userId);
+
+		void getEmpAttendance(String startTime, String endTime);
 	}
 
 	interface View extends BaseView<Presenter> {

@@ -30,6 +30,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 	private String mTime;
 	private String mType;
 
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,8 +51,8 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 				Intent intent = new Intent(getContext(), DomainDetailsActivity.class);
 				intent.putExtra("carName", item.getCarName());
 				intent.putExtra("gps_simId", item.getCarId());
-				intent.putExtra("userName",item.getUserName());
-				intent.putExtra("user_simId",item.getUserId());
+				intent.putExtra("userName", item.getUserName());
+				intent.putExtra("user_simId", item.getUserId());
 				intent.putExtra("type", mType);
 				DomainRecordsActivity activity = (DomainRecordsActivity) getActivity();
 				if (activity == null) {
@@ -88,8 +89,12 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 			case "人员工作报表":
 				mPresenter.getEmpWork(mTime);
 				break;
+			case "人员考勤报表":
+				mPresenter.getEmpAttendance(mTime, mTime);
+				break;
 		}
 	}
+
 
 	@Override
 	//分页查询时使用 后期会加上判断 上拉加载 下拉刷新 如果是下拉 那么先.clear清除 然后走addAll重新填充 如果是上拉 那么直接走addAll
