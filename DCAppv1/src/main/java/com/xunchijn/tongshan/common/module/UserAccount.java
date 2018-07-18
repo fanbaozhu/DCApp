@@ -3,10 +3,19 @@ package com.xunchijn.tongshan.common.module;
 public class UserAccount {
     private String mUserAccount;
     private String mUserPassword;
+    private String mUserEmpName;
 
-    public UserAccount(String userAccount, String userPassword) {
+
+
+    public UserAccount(String userAccount, String userPassword, String userEmpName) {
         mUserAccount = userAccount;
         mUserPassword = userPassword;
+        mUserEmpName = userEmpName;
+
+    }
+
+    public String getUserEmpName() {
+        return mUserEmpName;
     }
 
     public String getUserAccount() {

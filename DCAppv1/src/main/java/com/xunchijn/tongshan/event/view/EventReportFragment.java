@@ -102,8 +102,7 @@ public class EventReportFragment extends Fragment implements EventReportContract
     public void Report() {
         String describe = mInputDescribe.getText().toString();
         if (TextUtils.isEmpty(describe)) {
-            showError("事件描述不能为空！");
-            return;
+           describe = " ";
         }
         if (mUrls == null || mUrls.size() == 0) {
             showError("请选择至少一张图片");
@@ -115,17 +114,18 @@ public class EventReportFragment extends Fragment implements EventReportContract
             showError("请设置所在位置");
             return;
         }
+        if (mSettingItems.size() == 1) {
+            if (mPresenter != null) {
+                mPresenter.report(describe, mUrls, position, point);
+            }
+            return;
+        }
         String mSubDepartmentId = mSettingItems.get(2).getId();
         if (TextUtils.isEmpty(mSubDepartmentId)) {
             showError("请设置子部门");
             return;
         }
-        if (mSettingItems.size() == 3) {
-            if (mPresenter != null) {
-                mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, "巡查员");
-            }
-            return;
-        }
+
         String mTypeId = mSettingItems.get(3).getId();
         if (TextUtils.isEmpty(position)) {
             showError("请设置考核类型");
@@ -137,7 +137,7 @@ public class EventReportFragment extends Fragment implements EventReportContract
             return;
         }
         if (mPresenter != null) {
-            mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, mTypeId, mContentId, "巡查员");
+            mPresenter.report(describe, mUrls, position, point, mSubDepartmentId, mTypeId, mContentId);
         }
     }
 

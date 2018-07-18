@@ -1,10 +1,13 @@
 package com.xunchijn.tongshan.event.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.xunchijn.tongshan.base.Result;
+import com.xunchijn.tongshan.common.module.UserAccount;
 import com.xunchijn.tongshan.event.model.EventResult;
 import com.xunchijn.tongshan.event.model.EventService;
+import com.xunchijn.tongshan.util.PreferHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,11 +19,13 @@ public class EventHistoryPresenter implements EventHistoryContract.Presenter {
     private EventHistoryContract.View mView;
     private EventService mEventService;
     private Observer<Response<Result<EventResult>>> mObserver;
+    private PreferHelper mPreferHelper;
 
-    public EventHistoryPresenter(EventHistoryContract.View view) {
+    public EventHistoryPresenter(EventHistoryContract.View view, Context context) {
         mView = view;
         mView.setPresenter(this);
         mEventService = new EventService();
+        mPreferHelper = new PreferHelper(context);
         mObserver = new Observer<Response<Result<EventResult>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -59,13 +64,17 @@ public class EventHistoryPresenter implements EventHistoryContract.Presenter {
 
     @Override
     public void getHistory() {
-        mEventService.getHistory().observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mEventService.getHistory(account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 
     @Override
     public void getEventHistory() {
-        mEventService.getEventHistory().observeOn(AndroidSchedulers.mainThread())
+        UserAccount userAccount = mPreferHelper.getUserAccount();
+        String account = userAccount.getUserAccount();
+        mEventService.getEventHistory(account).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
     }
 }

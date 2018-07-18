@@ -55,13 +55,13 @@ public class EventService {
     }
 
     //获取事件历史
-    public Observable<Response<Result<EventResult>>> getEventHistory() {
-        return mEventApi.GetEventHistory().subscribeOn(Schedulers.io());
+    public Observable<Response<Result<EventResult>>> getEventHistory(String acconut) {
+        return mEventApi.GetEventHistory(acconut).subscribeOn(Schedulers.io());
     }
 
     //获取历史
-    public Observable<Response<Result<EventResult>>> getHistory() {
-        return mEventApi.getHistory().subscribeOn(Schedulers.io());
+    public Observable<Response<Result<EventResult>>> getHistory(String acconut) {
+        return mEventApi.getHistory(acconut).subscribeOn(Schedulers.io());
     }
 
     //获取历史详情
@@ -77,5 +77,10 @@ public class EventService {
     //获取车辆实时信息
     public Observable<Response<Result<DetailsResult>>> GetCarinFormation(String eventId) {
         return mEventApi.GetCarinFormation(eventId).subscribeOn(Schedulers.io());
+    }
+
+    //获取人员实时信息
+    public Observable<Response<Result<DetailsResult>>> GetUserinFormation(String eventId) {
+        return mEventApi.GetUserinFormation(eventId).subscribeOn(Schedulers.io());
     }
 }

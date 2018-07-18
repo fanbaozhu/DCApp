@@ -56,8 +56,8 @@ public class LoginPresenter implements LoginContrast.Presenter {
                                     return;
                                 }
                                 if (resultResponse.body().getData().getUserInfo() != null) {
-                                    mPreferHelper.saveUserAccount(new UserAccount(userAccount, password));
-                                    mView.loginSuccess(resultResponse.body().getData().getUserInfo().getUserName());
+                                    mPreferHelper.saveUserAccount(new UserAccount(userAccount, password, resultResponse.body().getData().getUserInfo().getUserEmpName()));
+                                    mView.loginSuccess(resultResponse.body().getData().getUserInfo().getUserEmpName());
                                 }
                             } else {
                                 mView.showError(resultResponse.body().getMessage());

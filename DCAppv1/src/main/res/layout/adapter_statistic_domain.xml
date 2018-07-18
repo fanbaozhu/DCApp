@@ -25,6 +25,14 @@
             android:id="@+id/text_car_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_car_earlyRetreat"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +44,15 @@
         <TextView
             android:id="@+id/text_car_dept"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/text_car_status"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/text_car_count"
@@ -49,6 +65,8 @@
             android:id="@+id/text_car_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
     <TextView

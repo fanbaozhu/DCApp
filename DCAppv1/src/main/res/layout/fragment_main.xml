@@ -13,7 +13,7 @@
             android:layout_height="224dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_banner2" />
+            android:src="@mipmap/ic_banner3" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

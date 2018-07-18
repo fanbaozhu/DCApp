@@ -9,6 +9,6 @@ public interface MineContrast {
     }
 
     interface View extends BaseView<Presenter> {
-        void showUserInfo(UserInfo userInfo);
+        void showUserInfo(String username);
     }
 }

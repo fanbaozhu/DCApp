@@ -9,12 +9,14 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.util.NoticeDialog;
+import com.xunchijn.tongshan.common.presenter.MinePresenter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private FragmentManager mFragmentManager;
     private MainFragment mMainFragment;
     private MineFragment mMineFragment;
     private NoticeDialog mNoticeDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         mMainFragment = new MainFragment();
         mMineFragment = new MineFragment();
+        new MinePresenter(mMineFragment,this);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
                 .add(R.id.layout_container, mMainFragment)

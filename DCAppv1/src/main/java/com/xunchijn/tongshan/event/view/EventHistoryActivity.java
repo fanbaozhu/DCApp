@@ -35,7 +35,7 @@ public class EventHistoryActivity extends AbsBaseActivity {
         boolean isEvent = getIntent().getBooleanExtra("isEvent", true);
         EventHistoryFragment historyFragment = new EventHistoryFragment();
         historyFragment.setEvent(isEvent);
-        new EventHistoryPresenter(historyFragment);
+        new EventHistoryPresenter(historyFragment,this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_container, historyFragment)
                 .show(historyFragment).commit();

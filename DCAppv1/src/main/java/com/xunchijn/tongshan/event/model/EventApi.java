@@ -2,6 +2,7 @@ package com.xunchijn.tongshan.event.model;
 
 import com.xunchijn.tongshan.base.Result;
 import com.xunchijn.tongshan.map.model.DetailsResult;
+import com.xunchijn.tongshan.map.model.MapResult;
 
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public interface EventApi {
     Observable<Response<Result<EventResult>>> UploadPic(@PartMap Map<String, RequestBody> map);
 
     //获取事件历史
-    @GET("API/tmd/GetEventInfo")
-    Observable<Response<Result<EventResult>>> GetEventHistory();
+    @GET("API/tmd/GetEventHistory")
+    Observable<Response<Result<EventResult>>> GetEventHistory(@Query("account") String account);
 
     //事件上报
     @FormUrlEncoded
@@ -34,7 +35,7 @@ public interface EventApi {
 
     //获取历史
     @GET("API/tmd/GetMessageInfo")
-    Observable<Response<Result<EventResult>>> getHistory();
+    Observable<Response<Result<EventResult>>> getHistory(@Query("account") String account);
 
     //事件上报
     @FormUrlEncoded
@@ -68,4 +69,8 @@ public interface EventApi {
     //获取车辆详情
     @GET("API/tmd/GetCarinFormation")
     Observable<Response<Result<DetailsResult>>> GetCarinFormation(@Query("id") String typeId);
+
+    //获取用户详情
+    @GET("API/tmd/GetEmpinformation")
+    Observable<Response<Result<DetailsResult>>> GetUserinFormation(@Query("id") String typeId);
 }

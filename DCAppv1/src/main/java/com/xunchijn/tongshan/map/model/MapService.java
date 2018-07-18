@@ -21,16 +21,16 @@ public class MapService {
         mMapApi = RetrofitProvider.get().create(MapApi.class);
     }
 
-    public Observable<Response<Result<MapResult>>> getDepartmentUsers(String subDepartmentId) {
-        return mMapApi.GetDepartmentUsers(subDepartmentId).subscribeOn(Schedulers.io());
+    public Observable<Response<Result<MapResult>>> getDepartmentUsers(String subDepartmentId, String account) {
+        return mMapApi.GetDepartmentUsers(subDepartmentId, account).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<MapResult>>> getUserInfo(String userId) {
         return mMapApi.GetUserInfo(userId).subscribeOn(Schedulers.io());
     }
 
-    public Observable<Response<Result<MapResult>>> getDepartmentCars(String subDepartmentId) {
-        return mMapApi.GetDepartmentCars(subDepartmentId).subscribeOn(Schedulers.io());
+    public Observable<Response<Result<MapResult>>> getDepartmentCars(String subDepartmentId, String account) {
+        return mMapApi.GetDepartmentCars(subDepartmentId, account).subscribeOn(Schedulers.io());
     }
 
     public Observable<Response<Result<MapResult>>> getCarInfo(String id) {
