@@ -128,9 +128,9 @@ public class BaseConfig {
 
 	public static List<SettingItem> getUserTable() {
 		List<SettingItem> items = new ArrayList<>();
-		//SettingItem item4 = new SettingItem(3, "人员考勤报表", "");
+		SettingItem item4 = new SettingItem(3, "人员考勤报表", "");
 		SettingItem item5 = new SettingItem(4, "人员工作报表", "");
-		//items.add(item4);
+		items.add(item4);
 		items.add(item5);
 		return items;
 	}

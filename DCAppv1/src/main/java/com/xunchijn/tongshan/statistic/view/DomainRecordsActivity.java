@@ -18,8 +18,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.baidu.mapapi.BMapManager.getContext;
-
 /**
  * Created by Administrator on 2018/5/9 0009.
  */
@@ -30,8 +28,11 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 	private String mTimes;
 	private String mType;
 	private TimePickerDialog timePickerDialog;
-	private long mStartTime;
-	private long mEndTime;
+	private DatePickerDialog datePickerDialog;
+	private String mStartTime;
+	private String mEndTime;
+	private long startTime;
+	private long endTime;
 
 	public static void start(Context context, String type) {
 		Intent intent = new Intent(context, DomainRecordsActivity.class);
@@ -52,9 +53,9 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 
 			@Override
 			public void onConfirm() {
-				if(mType.equals("人员考勤报表")){
+				if (mType.equals("人员考勤报表")) {
 					selectStartTime();
-				}else{
+				} else {
 					showDialog();
 				}
 
@@ -115,38 +116,47 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 	}
 
 	private void selectStartTime() {
-		mStartTime = 0;
-		mEndTime = 0;
-		timePickerDialog = new TimePickerDialog();
-		timePickerDialog.setTitle("开始时间");
-		timePickerDialog.setOnConfirmClickListener(new TimePickerDialog.OnConfirmClickListener() {
+		//1.new一个DatePickerDialog
+		com.xunchijn.tongshan.util.DatePickerDialog datePickerDialog = new com.xunchijn.tongshan.util.DatePickerDialog();
+		//2.onClick方法
+		datePickerDialog.setOnConfirmClickListener(new com.xunchijn.tongshan.util.DatePickerDialog.OnConfirmClickListener() {
 			@Override
+			//3.点击确定后再执行里面的代码
 			public void OnConfirm(String timestamp, long time) {
-				timePickerDialog.dismiss();
-				Log.d("test", "OnConfirm: timestamp=" + timestamp + " time=" + time);
-				if (mStartTime == 0) {
-					mStartTime = time;
-					selectEndTime();
-				} else if (mStartTime >= time) {
-					selectEndTime();
-					Toast.makeText(getContext(), "结束时间不能早于或者等于开始时间", Toast.LENGTH_SHORT).show();
-				} else {
-					mEndTime = time;
-					mPresenter.getEmpAttendance(String.valueOf(mStartTime), String.valueOf(mEndTime));
-				}
+				startTime = time;
+				Log.d("startTime", "startTime");
+				//5.点击事件结束后进行下一个方法
+				selectEndTime();
 			}
 		});
-		timePickerDialog.show(getSupportFragmentManager(), "timePickerDialog");
+		//4.展示
+		datePickerDialog.show(getSupportFragmentManager(), "datePicker");
 	}
 
 	private void selectEndTime() {
-		if (timePickerDialog == null) {
-			timePickerDialog = new TimePickerDialog();
-		}
-		timePickerDialog.setTitle("结束时间");
-		timePickerDialog.setFixedDate(false);
-		timePickerDialog.show(getSupportFragmentManager(), "timePickerDialog");
+		//5.接上一个方法内的点击事件
+		com.xunchijn.tongshan.util.DatePickerDialog datePickerDialog = new com.xunchijn.tongshan.util.DatePickerDialog();
+		//6.onClick方法执行
+		datePickerDialog.setOnConfirmClickListener(new com.xunchijn.tongshan.util.DatePickerDialog.OnConfirmClickListener() {
+			@Override
+			public void OnConfirm(String timestamp, long time) {
+				endTime = time;
+				Log.d("endTime", "endTime");
+				//8.判断
+				if (startTime > endTime) {
+					Toast.makeText(DomainRecordsActivity.this, "开始时间不能大于结束时间，请重新选择日期", Toast.LENGTH_SHORT).show();
+					return;
+				} else {
+					mStartTime = startTime + "";
+					mEndTime = endTime + "";
+					mPresenter.getEmpAttendance(mStartTime, mEndTime);
+				}
+			}
+		});
+		//7.展示
+		datePickerDialog.show(getSupportFragmentManager(), "datePicker");
 	}
+
 	public String getTimes() {
 		return mTimes;
 	}
