@@ -77,8 +77,6 @@ public class MineFragment extends Fragment implements MineContrast.View {
         } ;
 
         mPreferHelper = new PreferHelper(getContext());
-
-
     }
 
     @Override

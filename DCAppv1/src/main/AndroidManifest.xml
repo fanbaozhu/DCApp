@@ -70,6 +70,14 @@
         <activity android:name=".map.view.DetailsActivity" />
         <activity android:name=".statistic.view.TableActivity" />
 
+        <activity android:name=".util.TestActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="gX1Ud9B48jNXYNn8lZDVYptVV844F9o8" />
