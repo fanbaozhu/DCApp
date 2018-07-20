@@ -3,6 +3,7 @@ package com.xunchijn.tongshan.statistic.view;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -11,7 +12,6 @@ import com.xunchijn.tongshan.R;
 import com.xunchijn.tongshan.base.AbsBaseActivity;
 import com.xunchijn.tongshan.statistic.presenter.DomainPresenter;
 import com.xunchijn.tongshan.statistic.presenter.DomainsContrast;
-import com.xunchijn.tongshan.util.TimePickerDialog;
 import com.xunchijn.tongshan.util.TitleFragment;
 
 import java.text.ParseException;
@@ -27,12 +27,11 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 	private DomainsContrast.Presenter mPresenter;
 	private String mTimes;
 	private String mType;
-	private TimePickerDialog timePickerDialog;
-	private DatePickerDialog datePickerDialog;
 	private String mStartTime;
 	private String mEndTime;
 	private long startTime;
 	private long endTime;
+	private DomainRecordsFragment fragment;
 
 	public static void start(Context context, String type) {
 		Intent intent = new Intent(context, DomainRecordsActivity.class);
@@ -58,7 +57,6 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 				} else {
 					showDialog();
 				}
-
 			}
 		});
 		getSupportFragmentManager().beginTransaction()
@@ -69,7 +67,7 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 
 	@Override
 	public void initContent() {
-		DomainRecordsFragment fragment = new DomainRecordsFragment();
+		fragment = new DomainRecordsFragment();
 		fragment.setType(mType);
 		mPresenter = new DomainPresenter(fragment, this);
 		getSupportFragmentManager().beginTransaction()
@@ -149,7 +147,8 @@ public class DomainRecordsActivity extends AbsBaseActivity {
 				} else {
 					mStartTime = startTime + "";
 					mEndTime = endTime + "";
-					mPresenter.getEmpAttendance(mStartTime, mEndTime);
+					fragment.selectTime(mStartTime,mEndTime);
+					//mPresenter.getEmpAttendance(mStartTime, mEndTime);
 				}
 			}
 		});

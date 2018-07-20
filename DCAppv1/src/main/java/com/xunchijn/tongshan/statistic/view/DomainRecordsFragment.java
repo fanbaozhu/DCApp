@@ -28,6 +28,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 	private List<DomainItem> mList;
 	private DomainsAdapter mDomainsAdapter;
 	private String mTime;
+	private String eTime;
 	private String mType;
 
 
@@ -48,21 +49,26 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 		mDomainsAdapter.setItemClickListener(new DomainsAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(DomainItem item) {
+				//不点击不执行
 				Intent intent = new Intent(getContext(), DomainDetailsActivity.class);
 				intent.putExtra("carName", item.getCarName());
 				intent.putExtra("gps_simId", item.getCarId());
 				intent.putExtra("userName", item.getUserName());
 				intent.putExtra("user_simId", item.getUserId());
+				intent.putExtra("user_status", item.getUserStatus());
 				intent.putExtra("type", mType);
 				DomainRecordsActivity activity = (DomainRecordsActivity) getActivity();
 				if (activity == null) {
 					return;
 				}
 				String time = activity.getTimes();
+
 				if (! TextUtils.isEmpty(time)) {
 					mTime = time;
 				}
 				intent.putExtra("startTime", mTime);
+				intent.putExtra("sTime", mTime);
+				intent.putExtra("eTime", eTime);
 				startActivity(intent);
 			}
 		});
@@ -72,7 +78,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 	private void initData() {
 		Log.d("Domain", "initView: " + mType);
 		mTime = String.valueOf(new Date().getTime() - 24 * 60 * 60 * 1000);
-		mTime = mTime.substring(0, 10);
+		eTime = mTime = mTime.substring(0, 10);
 		if (mPresenter == null) {
 			return;
 		}
@@ -90,7 +96,7 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 				mPresenter.getEmpWork(mTime);
 				break;
 			case "人员考勤报表":
-				mPresenter.getEmpAttendance(mTime, mTime);
+				mPresenter.getEmpAttendance(mTime, eTime);
 				break;
 		}
 	}
@@ -128,4 +134,12 @@ public class DomainRecordsFragment extends Fragment implements DomainsContrast.V
 	public void setType(String type) {
 		mType = type;
 	}
+
+
+	public void selectTime(String startTime,String endTime){
+		mTime = startTime;
+		eTime = endTime;
+		mPresenter.getEmpAttendance(mTime,eTime);
+	}
+
 }

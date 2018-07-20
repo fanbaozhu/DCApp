@@ -69,12 +69,12 @@
         <activity android:name=".statistic.view.DomainDetailsActivity" />
         <activity android:name=".map.view.DetailsActivity" />
         <activity android:name=".statistic.view.TableActivity" />
-
-        <activity android:name=".util.TestActivity" >
+        <activity android:name=".statistic.view.JumpActivity"/>
+        <activity android:name=".util.TestActivity">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 

@@ -30,8 +30,8 @@ public class StatisticService {
 	}
 
 	//人员工作详细表
-	public Observable<Response<Result<StatisticResult>>> GetUserWorkDetails(String startTime, String simId) {
-		return mStatisticApi.GetUserWorkDetails(startTime, simId).subscribeOn(Schedulers.io());
+	public Observable<Response<Result<StatisticResult>>> GetUserWorkDetails(String startTime, String simId, String status) {
+		return mStatisticApi.GetUserWorkDetails(startTime, simId, status).subscribeOn(Schedulers.io());
 	}
 
 	//车辆加水/垃圾倾倒表
@@ -47,5 +47,10 @@ public class StatisticService {
 	//人员考勤报表
 	public Observable<Response<Result<StatisticResult>>> GetUserAttendance(String startTime, String Name, String endTime) {
 		return mStatisticApi.GetUserAttendance(startTime, Name, endTime).subscribeOn(Schedulers.io());
+	}
+
+	//人员考勤详情报表
+	public Observable<Response<Result<StatisticResult>>> GetUserAttendanceDetails(String startTime, String simId, String endTime) {
+		return mStatisticApi.GetUserAttendanceDetails(startTime, simId, endTime).subscribeOn(Schedulers.io());
 	}
 }

@@ -31,10 +31,14 @@ public interface StatisticApi {
 
 	//获取人员工作详细表
 	@GET("API/tmd/GetUserWorkDetails")
-	Observable<Response<Result<StatisticResult>>> GetUserWorkDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId);
+	Observable<Response<Result<StatisticResult>>> GetUserWorkDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId, @Query("status") String status);
 
 	//获取人员考勤报表
 	@GET("API/tmd/GetUserAttendance")
 	Observable<Response<Result<StatisticResult>>> GetUserAttendance(@Query("startTime") String startTime, @Query("Name") String Name, @Query("endTime") String endTime);
+
+	//获取人员考勤报表详情
+	@GET("API/tmd/GetUserAttendanceDetails")
+	Observable<Response<Result<StatisticResult>>> GetUserAttendanceDetails(@Query("startTime") String startTime, @Query("gps_simId") String simId, @Query("endTime") String endTime);
 
 }

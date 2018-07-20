@@ -33,6 +33,82 @@ public class DomainItem {
 	private String Transboundary;
 	//早退
 	private String EarlyRetreat;
+	//人员考勤详情字段
+	private String scantime;
+	private String sStart;
+	private String sEnd;
+	private String sChiDao;
+	private String sZaoTui;
+	private String sYueJie;
+	private String sLiXian;
+	private String sKuangGong;
+	private String xStart;
+	private String xEnd;
+	private String xChiDao;
+	private String xZaoTui;
+	private String xYueJie;
+	private String xLiXian;
+	private String xKuangGong;
+
+	public String getScantime() {
+		return scantime;
+	}
+
+	public String getsStart() {
+		return sStart;
+	}
+
+	public String getsEnd() {
+		return sEnd;
+	}
+
+	public String getsChiDao() {
+		return sChiDao;
+	}
+
+	public String getsZaoTui() {
+		return sZaoTui;
+	}
+
+	public String getsYueJie() {
+		return sYueJie;
+	}
+
+	public String getsLiXian() {
+		return sLiXian;
+	}
+
+	public String getsKuangGong() {
+		return sKuangGong;
+	}
+
+	public String getxStart() {
+		return xStart;
+	}
+
+	public String getxEnd() {
+		return xEnd;
+	}
+
+	public String getxChiDao() {
+		return xChiDao;
+	}
+
+	public String getxZaoTui() {
+		return xZaoTui;
+	}
+
+	public String getxYueJie() {
+		return xYueJie;
+	}
+
+	public String getxLiXian() {
+		return xLiXian;
+	}
+
+	public String getxKuangGong() {
+		return xKuangGong;
+	}
 
 	public String getLate() {
 		return Late;

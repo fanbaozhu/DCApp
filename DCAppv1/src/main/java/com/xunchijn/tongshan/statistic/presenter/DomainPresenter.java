@@ -74,6 +74,9 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 			if (resultResult.getData().getUserAttendanceList() != null) {
 				mView.showUserRecords(resultResult.getData().getUserAttendanceList());
 			}
+			if (resultResult.getData().getAttendanceDetails() != null) {
+				mView.showUserRecords(resultResult.getData().getAttendanceDetails());
+			}
 		} else {
 			mView.showError(resultResult.getMessage());
 		}
@@ -116,8 +119,8 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 	}
 
 	@Override
-	public void getEmpDomainDetails(String time, String userId) {
-		mStatisticService.GetUserWorkDetails(time, userId).observeOn(AndroidSchedulers.mainThread())
+	public void getEmpDomainDetails(String time, String userId, String status) {
+		mStatisticService.GetUserWorkDetails(time, userId, status).observeOn(AndroidSchedulers.mainThread())
 				.subscribe(mResultObserver);
 	}
 
@@ -126,6 +129,12 @@ public class DomainPresenter implements DomainsContrast.Presenter {
 		UserAccount userAccount = mPreferHelper.getUserAccount();
 		String Name = userAccount.getUserAccount();
 		mStatisticService.GetUserAttendance(startTime, Name, endTime).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(mResultObserver);
+	}
+
+	@Override
+	public void getEmpAttendanceDetails(String startTime, String endTime, String simId) {
+		mStatisticService.GetUserAttendanceDetails(startTime, endTime, simId).observeOn(AndroidSchedulers.mainThread())
 				.subscribe(mResultObserver);
 	}
 }

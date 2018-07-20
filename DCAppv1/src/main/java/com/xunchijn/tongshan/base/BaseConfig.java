@@ -135,4 +135,12 @@ public class BaseConfig {
 		return items;
 	}
 
+	public static List<SettingItem> getUserTableDetails() {
+		List<SettingItem> items = new ArrayList<>();
+		SettingItem item6 = new SettingItem(5, "当月详情", "");
+		SettingItem item7 = new SettingItem(6, "异常详情", "");
+		items.add(item6);
+		items.add(item7);
+		return items;
+	}
 }

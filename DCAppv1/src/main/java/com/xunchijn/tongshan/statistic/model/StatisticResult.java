@@ -8,6 +8,11 @@ public class StatisticResult {
 	private List<DomainItem> userList;
 	private List<DomainItem> userDetails;
 	private List<DomainItem> userAttendanceList;
+	private List<DomainItem> attendanceDetails;
+
+	public List<DomainItem> getAttendanceDetails() {
+		return attendanceDetails;
+	}
 
 	public List<DomainItem> getUserAttendanceList() {
 		return userAttendanceList;
